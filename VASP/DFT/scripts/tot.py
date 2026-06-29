@@ -3,40 +3,47 @@
 # 2024-10
 
 "Code for print the total energy from vaprun.xml files"
-import sys
-from pymatgen.io.vasp.outputs import Vasprun
-import glob
+import os
+import re
+from collections import defaultdict
 
 def process_vasrun_file(filename):
-    """Load a vasprun.xml file and return its total energy."""
-    try:
-        vasprun = Vasprun(filename)
-        
-        # Get the total energy from the last ionic step
-        last_energy = vasprun.ionic_steps[-1]['electronic_steps'][-1]['e_fr_energy']
-        
-        return last_energy
-        
-    except Exception as e:
-        print(f"Error processing {filename}: {e}")
-        return None  
+    last_value = None
+    pattern = re.compile(r'<i name="e_wo_entrp">\s*([-+]?\d*\.\d+)\s*</i>')
+    
+    with open(filename, 'r', encoding='utf-8') as file:
+        for line in file:
+            match = pattern.search(line)
+            if match:
+                last_value = match.group(1)  # Update last occurrence
+    
+    return last_value  # Return the extracted energy
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: test.py <pattern>")
-        sys.exit(1)
-
-    print(f"{'Filename':<20} {'Total energy (eV)':<20}")
+    base_directory = os.getcwd()  # Use current directory as the base
     
-    # Process each file passed as an argument
-    for arg in sys.argv[1:]:
-        files = glob.glob(arg)
-        if not files:
-            print(f"No files found for pattern: {arg}")
-            continue
-        
-        for filename in files:
-            total_energy = process_vasrun_file(filename)
+    results = []
+    
+    for root, _, files in os.walk(base_directory):
+        if 'vasprun.xml' in files:
+            vasprun_path = os.path.join(root, 'vasprun.xml')
+            total_energy = process_vasrun_file(vasprun_path)
+            folder_name = os.path.basename(root)  # Extract folder name
+            
+            results.append((folder_name, total_energy))
+
+    # Grouping folders with similar prefixes
+    grouped_results = defaultdict(list)
+    for folder, total_energy in results:
+        prefix = ''.join([char for char in folder if char.isalpha()])  # Extract alphabetic prefix
+        grouped_results[prefix].append((folder, total_energy))
+
+    # Print Folder and Total Energy
+    print(f"{'Folder':<15} {'Total energy (eV)':<20}")
+    for entries in grouped_results.values():
+        print("-" * 34)
+        for folder_name, total_energy in entries:
             if total_energy is not None:
-                # Print the filename and its total energy
-                print(f"{filename:<20} {total_energy:<20.8f}")
+                print(f"{folder_name:<15} {float(total_energy):<20.6f}")
+            else:
+                print(f"{folder_name:<15} {'Value not found':<20}")
