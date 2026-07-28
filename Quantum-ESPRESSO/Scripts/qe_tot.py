@@ -23,12 +23,23 @@ for filename in out_files:
     with open(filename) as f:
         lines = f.readlines()
 
-    last_energy = None
+    last_energy_single = None
+    last_energy_double = None
     for line in lines:
-        if re.match(r"^\s*!\s*total energy\s*=", line):
+        # "!!   total energy" (double exclamation)
+        if re.match(r"^\s*!!\s*total energy\s*=", line):
             match = re.search(r"total energy\s*=\s*(-?\d+\.\d+)\s*(\w+)", line)
             if match:
-                last_energy = match.group(1)
+                last_energy_double = match.group(1)
+
+        # "!    total energy" (single exclamation, NOT followed by another "!")
+        elif re.match(r"^\s*!\s*total energy\s*=", line):
+            match = re.search(r"total energy\s*=\s*(-?\d+\.\d+)\s*(\w+)", line)
+            if match:
+                last_energy_single = match.group(1)
+
+    # Prefer "!!" energy if it exists; otherwise fall back to "!" energy
+    last_energy = last_energy_double if last_energy_double is not None else last_energy_single
 
     folder = os.path.dirname(filename) if os.path.dirname(filename) else "."
     results.append((folder, last_energy))
