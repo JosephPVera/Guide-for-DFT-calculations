@@ -58,5 +58,5 @@ K_POINTS (automatic)
 10 10 10 0 0 0
 ```
 The meaning of each tag is described in the [PWscf Input Description](https://www.quantum-espresso.org/Doc/INPUT_PW.html). An example of these calculations can be found in the [ecutwfc folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutwfc). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
-![Alt text]()
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutwfc/delta_e_encut.png)
 
