@@ -59,7 +59,15 @@ C 0.25 0.25 0.25
 K_POINTS (automatic)
 10 10 10 0 0 0
 ```
-The meaning of each tag is described in the [PWscf Input Description](https://www.quantum-espresso.org/Doc/INPUT_PW.html). An example of these calculations can be found in the [ecutwfc folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutwfc). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
+The meaning of each tag is described in the [PWscf Input Description](https://www.quantum-espresso.org/Doc/INPUT_PW.html). The input file can be executed using the following command:
+```bash
+pw.x -i diamond.in > diamond.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 pw.x -inp diamond.in > diamond.out
+```
+where **20** represents the number of CPU cores used for the calculation. An example of these calculations can be found in the [ecutwfc folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutwfc). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutwfc/delta_e_encut.png)
 
 
