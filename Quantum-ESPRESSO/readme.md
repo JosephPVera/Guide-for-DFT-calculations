@@ -189,7 +189,7 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 pw.x -inp diamond_relax.in > diamond_relax.out
 ```
-where **20** represents the number of CPU cores used for the calculation. In addition, the crystal structure can be visualized using the [xcrysden](http://www.xcrysden.org/) or [ASE](https://docs.ase-lib.org/) software.
+where **20** represents the number of CPU cores used for the calculation. In addition, the crystal structure can be visualized using the [xcrysden](http://www.xcrysden.org/) or [ASE](https://docs.ase-lib.org/) software. Since [VESTA](https://jp-minerals.org/vesta/en/download.html) software can not read **.in** files, a good option is to use the [qe_convert.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_convert.py) script for convert the **.in** file to **POSCAR** file and then can read it.
 
 ## 1.4. Self-Consistent Field (SCF) calculation
 The aim of the SCF calculation is to solve the Kohn-Sham equations iteratively to find the ground-state electron charge density, total energy, and converged electronic wavefunctions for a system at fixed atomic positions. At this point, the lattice parameters obtained from the **relaxation calculation** must be used. This type of calculation can be performed by setting up the input file as follows:
