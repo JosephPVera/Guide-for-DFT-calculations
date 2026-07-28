@@ -18,7 +18,7 @@ Create several folders named according to the energy cutoff values to be used. F
 ```bash
 mkdir {10..80..5}
 ```
-Then, create the **.in** file for the system under study. Next, copy the **.in** file into each of the created folders, modifying the **ecutwfc** parameter to match the energy cutoff value indicated by the corresponding folder name. For example, a **diamond.in** file can be used for a diamond calculation, as shown below:
+Then, create the **.in** file for the system under study. Next, copy the **.in** file into each of the created folders, modifying the **ecutwfc** tag to match the energy cutoff value indicated by the corresponding folder name. For example, a **diamond.in** file can be used for a diamond calculation, as shown below:
 ```bash
 &CONTROL
   calculation = 'scf',
@@ -66,4 +66,17 @@ Once an **ecutwfc** value has been selected (for the diamond example,**ecutwfc =
 ```bash
 mkdir {1..15..1}
 ```
-**Note:** Keep in mind that I'm considering **ecutrho = N*ecutwfc**.
+**Note:** Keep in mind that, in this case, **ecutrho = N*ecutwfc** is being considered.
+
+Now, create the **.in** files, keeping **ecutwfc = 45.0** fixed and modifiying the **ecutrho** tag to match the energy cutoff value indicated by the corresponding folder name. For example, the previous input file (**diamond.in**) will be modified as shown in the next section:
+```bash
+&SYSTEM
+  ibrav =  2,
+  celldm(1) = 6.74,
+  nat  = 2,
+  ntyp = 1,
+  ecutwfc = 45.0,
+  ecutrho = 90.0,
+  nbnd = 8,
+/
+```
