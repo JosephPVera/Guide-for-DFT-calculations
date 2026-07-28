@@ -189,7 +189,7 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 pw.x -inp diamond_relax.in > diamond_relax.out
 ```
-where **20** represents the number of CPU cores used for the calculation.
+where **20** represents the number of CPU cores used for the calculation. In addition, the crystal structure can be visualized using the [xcrysden](http://www.xcrysden.org/) or [ASE](https://docs.ase-lib.org/) software.
 
 ## 1.4. Self-Consistent Field (SCF) calculation
 The aim of the SCF calculation is to solve the Kohn-Sham equations iteratively to find the ground-state electron charge density, total energy, and converged electronic wavefunctions for a system at fixed atomic positions. At this point, the lattice parameters obtained from the **relaxation calculation** must be used. This type of calculation can be performed by setting up the input file as follows:
