@@ -82,3 +82,10 @@ Now, create the **.in** files, keeping **ecutwfc = 45.0** fixed and modifiying t
 ```
 An example of these calculations can be found in the [ecutrho folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutrho). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutrho/delta_e_ecutrho.png)
+
+### 1.2.3. K-point mesh
+Now, **ecutwfc** and **ecutrho** values has been selected (for the diamond example,**ecutwfc = 45.0** and **ecutrho = 180.0**), the final step is to perform the convergence test for the **k-point mesh** using the **K-POINTS** section. We must to create several folders named according to the **k-point grid** values to be used. For example:
+```bash
+mkdir {1..15..1}
+```
+**Note:** Keep in mind that, in this case, the **k-point grid** is represented as **nxnxn**.
