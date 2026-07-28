@@ -311,3 +311,28 @@ mpirun -np 20 dos.x -inp diamond_dos.in > diamond_dos.out
 where **20** represents the number of CPU cores used for the calculation. In addition, the DOS can be plotted using the [dos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/dos.py) script.
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/dos/diamond_dos.png)
+
+## 1.7. Projected Density Of States (PDOS) calculation
+The aim of the PDOS calculation is to break down the total density of states (DOS) into specific atomic and orbital contributions. It reveals which atoms and angular momentum channels (s, p, d, f, and so on) dominate bonding, hybridization, and the states near the Fermi level. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&PROJWFC
+  prefix = 'diamond',
+  outdir = '../tmp/',
+  filpdos= 'diamond_pdos.dat',
+  DeltaE = 0.02,
+  Emax = 50,
+  Emin = -50,
+  degauss = 0.007,
+  ngauss = 0,
+  lsym = .TRUE.,
+/
+```
+The meaning of each tag is described in the [PDOS Input Description](https://www.quantum-espresso.org/Doc/INPUT_PROJWFC.html). An example of this calculation can be found in the [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/pdos). The input file can be executed using the following command:
+```bash
+projwfc.x -i diamond_projwfc.in > diamond_projwfc.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 projwfc.x -inp diamond_projwfc.in > diamond_projwfc.out
+```
+where **20** represents the number of CPU cores used for the calculation. In addition, the PDOS corresponding to the contribution of each atom can be plotted using the [pdos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/pdos.py) script.
