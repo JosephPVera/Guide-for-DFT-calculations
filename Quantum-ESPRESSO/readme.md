@@ -117,3 +117,53 @@ K_POINTS (automatic)
 ```
 An example of these calculations can be found in the [kpoints folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/kpoints). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/convergence/kpoints/delta_e_kpoint.png)
+
+## 1.3. Relaxation
+The aim of the relaxation calculation is to find the most stable arrangement of atoms by minimizing total energy, reducing internal forces to zero, and optimizing cell geometry. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&CONTROL
+  calculation = 'vc-relax',
+  prefix      = 'diamond',
+  outdir      = './tmp/',
+  pseudo_dir  = '../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-6,
+  etot_conv_thr = 1.0d-8,
+  disk_io = 'nowf',
+/
+
+&SYSTEM
+  ibrav =  2,
+  celldm(1) = 6.74,
+  nat  = 2,
+  ntyp = 1,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+  nbnd = 8,
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8
+  mixing_beta = 0.7
+/
+
+&IONS
+/
+
+&CELL
+  cell_dofree='all'
+/
+
+ATOMIC_SPECIES
+  C  12.0107 C.pbe-n-kjpaw_psl.1.0.0.UPF
+  
+ATOMIC_POSITIONS (alat)
+C 0.00 0.00 0.00
+C 0.25 0.25 0.25
+
+K_POINTS (automatic)
+8 8 8 0 0 0
+```
+Keep in mind that, for this and all subsequent calculations, the converged values of **ecutwfc**, **ecutrho**, and **k-point mesh** should be kept fixed. For the diamond calculation, use the converged values **ecutwfc = 45.0**, **ecutrho = 180.0**, and **K_POINTS = 8 8 8** for all subsequent calculations.
