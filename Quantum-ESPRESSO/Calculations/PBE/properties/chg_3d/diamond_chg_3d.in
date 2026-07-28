@@ -1,0 +1,10 @@
+&INPUTPP
+    prefix='diamond'
+    outdir='../tmp'
+    plot_num=0
+/
+&PLOT
+    iflag=3
+    output_format=5
+    fileout='diamond_chg_3d.xsf'
+/

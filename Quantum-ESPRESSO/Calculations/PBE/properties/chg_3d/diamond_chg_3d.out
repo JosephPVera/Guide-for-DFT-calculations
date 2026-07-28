@@ -1,0 +1,58 @@
+
+     Program POST-PROC v.7.4.1 starts on 27Jul2026 at  0:51: 1 
+
+     This program is part of the open-source Quantum ESPRESSO suite
+     for quantum simulation of materials; please cite
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 21 395502 (2009);
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 29 465901 (2017);
+         "P. Giannozzi et al., J. Chem. Phys. 152 154105 (2020);
+          URL http://www.quantum-espresso.org", 
+     in publications or presentations arising from this work. More details at
+     http://www.quantum-espresso.org/quote
+
+     Parallel version (MPI), running on    24 processors
+
+     MPI processes distributed on     1 nodes
+     R & G space division:  proc/nbgrp/npool/nimage =      24
+     291393 MiB available memory on the printing compute node when the environment starts
+ 
+
+     Reading xml data from directory:
+
+     ../tmp/diamond.save/
+     file C.pbe-n-kjpaw_psl.1.0.0.UPF: wavefunction(s)  2S 2P renormalized
+
+     IMPORTANT: XC functional enforced from input :
+     Exchange-correlation= PBE
+                           (   1   4   3   4   0   0   0)
+     Any further DFT definition will be discarded
+     Please, verify this is what you really want
+
+ 
+     Parallelization info
+     --------------------
+     sticks:   dense  smooth     PW     G-vecs:    dense   smooth      PW
+     Min          11      11      3                  129      129      23
+     Max          12      12      4                  131      131      27
+     Sum         283     283     91                 3119     3119     609
+ 
+     Using Slab Decomposition
+ 
+
+     Check: negative core charge=   -0.000077
+
+     Calling punch_plot, plot_num =   0
+     Writing data to file  tmp.pp
+     Reading data from file  tmp.pp
+
+     Writing data to be plotted to file diamond_chg_3d.xsf
+     Plot Type: 3D                     Output format: XCrySDen     
+ 
+     POST-PROC    :      0.48s CPU      0.61s WALL
+
+ 
+   This run was terminated on:   0:51: 1  27Jul2026            
+
+=------------------------------------------------------------------------------=
+   JOB DONE.
+=------------------------------------------------------------------------------=

@@ -1,0 +1,11 @@
+&PROJWFC
+  prefix = 'diamond',
+  outdir = '../tmp/',
+  filpdos= 'diamond_pdos.dat',
+  DeltaE = 0.02,
+  Emax = 50,
+  Emin = -50,
+  degauss = 0.007,
+  ngauss = 0,
+  lsym = .TRUE.,
+/
