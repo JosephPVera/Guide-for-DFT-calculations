@@ -66,7 +66,7 @@ Once an **ecutwfc** value has been selected (for the diamond example,**ecutwfc =
 ```bash
 mkdir {1..15..1}
 ```
-**Note:** Keep in mind that, in this case, **ecutrho = N*ecutwfc** is being considered.
+**Note:** Keep in mind that, in this case, **ecutrho = Nx(ecutwfc)** is being considered.
 
 Now, create the **.in** files, keeping **ecutwfc = 45.0** fixed and modifiying the **ecutrho** tag to match the energy cutoff value indicated by the corresponding folder name. For example, the previous input file (**diamond.in**) will be modified as shown in the next section:
 ```bash
