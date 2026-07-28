@@ -168,3 +168,16 @@ K_POINTS (automatic)
 8 8 8 0 0 0
 ```
 Keep in mind that, for this and all subsequent calculations, the converged values of **ecutwfc**, **ecutrho**, and **k-point mesh** should be kept fixed. For the diamond calculation, use the converged values **ecutwfc = 45.0**, **ecutrho = 180.0**, and **K_POINTS = 8 8 8** for all subsequent calculations.
+
+After running the calculation, it is important to extract the lattice parameters of the relaxed system. This can be done using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. For our example, the diamond calculation, this information can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/relax). The lattice parameters of the relaxed system are as follows:
+```bash
+CELL_PARAMETERS (alat=  6.74000000)
+  -0.500778093   0.000000000   0.500778093
+  -0.000000000   0.500778093   0.500778093
+  -0.500778093   0.500778093   0.000000000
+
+ATOMIC_POSITIONS (alat)
+C               -0.0000000000       -0.0000000000       -0.0000000000
+C                0.2503890466        0.2503890466        0.2503890466
+End final coordinates
+```
