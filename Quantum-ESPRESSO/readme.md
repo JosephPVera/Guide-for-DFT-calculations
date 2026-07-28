@@ -190,3 +190,5 @@ Alternatively, the input file can be executed using parallelization:
 mpirun -np 20 pw.x -inp diamond_relax.in > diamond_relax.out
 ```
 where **20** represents the number of CPU cores used for the calculation.
+
+## 1.4. Self-consistency field (SCF) calculation
