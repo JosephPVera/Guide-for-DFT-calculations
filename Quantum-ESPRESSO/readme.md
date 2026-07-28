@@ -18,4 +18,4 @@ Create several folders named according to the energy cutoff values to be used. F
 ```bash
 mkdir {10..80..5}
 ```
-
+Then, create the **.in** file for the system under study. Next, copy the **.in** file into each of the created folders, modifying the **ecutwfc** parameter to match the energy cutoff value indicated by the corresponding folder name.
