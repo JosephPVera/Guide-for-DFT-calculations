@@ -1,5 +1,5 @@
 --- 
-# Steps for Quantum ESPRESSO calculations: Relax, DOS, PDOS and Band Structure
+# Steps for Quantum ESPRESSO calculations: Relax, DOS, PDOS, Band Structure, and Charge Density
 
 Steps for Quantum ESPRESSO calculations using **PBE** and **HSE06** pseudopotentials.
 
