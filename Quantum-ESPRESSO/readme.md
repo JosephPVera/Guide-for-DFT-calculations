@@ -62,7 +62,7 @@ The meaning of each tag is described in the [PWscf Input Description](https://ww
 
 
 ### 1.2.2. Energy cutoff for charge density
-Once an **ecutwfc** value has been selected (for the diamond example,**ecutwfc = 45.0**), the next step is to perform the convergence test for the **energy cutoff for charge density** using the **ecutrho** tag. We must to create several folders named according to the **ecutrho** values to be used. For example:
+Once an **ecutwfc** value has been selected (for the diamond example, **ecutwfc = 45.0**), the next step is to perform the convergence test for the **energy cutoff for charge density** using the **ecutrho** tag. We must to create several folders named according to the **ecutrho** values to be used. For example:
 ```bash
 mkdir {1..15..1}
 ```
@@ -84,8 +84,14 @@ An example of these calculations can be found in the [ecutrho folder](https://gi
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutrho/delta_e_ecutrho.png)
 
 ### 1.2.3. K-point mesh
-Now, **ecutwfc** and **ecutrho** values has been selected (for the diamond example,**ecutwfc = 45.0** and **ecutrho = 180.0**), the final step is to perform the convergence test for the **k-point mesh** using the **K-POINTS** section. We must to create several folders named according to the **k-point grid** values to be used. For example:
+Now, **ecutwfc** and **ecutrho** values has been selected (for the diamond example, **ecutwfc = 45.0** and **ecutrho = 180.0**), the final step is to perform the convergence test for the **k-point mesh** using the **K_POINTS** section. We must to create several folders named according to the **k-point grid** values to be used. For example:
 ```bash
 mkdir {1..15..1}
 ```
 **Note:** Keep in mind that, in this case, the **k-point grid** is represented as **nxnxn**.
+
+Create the **.in** files, keeping **ecutwfc = 45.0** and **ecutrho = 180.0** fixed and modifiying the **K_POINTS** section to match the grid value indicated by the corresponding folder name. For example, the previous input file (**diamond.in**) will be modified as shown in the next section:
+```bash
+K_POINTS (automatic)
+10 10 10 0 0 0
+```
