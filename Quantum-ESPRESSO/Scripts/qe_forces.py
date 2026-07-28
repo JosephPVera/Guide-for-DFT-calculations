@@ -25,16 +25,23 @@ print(f"Reading: {filename}\n")
 with open(filename) as f:
     lines = f.readlines()
 
-energies = []
+energies_single = []  # lines with exactly "!"
+energies_double = []  # lines with "!!"
 forces = []
 pressures = []
 
 for line in lines:
-    # Total energy (the "!" marked line)
-    if re.match(r"^\s*!\s*total energy\s*=", line):
+    # "!!   total energy" (double exclamation)
+    if re.match(r"^\s*!!\s*total energy\s*=", line):
         match = re.search(r"total energy\s*=\s*(-?\d+\.\d+)", line)
         if match:
-            energies.append(match.group(1))
+            energies_double.append(match.group(1))
+
+    # "!    total energy" (single exclamation, NOT followed by another "!")
+    elif re.match(r"^\s*!\s*total energy\s*=", line):
+        match = re.search(r"total energy\s*=\s*(-?\d+\.\d+)", line)
+        if match:
+            energies_single.append(match.group(1))
 
     # Total force
     if re.match(r"^\s*Total force\s*=", line):
@@ -47,6 +54,9 @@ for line in lines:
         match = re.search(r"P=\s*(-?\d+\.\d+)", line)
         if match:
             pressures.append(match.group(1))
+
+# Prefer "!!" energies if they exist; otherwise fall back to "!" energies
+energies = energies_double if energies_double else energies_single
 
 # Pair them up by order (assumes same number of entries)
 n = min(len(energies), len(forces), len(pressures))
