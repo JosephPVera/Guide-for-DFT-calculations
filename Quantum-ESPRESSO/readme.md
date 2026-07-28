@@ -10,7 +10,7 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 ---
 
 ## 1.1. Workflow
-![Alt text](https://github.com/JosephPVera/Quantum_espresso_software/blob/main/Examples/workflow/qe-workflow.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Figures/QE_workflow.png)
 
 ## 1.2. Convergence tests
 The first step in obtaining accurate results is to perform convergence tests for parameters such as the **energy cutoff for wavefunctions**, **energy cutoff for charge density**, and **k-point mesh**. These parameters can be modified through the **ecutwfc** and **ecutrho** tags, as well as the **K_POINTS** section.  
