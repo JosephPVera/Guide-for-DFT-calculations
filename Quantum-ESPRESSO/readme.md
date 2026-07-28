@@ -191,4 +191,53 @@ mpirun -np 20 pw.x -inp diamond_relax.in > diamond_relax.out
 ```
 where **20** represents the number of CPU cores used for the calculation.
 
-## 1.4. Self-consistency field (SCF) calculation
+## 1.4. Self-Consistent Field (SCF) calculation
+The aim of the SCF calculation is to solve the Kohn-Sham equations iteratively to find the ground-state electron charge density, total energy, and converged electronic wavefunctions for a system at fixed atomic positions. At this point, the lattice parameters obtained from the **relaxation calculation** must be used. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&CONTROL
+  calculation = 'scf',
+  prefix      = 'diamond',
+  outdir      = '../tmp/',
+  pseudo_dir  = '../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-6,
+  etot_conv_thr = 1.0d-8,
+  restart_mode = 'from_scratch',
+  disk_io = 'low',
+/
+
+&SYSTEM
+  ibrav =  0,
+  nat  = 2,
+  ntyp = 1,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+  nbnd = 8,
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8,
+  electron_maxstep = 200,
+  mixing_beta = 0.7,
+  mixing_mode = 'plain',
+  scf_must_converge = .TRUE.,
+  startingwfc = 'random',
+/
+
+ATOMIC_SPECIES
+  C  12.0107 C.pbe-n-kjpaw_psl.1.0.0.UPF
+
+K_POINTS (automatic)
+8 8 8 0 0 0
+  
+CELL_PARAMETERS (angstrom)
+  -1.786102785   0.000000000   1.786102785
+  -0.000000000   1.786102785   1.786102785
+  -1.786102785   1.786102785   0.000000000
+
+ATOMIC_POSITIONS (crystal)
+C  -0.0000000000       -0.0000000000       -0.0000000000
+C   0.2503890466        0.2503890466        0.2503890466
+```
