@@ -432,3 +432,27 @@ mpirun -np 20 bands.x -inp diamond_bands_pp.in > diamond_bands_pp.out
 where **20** represents the number of CPU cores used for the calculation. In addition, the band structure diagram can be plotted using the [bandplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/bandplot.py) script.
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/band_pp/diamond_bands.png)
+
+## 1.9. Electronic charge density
+The aim of the charge density extraction is to convert raw, internal binary electronic data into a readable, spatial 3D grid format. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&INPUTPP
+    prefix='diamond'
+    outdir='../tmp'
+    plot_num=0
+/
+&PLOT
+    iflag=3
+    output_format=5
+    fileout='diamond_chg_3d.xsf'
+/
+```
+The meaning of each tag is described in the [PP Input Description](https://www.quantum-espresso.org/Doc/INPUT_PP.html). An example of this calculation can be found in the [chg_3d folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/chg_3d). The input file can be executed using the following command:
+```bash
+pp.x -i diamond_chg_3d.in > diamond_chg_3d.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 pp.x -inp diamond_chg_3d.in > diamond_chg_3d.out
+```
+where **20** represents the number of CPU cores used for the calculation. In addition, the 3D charge density can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software along with the [diamond_chg_3d.xsf](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/chg_3d/diamond_chg_3d.xsf) file.
