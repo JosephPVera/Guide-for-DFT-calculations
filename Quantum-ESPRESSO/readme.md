@@ -264,3 +264,4 @@ The aim of the NSCF calculation is to compute accurate electronic eigenvalues on
 K_POINTS (automatic)
 24 24 24 0 0 0
 ```
+An example of this calculation can be found in the [nscf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/nscf). The true band gap can be extracted using the [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) script.
