@@ -1,0 +1,36 @@
+&CONTROL
+  calculation = 'scf',
+  prefix      = 'diamond',
+  outdir      = './tmp/',
+  pseudo_dir  = '../../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-6,
+  etot_conv_thr = 1.0d-8,
+  disk_io = 'nowf',
+/
+
+&SYSTEM
+  ibrav =  2,
+  celldm(1) = 6.74,
+  nat  = 2,
+  ntyp = 1,
+  ecutwfc = 55.0,
+  nbnd = 8,
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8
+  mixing_beta = 0.7
+/
+
+ATOMIC_SPECIES
+  C  12.0107 C.pbe-n-kjpaw_psl.1.0.0.UPF
+  
+ATOMIC_POSITIONS (alat)
+C 0.00 0.00 0.00
+C 0.25 0.25 0.25
+
+K_POINTS (automatic)
+10 10 10 0 0 0
