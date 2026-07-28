@@ -62,4 +62,4 @@ The meaning of each tag is described in the [PWscf Input Description](https://ww
 
 
 ### 1.2.2. Energy cutoff for charge density
-once an **ecutwfc** value has been selected (for the diamond example,**ecutwfc = 45.0**), the next step is to perform the convergence test for the Energy cutoff for charge density using the **ecutrho** tag
+Once an **ecutwfc** value has been selected (for the diamond example,**ecutwfc = 45.0**), the next step is to perform the convergence test for the Energy cutoff for charge density using the **ecutrho** tag
