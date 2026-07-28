@@ -309,3 +309,5 @@ Alternatively, the input file can be executed using parallelization:
 mpirun -np 20 dos.x -inp diamond_dos.in > diamond_dos.out
 ```
 where **20** represents the number of CPU cores used for the calculation. In addition, the DOS can be plotted using the [dos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/dos.py) script.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/dos/diamond_dos.png)
