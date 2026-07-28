@@ -181,3 +181,12 @@ C               -0.0000000000       -0.0000000000       -0.0000000000
 C                0.2503890466        0.2503890466        0.2503890466
 End final coordinates
 ```
+The input file can be executed using the following command:
+```bash
+pw.x -i diamond_relax.in > diamond_relax.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 pw.x -inp diamond_relax.in > diamond_relax.out
+```
+where **20** represents the number of CPU cores used for the calculation.
