@@ -62,4 +62,8 @@ The meaning of each tag is described in the [PWscf Input Description](https://ww
 
 
 ### 1.2.2. Energy cutoff for charge density
-Once an **ecutwfc** value has been selected (for the diamond example,**ecutwfc = 45.0**), the next step is to perform the convergence test for the Energy cutoff for charge density using the **ecutrho** tag
+Once an **ecutwfc** value has been selected (for the diamond example,**ecutwfc = 45.0**), the next step is to perform the convergence test for the **energy cutoff for charge density** using the **ecutrho** tag. We must to create several folders named according to the **ecutrho** values to be used. For example:
+```bash
+mkdir {1..15..1}
+```
+**Note:** Keep in mind that I'm considering **ecutrho = N*ecutwfc**.
