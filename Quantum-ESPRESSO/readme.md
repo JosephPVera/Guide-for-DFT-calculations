@@ -95,3 +95,5 @@ Create the **.in** files, keeping **ecutwfc = 45.0** and **ecutrho = 180.0** fix
 K_POINTS (automatic)
 10 10 10 0 0 0
 ```
+An example of these calculations can be found in the [kpoints folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/kpoints). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/convergence/kpoints/delta_e_kpoint.png)
