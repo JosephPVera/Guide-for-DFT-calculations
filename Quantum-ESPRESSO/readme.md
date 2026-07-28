@@ -242,3 +242,25 @@ C  -0.0000000000       -0.0000000000       -0.0000000000
 C   0.2503890466        0.2503890466        0.2503890466
 ```
 An example of this calculation can be found in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/scf). The total energy and band gap can be extracted using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) and [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) scripts.
+
+## 1.4. Non-Self-Consistent Field (NSCF) calculation
+The aim of the NSCF calculation is to compute accurate electronic eigenvalues on a denser reciprocal space (k-point) grid. For this calculation, the **calculation** tag and **K_POINTS** section are modified from the previous input file, as follows:
+```bash
+&CONTROL
+  calculation = 'nscf',
+  prefix      = 'diamond',
+  outdir      = '../tmp/',
+  pseudo_dir  = '../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-6,
+  etot_conv_thr = 1.0d-8,
+  restart_mode = 'from_scratch',
+  disk_io = 'low',
+/
+```
+```bash
+K_POINTS (automatic)
+24 24 24 0 0 0
+```
