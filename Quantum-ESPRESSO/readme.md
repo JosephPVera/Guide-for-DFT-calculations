@@ -241,3 +241,4 @@ ATOMIC_POSITIONS (crystal)
 C  -0.0000000000       -0.0000000000       -0.0000000000
 C   0.2503890466        0.2503890466        0.2503890466
 ```
+The total energy and band gap can be extracted using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) and [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) scripts.
