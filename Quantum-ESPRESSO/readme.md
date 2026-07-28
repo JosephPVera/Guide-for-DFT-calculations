@@ -80,3 +80,5 @@ Now, create the **.in** files, keeping **ecutwfc = 45.0** fixed and modifiying t
   nbnd = 8,
 /
 ```
+An example of these calculations can be found in the [ecutrho folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutrho). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutrho/delta_e_ecutrho.png)
