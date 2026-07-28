@@ -243,7 +243,17 @@ C   0.2503890466        0.2503890466        0.2503890466
 ```
 An example of this calculation can be found in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/scf). The total energy and band gap can be extracted using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) and [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) scripts.
 
-## 1.4. Non-Self-Consistent Field (NSCF) calculation
+The input file can be executed using the following command:
+```bash
+pw.x -i diamond_scf.in > diamond_scf.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 pw.x -inp diamond_scf.in > diamond_scf.out
+```
+where **20** represents the number of CPU cores used for the calculation.
+
+## 1.5. Non-Self-Consistent Field (NSCF) calculation
 The aim of the NSCF calculation is to compute accurate electronic eigenvalues on a denser reciprocal space (k-point) grid. For this calculation, the **calculation** tag and **K_POINTS** section are modified from the previous input file, as follows:
 ```bash
 &CONTROL
@@ -265,3 +275,37 @@ K_POINTS (automatic)
 24 24 24 0 0 0
 ```
 An example of this calculation can be found in the [nscf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/nscf). The true band gap can be extracted using the [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) script.
+
+The input file can be executed using the following command:
+```bash
+pw.x -i diamond_nscf.in > diamond_nscf.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 pw.x -inp diamond_nscf.in > diamond_nscf.out
+```
+where **20** represents the number of CPU cores used for the calculation.
+
+## 1.6. Density Of States (DOS) calculation
+The aim of the DOS calculation is to find the number of available electronic energy states per unit energy interval in a material. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&DOS
+  prefix = 'diamond',
+  outdir = '../tmp/',
+  fildos = 'diamond_dos.dat',
+  DeltaE = 0.02,
+  Emax = 50,
+  Emin = -50,
+  degauss = 0.007,
+  ngauss = 0,
+/
+```
+The meaning of each tag is described in the [DOS Input Description](https://www.quantum-espresso.org/Doc/INPUT_DOS.html). An example of this calculation can be found in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/dos). The input file can be executed using the following command:
+```bash
+dos.x -i diamond_dos.in > diamond_dos.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 dos.x -inp diamond_dos.in > diamond_dos.out
+```
+where **20** represents the number of CPU cores used for the calculation. In addition, the DOS can be plotted using the [dos.py]() script.
