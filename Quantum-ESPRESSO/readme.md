@@ -57,4 +57,4 @@ C 0.25 0.25 0.25
 K_POINTS (automatic)
 10 10 10 0 0 0
 ```
-The meaning of each tag is described in the [PWscf Input Description](https://www.quantum-espresso.org/Doc/INPUT_PW.html).
+The meaning of each tag is described in the [PWscf Input Description](https://www.quantum-espresso.org/Doc/INPUT_PW.html). An example for these calculations can be found in [ecutwfc folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutwfc).
