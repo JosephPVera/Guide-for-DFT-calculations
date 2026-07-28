@@ -3,6 +3,8 @@
 
 Steps for Quantum ESPRESSO calculations using **PBE** and **HSE06** pseudopotentials.
 
+A guide to install quantum ESPRESSO can be found in [Quantum ESPRESSO repository](https://github.com/JosephPVera/Quantum_espresso_software).
+
 ---
 # 1. PBE functional
 ---
