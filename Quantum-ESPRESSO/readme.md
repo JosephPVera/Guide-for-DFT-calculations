@@ -336,3 +336,97 @@ Alternatively, the input file can be executed using parallelization:
 mpirun -np 20 projwfc.x -inp diamond_projwfc.in > diamond_projwfc.out
 ```
 where **20** represents the number of CPU cores used for the calculation. In addition, the PDOS corresponding to the contribution of each atom can be plotted using the [pdos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/pdos.py) script.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/pdos/diamond_pdos-C-atom_1.png)
+
+## 1.8. Band structure calculation
+The aim of the band structure calculation is to determine allowed electron energy levels along high-symmetry paths in reciprocal space, identifying whether a material is a metal, semiconductor, or insulator, and finding its fundamental band gap. This type of calculation can be performed by setting up the input file as follows:
+
+### 1.8.1. Bands calculation
+This step calculates the eigenvalues (Kohn–Sham energies) at specific k-points defined along the high-symmetry points of the First Brillouin zone, using the fixed potential. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&CONTROL
+  calculation = 'bands',
+  prefix      = 'diamond',
+  outdir      = '../tmp/',
+  pseudo_dir  = '../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-6,
+  etot_conv_thr = 1.0d-8,
+  restart_mode = 'restart',
+  disk_io = 'low',
+/
+
+&SYSTEM
+  ibrav =  0,
+  nat  = 2,
+  ntyp = 1,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+  nbnd = 8,
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8,
+  electron_maxstep = 200,
+  mixing_beta = 0.7,
+  mixing_mode = 'plain',
+  scf_must_converge = .TRUE.,
+  startingwfc = 'random',
+/
+
+ATOMIC_SPECIES
+  C  12.0107 C.pbe-n-kjpaw_psl.1.0.0.UPF
+
+K_POINTS {crystal_b}
+10
+  0.0000 0.0000 0.0000 200  !G
+  0.5000 0.0000 0.5000 200  !X
+  0.5000 0.2500 0.7500 200  !W
+  0.3750 0.3750 0.7500 200  !K
+  0.0000 0.0000 0.0000 200  !G
+  0.5000 0.5000 0.5000 200  !L
+  0.6250 0.2500 0.6250 200  !U
+  0.5000 0.2500 0.7500 200  !W
+  0.5000 0.5000 0.5000 200  !L
+  0.3750 0.3750 0.7500   0  !K
+  
+CELL_PARAMETERS (angstrom)
+  -1.786102785   0.000000000   1.786102785
+  -0.000000000   1.786102785   1.786102785
+  -1.786102785   1.786102785   0.000000000
+
+ATOMIC_POSITIONS (crystal)
+C  -0.0000000000       -0.0000000000       -0.0000000000
+C   0.2503890466        0.2503890466        0.2503890466
+```
+An example of this calculation can be found in the [band folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/band). The input file can be executed using the following command:
+```bash
+pw.x -i diamond_bands.in > diamond_bands.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 pw.x -inp diamond_bands.in > diamond_bands.out
+```
+where **20** represents the number of CPU cores used for the calculation.
+
+### 1.8.2. Post-processing of bands calculation
+This step generates clean, readable text files containing energy values versus k-distance, which can be used to plot the band structure diagram. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&BANDS
+  prefix = 'diamond'
+  outdir = '../tmp/'
+  filband = 'diamond_bands.dat'
+/
+```
+The meaning of each tag is described in the [BANDS Input Description](https://www.quantum-espresso.org/Doc/INPUT_BANDS.html). An example of this calculation can be found in the [band_pp folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/band_pp). The input file can be executed using the following command:
+```bash
+bands.x -i diamond_bands_pp.in > diamond_bands_pp.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 bands.x -inp diamond_bands_pp.in > diamond_bands_pp.out
+```
+where **20** represents the number of CPU cores used for the calculation. In addition, the band structure diagram can be plotted using the [bandplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/bandplot.py) script.
