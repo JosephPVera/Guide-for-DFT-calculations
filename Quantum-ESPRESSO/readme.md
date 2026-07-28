@@ -430,3 +430,5 @@ Alternatively, the input file can be executed using parallelization:
 mpirun -np 20 bands.x -inp diamond_bands_pp.in > diamond_bands_pp.out
 ```
 where **20** represents the number of CPU cores used for the calculation. In addition, the band structure diagram can be plotted using the [bandplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/bandplot.py) script.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/band_pp/diamond_bands.png)
