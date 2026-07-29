@@ -460,4 +460,7 @@ where **20** represents the number of CPU cores used for the calculation. In add
 # 2. HSE06 functional
 ## 2.1. Workflow
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Figures/QE_workflow_hse06.png)
+
 ## 1.2. Convergence tests
+### 1.2.1. From convergence tests with PBE functional
+The initial parameters for the subsequent calculations will be taken from the previous calculations, i.e., those performed using the PBE functional. Furthermore, the relaxed structure obtained using the PBE functional will be used as the initial structure for the subsequent calculations. For the diamond example, the converged values **ecutwfc = 45.0**, **ecutrho = 180.0**, and **K_POINTS = 8 8 8** will be used.
