@@ -1,0 +1,4 @@
+&INPUTPP
+  prefix = 'diamond-HSE06'
+  outdir = '../tmp'
+/

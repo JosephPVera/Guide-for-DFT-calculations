@@ -1,0 +1,57 @@
+
+     Program DOS v.7.4.1 starts on 28Jul2026 at 23:12:45 
+
+     This program is part of the open-source Quantum ESPRESSO suite
+     for quantum simulation of materials; please cite
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 21 395502 (2009);
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 29 465901 (2017);
+         "P. Giannozzi et al., J. Chem. Phys. 152 154105 (2020);
+          URL http://www.quantum-espresso.org", 
+     in publications or presentations arising from this work. More details at
+     http://www.quantum-espresso.org/quote
+
+     Parallel version (MPI), running on    24 processors
+
+     MPI processes distributed on     1 nodes
+     R & G space division:  proc/nbgrp/npool/nimage =      24
+     124329 MiB available memory on the printing compute node when the environment starts
+ 
+
+     Reading xml data from directory:
+
+     ../tmp/diamond-HSE06.save/
+     EXX fraction changed:   0.25
+     EXX Screening parameter changed:    0.2000000
+     file C.pbe-n-kjpaw_psl.1.0.0.UPF: wavefunction(s)  2S 2P renormalized
+
+     IMPORTANT: XC functional enforced from input :
+     Exchange-correlation= HSE
+                           (   1   4  12   4   0   0   0)
+     EXX-fraction              =        0.25
+     Any further DFT definition will be discarded
+     Please, verify this is what you really want
+
+ 
+     Parallelization info
+     --------------------
+     sticks:   dense  smooth     PW     G-vecs:    dense   smooth      PW
+     Min          11      11      4                  129      129      29
+     Max          12      12      5                  131      131      31
+     Sum         283     283    109                 3119     3119     701
+ 
+     Using Slab Decomposition
+ 
+
+     Check: negative core charge=   -0.000077
+
+     Gaussian broadening (read from input): ngauss,degauss=   0    0.007000
+
+ 
+     DOS          :      0.26s CPU      0.36s WALL
+
+ 
+   This run was terminated on:  23:12:45  28Jul2026            
+
+=------------------------------------------------------------------------------=
+   JOB DONE.
+=------------------------------------------------------------------------------=

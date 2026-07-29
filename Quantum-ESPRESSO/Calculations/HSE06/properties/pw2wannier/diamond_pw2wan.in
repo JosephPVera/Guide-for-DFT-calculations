@@ -1,0 +1,9 @@
+&INPUTPP
+ prefix = 'diamond-HSE06_open'
+ outdir = '../tmp'
+ seedname = 'diamond'
+ scdm_proj = .true.
+! scdm_entanglement = 'isolated'
+! scdm_mu = 0.0
+! scdm_sigma = 1.0
+/

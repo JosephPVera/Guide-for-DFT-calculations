@@ -1,0 +1,10 @@
+&DOS
+  prefix = 'diamond-HSE06',
+  outdir = '../tmp/',
+  fildos = 'diamond_dos.dat',
+  DeltaE = 0.02,
+  Emax = 50,
+  Emin = -50,
+  degauss = 0.007,
+  ngauss = 0,
+/
