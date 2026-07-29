@@ -456,3 +456,8 @@ Alternatively, the input file can be executed using parallelization:
 mpirun -np 20 pp.x -inp diamond_chg_3d.in > diamond_chg_3d.out
 ```
 where **20** represents the number of CPU cores used for the calculation. In addition, the 3D charge density can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software along with the [diamond_chg_3d.xsf](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/chg_3d/diamond_chg_3d.xsf) file.
+
+# 2. HSE06 functional
+## 2.1. Workflow
+
+## 1.2. Convergence tests
