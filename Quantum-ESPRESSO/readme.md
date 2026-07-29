@@ -10,7 +10,7 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 ---
 
 ## 1.1. Workflow
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Figures/QE_workflow.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Figures/QE_workflow_pbe.png)
 
 ## 1.2. Convergence tests
 The first step in obtaining accurate results is to perform convergence tests for parameters such as the **energy cutoff for wavefunctions**, **energy cutoff for charge density**, and **k-point mesh**. These parameters can be modified through the **ecutwfc** and **ecutrho** tags, as well as the **K_POINTS** section.  
@@ -459,5 +459,5 @@ where **20** represents the number of CPU cores used for the calculation. In add
 
 # 2. HSE06 functional
 ## 2.1. Workflow
-
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Figures/QE_workflow_hse06.png)
 ## 1.2. Convergence tests
