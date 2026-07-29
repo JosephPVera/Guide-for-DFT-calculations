@@ -529,6 +529,9 @@ ATOMIC_POSITIONS (crystal)
 C  -0.0000000000       -0.0000000000       -0.0000000000
 C   0.2503890466        0.2503890466        0.2503890466
 ```
-An example of these calculations can be found in the [kpoints folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/kpoints). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/convergence/kpoints/delta_e_kpoint.png)
+An example of these calculations can be found in the [q-points folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/convergence/q-points). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/HSE06/convergence/q-points/bandgap.png)
+
+The plateauing pattern is typical of the q-point mesh convergence and indicates that the q-point mesh should be chosen using divisors of the k-point mesh. This behavior can be observed in the previous figure.
 
