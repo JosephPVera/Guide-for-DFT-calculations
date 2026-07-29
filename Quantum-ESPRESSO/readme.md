@@ -1,7 +1,7 @@
 --- 
 # Steps for Quantum ESPRESSO calculations: Relax, DOS, PDOS, Band Structure, and Charge Density
 
-Steps for Quantum ESPRESSO calculations using **PBE** and **HSE06** pseudopotentials.
+Steps for Quantum ESPRESSO calculations using **PBE** and **HSE06** functionals.
 
 A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO repository](https://github.com/JosephPVera/Quantum_espresso_software).
 
