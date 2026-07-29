@@ -461,11 +461,11 @@ where **20** represents the number of CPU cores used for the calculation. In add
 ## 2.1. Workflow
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Figures/QE_workflow_hse06.png)
 
-## 1.2. Convergence tests
-### 1.2.1. From convergence tests with PBE functional
+## 2.2. Convergence tests
+### 2.2.1. From convergence tests with PBE functional
 The initial parameters for the subsequent calculations will be taken from the previous calculations, i.e., those performed using the PBE functional. Furthermore, the relaxed structure obtained using the PBE functional will be used as the initial structure for the subsequent calculations. For the diamond example, the converged values **ecutwfc = 45.0**, **ecutrho = 180.0**, and **K_POINTS = 8 8 8** will be used.
 
-### 1.2.2. Q-point mesh
+### 2.2.2. Q-point mesh
 Since **ecutwfc**, **ecutrho**, and **K_POINTS** values has been selected; the final step is to perform the convergence test for the **q-point mesh** using the **nqx1**, **nqx2**, and **nqx3** tags. We must to create several folders named according to the **q-point grid** values to be used. For example:
 ```bash
 mkdir {1..9..1}
@@ -498,7 +498,7 @@ Create the **.in** files, keeping **ecutwfc**, **ecutrho**, and **k-point mesh**
   input_dft='hse',
   exx_fraction = 0.25,
   screening_parameter = 0.2, 
-  nqx1 = 1, nqx2 = 1, nqx3 = 1, 
+  nqx1 = 3, nqx2 = 3, nqx3 = 3, 
   x_gamma_extrapolation = .true.,
   exxdiv_treatment = 'gygi-baldereschi',
   nosym = .true.
@@ -533,5 +533,67 @@ An example of these calculations can be found in the [q-points folder](https://g
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/HSE06/convergence/q-points/bandgap.png)
 
-The plateauing pattern is typical of the q-point mesh convergence and indicates that the q-point mesh should be chosen using divisors of the k-point mesh. This behavior can be observed in the previous figure.
+The plateauing pattern is typical of the q-point mesh convergence and indicates that the q-point mesh should be chosen using divisors of the k-point mesh. This behavior can be observed in the previous figure. For the diamond calculation, since **k = 8**, the q-point mesh should be chosen using its divisors, namely **q = 1, 2, 4**, and **8**. However, for this example, we have chosen to use **q = 3**, i.e., a **3x3x3** q-point mesh.
 
+## 2.3. Relaxation
+At this point, all the parameters have been chosen: **ecutwfc**, **ecutrho**, **k-point mesh**, and **q-point mesh**. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&CONTROL
+  calculation = 'vc-relax',
+  prefix      = 'diamond-HSE06',
+  outdir      = './tmp/',
+  pseudo_dir  = '../pseudos/',
+  verbosity = 'low',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-6,
+  etot_conv_thr = 1.0d-8,
+  disk_io = 'nowf',
+/
+
+&SYSTEM
+  ibrav =  0,
+  nat  = 2,
+  ntyp = 1,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+  nbnd = 8,
+  input_dft='hse',
+  exx_fraction = 0.25,
+  screening_parameter = 0.2, 
+  nqx1 = 2, nqx2 = 2, nqx3 = 2, 
+  x_gamma_extrapolation = .true.,
+  exxdiv_treatment = 'gygi-baldereschi',
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8
+  mixing_beta = 0.7
+/
+
+&IONS
+/
+
+&CELL
+  cell_dofree='all'
+/
+
+ATOMIC_SPECIES
+  C  12.0107 C.pbe-nc.UPF
+
+K_POINTS (automatic)
+8 8 8 0 0 0
+
+CELL_PARAMETERS (angstrom)
+  -1.786102785   0.000000000   1.786102785
+  -0.000000000   1.786102785   1.786102785
+  -1.786102785   1.786102785   0.000000000
+
+ATOMIC_POSITIONS (crystal)
+C  -0.0000000000       -0.0000000000       -0.0000000000
+C   0.2503890466        0.2503890466        0.2503890466
+```
+⚠️ **WARNING**: This type of calculation does not work when using Ultrasoft (US) pseudopotentials or Projector-Augmented Wave (PAW) datasets because the forces for that combination are not implemented. This calculation can only be performed using Norm-Conserving (NC) pseudopotentials. If you attempt to run a calculation using either of these pseudopotential types, the following error message will be displayed:
+```bash
+```
+After running the calculation, it is important to extract the lattice parameters of the relaxed system. This can be done using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. For our example, the diamond calculation, this information can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/relax).
