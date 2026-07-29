@@ -595,5 +595,173 @@ C   0.2503890466        0.2503890466        0.2503890466
 ```
 ⚠️ **WARNING**: This type of calculation does not work when using Ultrasoft (US) pseudopotentials or Projector-Augmented Wave (PAW) datasets because the forces for that combination are not implemented. This calculation can only be performed using Norm-Conserving (NC) pseudopotentials. If you attempt to run a calculation using either of these pseudopotential types, the following error message will be displayed:
 ```bash
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     task #         1
+     from setup : error #         1
+     forces for hybrid functionals + US/PAW not implemented
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ```
 After running the calculation, it is important to extract the lattice parameters of the relaxed system. This can be done using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. For our example, the diamond calculation, this information can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/relax).
+
+## 2.4. Self-Consistent Field (SCF) calculation
+At this point, the lattice parameters obtained from the **relaxation calculation** must be used. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&CONTROL
+  calculation = 'scf',
+  prefix      = 'diamond-HSE06',
+  outdir      = '../tmp/',
+  pseudo_dir  = '../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-6,
+  etot_conv_thr = 1.0d-8,
+  restart_mode = 'from_scratch',
+  disk_io = 'low',
+/
+
+&SYSTEM
+  ibrav =  0,
+  nat  = 2,
+  ntyp = 1,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+  nbnd = 8,
+  input_dft='hse',
+  exx_fraction = 0.25,
+  screening_parameter = 0.2, 
+  nqx1 = 3, nqx2 = 3, nqx3 = 3, 
+  x_gamma_extrapolation = .true.,
+  exxdiv_treatment = 'gygi-baldereschi',
+  nosym = .true.
+  noinv = .true.
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8,
+  electron_maxstep = 200,
+  mixing_beta = 0.7,
+  mixing_mode = 'plain',
+  scf_must_converge = .TRUE.,
+  startingwfc = 'random',
+/
+
+ATOMIC_SPECIES
+  C  12.0107 C.pbe-n-kjpaw_psl.1.0.0.UPF
+
+K_POINTS (automatic)
+8 8 8 0 0 0
+  
+CELL_PARAMETERS (angstrom)
+  -1.786102785   0.000000000   1.786102785
+  -0.000000000   1.786102785   1.786102785
+  -1.786102785   1.786102785   0.000000000
+
+ATOMIC_POSITIONS (crystal)
+C  -0.0000000000       -0.0000000000       -0.0000000000
+C   0.2503890466        0.2503890466        0.2503890466
+```
+An example of this calculation can be found in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/scf). The total energy and band gap can be extracted using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) and [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) scripts.
+
+## 2.5. Density Of States (DOS) calculation
+This type of calculation can be performed in the same way as the PBE calculation. An example of this calculation can be found in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/dos).
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/HSE06/properties/dos/diamond_dos.png)
+
+## 2.6. Projected Density Of States (PDOS) calculation
+This type of calculation can be performed in the same way as the PBE calculation. An example of this calculation can be found in the [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/pdos).
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/HSE06/properties/pdos/diamond_pdos-C-atom_1.png)
+
+## 2.7. Band structure calculation
+Hybrid functional band structure calculations are expensive in Quantum ESPRESSO because exact exchange (Hartree-Fock) evaluation is computationally heavy, non-SCF band steps are unsupported, and dense meshes are required. A standard and efficient way to calculate band structures using hybrid functionals is through [Wannier90](https://wannier90.readthedocs.io/en/latest/user_guide/introduction/). This type of calculation can be performed by setting up the input files as follows:
+
+### 2.7.1. Open grid calculation
+Because Quantum ESPRESSO cannot run an NSCF step with hybrid functionals, **open_grid.x** serves as a synthetic NSCF step. It generates the full grid wavefunctions directly from converged SCF data without re-running any self-consistent loops. The main aim of the open grid calculation is to reconstruct and export wavefunctions onto the full, unreduced Brillouin zone grid. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&INPUTPP
+  prefix = 'diamond-HSE06'
+  outdir = '../tmp'
+/
+```
+An example of this calculation can be found in the [open_grid folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/open_grid). The input file can be executed using the following command:
+```bash
+open_grid.x -i diamond_open_grid.in > diamond_open_grid.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 1 open_grid.x -inp diamond_open_grid.in > diamond_open_grid.out
+```
+where **1** represents the number of CPU cores used for the calculation. After running the calculation, it is necessary to extract or copy the following section from the **.out** file (copy only the columns, not the header):
+```bash
+     List to be put in the .win file of wannier90: (already in crystal/fractionary coordinates):
+    0.000000000000000    0.000000000000000    0.000000000000000    0.0019531250
+    0.000000000000000    0.000000000000000    0.125000000000000    0.0019531250
+    0.000000000000000    0.000000000000000    0.250000000000000    0.0019531250
+                                   .
+                                   .
+                                   .
+   -0.125000000000000   -0.125000000000000   -0.375000000000000    0.0019531250
+   -0.125000000000000   -0.125000000000000   -0.250000000000000    0.0019531250
+   -0.125000000000000   -0.125000000000000   -0.125000000000000    0.0019531250
+```
+
+### 2.7.2. Win-1 calculation
+The main aim is to set up the structural blueprint and framework for the localization procedure. It reads the system geometry and the desired initial orbital projections from the **.win** file. This type of calculation can be performed by setting up the input file as follows:
+```bash
+! Diamond HSE 1
+ num_wann    = 8
+ num_bands   = 8
+ num_iter    = 20
+ kmesh_tol   = 0.000000001
+ auto_projections = .true.
+
+! Use as much precision as you can (at least 6 decimals) to prevent issues with matching to QE output
+Begin Unit_Cell_Cart
+-1.786102785   0.000000000   1.786102785
+-0.000000000   1.786102785   1.786102785
+-1.786102785   1.786102785   0.000000000
+End Unit_Cell_Cart
+
+begin atoms_frac
+C  -0.0000000000       -0.0000000000       -0.0000000000
+C   0.2503890466        0.2503890466        0.2503890466
+end atoms_frac
+
+!begin projections
+!C:sp3
+!end projections
+
+! To plot the WF interpolated bandstructure
+bands_plot       = .true.
+bands_num_points = 200
+
+begin kpoint_path
+G 0.00000 0.00000 0.0000 X 0.50000 0.00000 0.5000
+X 0.50000 0.00000 0.5000 W 0.50000 0.25000 0.7500
+W 0.50000 0.25000 0.7500 K 0.37500 0.37500 0.7500
+K 0.37500 0.37500 0.7500 G 0.00000 0.00000 0.0000
+G 0.00000 0.00000 0.0000 L 0.50000 0.50000 0.5000
+L 0.50000 0.50000 0.5000 U 0.62500 0.25000 0.6250
+U 0.62500 0.25000 0.6250 W 0.50000 0.25000 0.7500
+W 0.50000 0.25000 0.7500 L 0.50000 0.50000 0.5000
+L 0.50000 0.50000 0.5000 K 0.37500 0.37500 0.7500
+end kpoint_path
+
+! KPOINTS
+mp_grid : 8 8 8
+
+begin kpoints
+    0.000000000000000    0.000000000000000    0.000000000000000    0.0019531250
+    0.000000000000000    0.000000000000000    0.125000000000000    0.0019531250
+    0.000000000000000    0.000000000000000    0.250000000000000    0.0019531250
+    0.000000000000000    0.000000000000000    0.375000000000000    0.0019531250
+                                   .
+                                   .
+                                   .
+   -0.125000000000000   -0.125000000000000   -0.375000000000000    0.0019531250
+   -0.125000000000000   -0.125000000000000   -0.250000000000000    0.0019531250
+   -0.125000000000000   -0.125000000000000   -0.125000000000000    0.0019531250
+end kpoints
+```
+Note that the section copied in the previous step should be pasted into the **begin kpoints** section. This calculation generates a **.nnkp** file, which specifies the wavefunctions and overlap matrices that Quantum ESPRESSO must compute for the subsequent Wannier90 calculations.
