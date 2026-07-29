@@ -707,7 +707,7 @@ where **1** represents the number of CPU cores used for the calculation. After r
 ```
 
 ### 2.7.2. Win-1 calculation
-The main aim is to set up the structural blueprint and framework for the localization procedure. It reads the system geometry and the desired initial orbital projections from the **.win** file. This type of calculation can be performed by setting up the input file as follows:
+The main aim of the win-1 calculation is to set up the structural blueprint and framework for the localization procedure. It reads the system geometry and the desired initial orbital projections from the **.win** file. This type of calculation can be performed by setting up the input file as follows:
 ```bash
 ! Diamond HSE 1
  num_wann    = 8
@@ -764,4 +764,26 @@ begin kpoints
    -0.125000000000000   -0.125000000000000   -0.125000000000000    0.0019531250
 end kpoints
 ```
-Note that the section copied in the previous step should be pasted into the **begin kpoints** section. This calculation generates a **.nnkp** file, which specifies the wavefunctions and overlap matrices that Quantum ESPRESSO must compute for the subsequent Wannier90 calculations.
+Note that the section copied in the previous step should be pasted into the **begin kpoints** section. This calculation generates a **.nnkp** file, which specifies the wavefunctions and overlap matrices that Quantum ESPRESSO must compute for the subsequent Wannier90 calculations. An example of this calculation can be found in the [win-1 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/win-1). The input file can be executed using the following command:
+```bash
+wannier90.x -pp diamond.win
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 1 wannier90.x -pp diamond.win
+```
+
+### 2.7.3. pw2wannier calculation
+The aim of this calculation is to translate the raw quantum mechanical data into Wannier-readable formats. It computes the $$M_{mn}$$ overlap matrix (the overlap between Bloch states at neighboring k-points), and the projection matrix (the overlap between your Bloch states and your chosen initial trial orbitals). This type of calculation can be performed by setting up the input file as follows:
+```bash
+&INPUTPP
+ prefix = 'diamond-HSE06_open'
+ outdir = '../tmp'
+ seedname = 'diamond'
+ scdm_proj = .true.
+! scdm_entanglement = 'isolated'
+! scdm_mu = 0.0
+! scdm_sigma = 1.0
+/
+```
+**The .nnkp file from the previous calculation must be copied to this folder**. This calculation generates the **.eig**, **amn**, and **mmn** files
