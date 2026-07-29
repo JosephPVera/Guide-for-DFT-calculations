@@ -109,7 +109,7 @@ Now, **ecutwfc** and **ecutrho** values has been selected (for the diamond examp
 ```bash
 mkdir {1..15..1}
 ```
-**Note:** Keep in mind that, in this case, the **k-point grid** is represented as **nxnxn**.
+**Note:** Keep in mind that, in this case, the **k-point grid** is represented as **kxkxk**.
 
 Create the **.in** files, keeping **ecutwfc = 45.0** and **ecutrho = 180.0** fixed and modifiying the **K_POINTS** section to match the grid value indicated by the corresponding folder name. For example, the previous input file (**diamond.in**) will be modified as shown in the next section:
 ```bash
@@ -464,3 +464,71 @@ where **20** represents the number of CPU cores used for the calculation. In add
 ## 1.2. Convergence tests
 ### 1.2.1. From convergence tests with PBE functional
 The initial parameters for the subsequent calculations will be taken from the previous calculations, i.e., those performed using the PBE functional. Furthermore, the relaxed structure obtained using the PBE functional will be used as the initial structure for the subsequent calculations. For the diamond example, the converged values **ecutwfc = 45.0**, **ecutrho = 180.0**, and **K_POINTS = 8 8 8** will be used.
+
+### 1.2.2. Q-point mesh
+Since **ecutwfc**, **ecutrho**, and **K_POINTS** values has been selected; the final step is to perform the convergence test for the **q-point mesh** using the **nqx1**, **nqx2**, and **nqx3** tags. We must to create several folders named according to the **q-point grid** values to be used. For example:
+```bash
+mkdir {1..9..1}
+```
+**Note:** Keep in mind that, in this case, the **q-point grid** is represented as **qxqxq**.
+
+Create the **.in** files, keeping **ecutwfc**, **ecutrho**, and **k-point mesh** fixed and modifiying the **nqx1**, **nqx2**, and **nqx3** tags to match the grid value indicated by the corresponding folder name. For example, the input file (**diamond.in**) will be modified as shown in the next section:
+```bash
+&CONTROL
+  calculation = 'scf',
+  prefix      = 'diamond-HSE06',
+  outdir      = './tmp/',
+  pseudo_dir  = '../pseudos/',
+  verbosity = 'low',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-6,
+  etot_conv_thr = 1.0d-8,
+  restart_mode = 'from_scratch',
+  disk_io = 'nowf',
+/
+
+&SYSTEM
+  ibrav =  0,
+  nat  = 2,
+  ntyp = 1,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+  nbnd = 8,
+  input_dft='hse',
+  exx_fraction = 0.25,
+  screening_parameter = 0.2, 
+  nqx1 = 1, nqx2 = 1, nqx3 = 1, 
+  x_gamma_extrapolation = .true.,
+  exxdiv_treatment = 'gygi-baldereschi',
+  nosym = .true.
+  noinv = .true.
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8,
+  electron_maxstep = 200,
+  mixing_beta = 0.7,
+  mixing_mode = 'plain',
+  scf_must_converge = .TRUE.,
+  startingwfc = 'random',
+/
+
+ATOMIC_SPECIES
+  C  12.0107 C.pbe-n-kjpaw_psl.1.0.0.UPF
+
+K_POINTS (automatic)
+8 8 8 0 0 0
+  
+CELL_PARAMETERS (angstrom)
+  -1.786102785   0.000000000   1.786102785
+  -0.000000000   1.786102785   1.786102785
+  -1.786102785   1.786102785   0.000000000
+
+ATOMIC_POSITIONS (crystal)
+C  -0.0000000000       -0.0000000000       -0.0000000000
+C   0.2503890466        0.2503890466        0.2503890466
+```
+An example of these calculations can be found in the [kpoints folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/kpoints). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/convergence/kpoints/delta_e_kpoint.png)
+
