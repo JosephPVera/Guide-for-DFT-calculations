@@ -350,8 +350,10 @@ The aim of the PDOS calculation is to break down the total density of states (DO
 $$
 \mathrm{LDOS}(E)=\sum_{m=1}^{2l+1}\mathrm{PDOS}_{m}(E)
 $$
+
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/pdos/diamond_pdos-C-atom_1.png)
 
+The PDOS corresponding to the contribution of each orbital per atom can be plotted using the [pdos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/pdos.py) script.
 
 ## 1.8. Band structure calculation
 The aim of the band structure calculation is to determine allowed electron energy levels along high-symmetry paths in reciprocal space, identifying whether a material is a metal, semiconductor, or insulator, and finding its fundamental band gap. This type of calculation can be performed by setting up the input file as follows:
