@@ -15,18 +15,15 @@ element = "C"
 def data_loader(fname):
     data = np.loadtxt(fname)
     energy = data[:, 0] - VBM
-    pdos = data[:, 1]  # pdos col, total contribution for a given orbital
+    ldos = data[:, 1]  # ldos col
 
-    return energy, pdos
+    return energy, ldos
 
-energy, pdos_s = data_loader(f"diamond_pdos.dat.pdos_atm#{atom}({element})_wfc#1(s)")
-_, pdos_p = data_loader(f"diamond_pdos.dat.pdos_atm#{atom}({element})_wfc#2(p)")
-#_, pdos_tot = data_loader('diamond_pdos.dat.pdos_tot')
+energy, ldos_s = data_loader(f"diamond_pdos.dat.pdos_atm#{atom}({element})_wfc#1(s)")
+_, ldos_p = data_loader(f"diamond_pdos.dat.pdos_atm#{atom}({element})_wfc#2(p)")
 
-# make plots
-plt.plot(energy, pdos_s, linewidth=1, color='xkcd:green', label='s-orbital')
-plt.plot(energy, pdos_p, linewidth=1, color='xkcd:blue', label='p-orbital')
-#plt.plot(energy, pdos_tot, linewidth=0.75, color='k', label='total')
+plt.plot(energy, ldos_s, linewidth=1, color='xkcd:green', label='s-orbital')
+plt.plot(energy, ldos_p, linewidth=1, color='xkcd:blue', label='p-orbital')
 
 plt.xlabel('Energy (eV)', fontsize=14)
 plt.ylabel('DOS (States/eV)', fontsize=14)
@@ -36,4 +33,4 @@ plt.ylim(0, 0.9)
 
 plt.legend()
 plt.tight_layout()
-plt.savefig(rf"diamond_pdos-{element}-atom_{atom}.png", dpi=300)
+plt.savefig(rf"diamond_ldos-{element}-atom_{atom}.png", dpi=300)
