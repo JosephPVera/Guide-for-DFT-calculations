@@ -601,6 +601,8 @@ C   0.2503890466        0.2503890466        0.2503890466
      forces for hybrid functionals + US/PAW not implemented
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ```
+🔔**Reminder:** Variable-cell relaxation (**vc-relax**) is not supported for hybrid functionals in the pw.x code of Quantum ESPRESSO. While ionic relaxation (**relax**) and forces can be computed with hybrid functionals, the analytical stress tensor required for changing cell parameters (**vc-relax**) has not been implemented for exact-exchange/hybrid calculations in pw.x. Therefore, **vc-relax** and **relax** calculations only work with NC pseudopotentials.
+
 After running the calculation, it is important to extract the lattice parameters of the relaxed system. This can be done using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. For our example, the diamond calculation, this information can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/relax).
 
 ## 2.4. Self-Consistent Field (SCF) calculation
