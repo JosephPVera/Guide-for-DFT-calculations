@@ -312,8 +312,8 @@ where **20** represents the number of CPU cores used for the calculation. In add
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/dos/diamond_dos.png)
 
-## 1.7. Projected Density Of States (PDOS) calculation
-The aim of the PDOS calculation is to break down the total density of states (DOS) into specific atomic and orbital contributions. It reveals which atoms and angular momentum channels (s, p, d, f, and so on) dominate bonding, hybridization, and the states near the Fermi level. This type of calculation can be performed by setting up the input file as follows:
+## 1.7. Local and Projected Density Of States (LDOS and PDOS) calculation
+Only a single calculation is required to obtain both the LDOS and PDOS. This type of calculation can be performed by setting up the input file as follows:
 ```bash
 &PROJWFC
   prefix = 'diamond',
@@ -337,7 +337,18 @@ mpirun -np 20 projwfc.x -inp diamond_projwfc.in > diamond_projwfc.out
 ```
 where **20** represents the number of CPU cores used for the calculation. In addition, the PDOS corresponding to the contribution of each atom can be plotted using the [pdos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/pdos.py) script.
 
+### 1.7.1. LDOS
+The aim of the LDOS calculation is to find out which specific atoms or regions contribute to the electronic states at a particular energy level. 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/pdos/diamond_pdos-C-atom_1.png)
+
+### 1.7.2. PDOS
+The aim of the PDOS calculation is to break down the total density of states (DOS) into specific atomic and orbital contributions. It reveals which atoms and angular momentum components (s, p, d, f, and so on) dominate bonding, hybridization, and the states near the Fermi level. Focuses on the chemical character of the states. It tells you how much a specific atom or orbital contributes to the energy levels. Calculated by projecting wavefunctions onto atomic orbital basis sets or angular momentum components. Summing all the individual orbital PDOS contributions for a specific atom can give you an atomic-scale LDOS.
+$$
+\begin{equation}
+\mathrm{LDOS}(E)=\sum_{m=1}^{2l+1}\mathrm{PDOS}_{m}(E).
+\end{equation}
+$$
+
 
 ## 1.8. Band structure calculation
 The aim of the band structure calculation is to determine allowed electron energy levels along high-symmetry paths in reciprocal space, identifying whether a material is a metal, semiconductor, or insulator, and finding its fundamental band gap. This type of calculation can be performed by setting up the input file as follows:
