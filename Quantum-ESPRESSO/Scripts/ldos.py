@@ -13,8 +13,6 @@ element = "C"
 
 # load data
 def data_loader(fname):
-    import numpy as np
-
     data = np.loadtxt(fname)
     energy = data[:, 0] - VBM
     pdos = data[:, 1]  # pdos col, total contribution for a given orbital
