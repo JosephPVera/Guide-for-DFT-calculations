@@ -335,9 +335,9 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 projwfc.x -inp diamond_projwfc.in > diamond_projwfc.out
 ```
-where **20** represents the number of CPU cores used for the calculation. The PDOS corresponding to the contribution of each orbital per atom can be plotted using the [pdos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/pdos.py) scripts.
+where **20** represents the number of CPU cores used for the calculation. The PDOS corresponding to the contribution of each orbital per atom can be plotted using the [pdos-1.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/pdos-1.py) and [pdos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/pdos.py) scripts.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/pdos/diamond_ldos-C-atom_1.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/pdos/diamond_pdos-C-atom_1-1.png)
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/pdos/diamond_pdos-C-atom_1.png)
 
