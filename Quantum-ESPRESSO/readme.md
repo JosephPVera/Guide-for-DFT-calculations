@@ -344,9 +344,7 @@ The aim of the LDOS calculation is to find out which specific atoms or regions c
 ### 1.7.2. PDOS
 The aim of the PDOS calculation is to break down the total density of states (DOS) into specific atomic and orbital contributions. It reveals which atoms and angular momentum components (s, p, d, f, and so on) dominate bonding, hybridization, and the states near the Fermi level. Focuses on the chemical character of the states. It tells you how much a specific atom or orbital contributes to the energy levels. Calculated by projecting wavefunctions onto atomic orbital basis sets or angular momentum components. Summing all the individual orbital PDOS contributions for a specific atom can give you an atomic-scale LDOS.
 $$
-\begin{equation}
 \mathrm{LDOS}(E)=\sum_{m=1}^{2l+1}\mathrm{PDOS}_{m}(E).
-\end{equation}
 $$
 
 
