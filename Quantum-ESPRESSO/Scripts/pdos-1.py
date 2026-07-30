@@ -15,15 +15,15 @@ element = "C"
 def data_loader(fname):
     data = np.loadtxt(fname)
     energy = data[:, 0] - VBM
-    ldos = data[:, 1]  # ldos col
+    pdos = data[:, 1]  # pdos col
 
-    return energy, ldos
+    return energy, pdos
 
-energy, ldos_s = data_loader(f"diamond_pdos.dat.pdos_atm#{atom}({element})_wfc#1(s)")
-_, ldos_p = data_loader(f"diamond_pdos.dat.pdos_atm#{atom}({element})_wfc#2(p)")
+energy, pdos_s = data_loader(f"diamond_pdos.dat.pdos_atm#{atom}({element})_wfc#1(s)")
+_, pdos_p = data_loader(f"diamond_pdos.dat.pdos_atm#{atom}({element})_wfc#2(p)")
 
-plt.plot(energy, ldos_s, linewidth=1, color='xkcd:green', label='s-orbital')
-plt.plot(energy, ldos_p, linewidth=1, color='xkcd:blue', label='p-orbital')
+plt.plot(energy, pdos_s, linewidth=1, color='xkcd:green', label='s-orbital')
+plt.plot(energy, pdos_p, linewidth=1, color='xkcd:blue', label='p-orbital')
 
 plt.xlabel('Energy (eV)', fontsize=14)
 plt.ylabel('DOS (States/eV)', fontsize=14)
@@ -33,4 +33,4 @@ plt.ylim(0, 0.9)
 
 plt.legend()
 plt.tight_layout()
-plt.savefig(rf"diamond_ldos-{element}-atom_{atom}.png", dpi=300)
+plt.savefig(rf"diamond_pdos-{element}-atom_{atom}-1.png", dpi=300)
