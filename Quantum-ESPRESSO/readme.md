@@ -791,7 +791,11 @@ The aim of this calculation is to translate the raw quantum mechanical data into
 ! scdm_sigma = 1.0
 /
 ```
-**The .nnkp file from the previous calculation must be copied to this folder**. This calculation generates the **.eig**, **amn**, and **mmn** files. The **.mmn** and **.amn** files only contain information about the shapes and overlaps of your wavefunctions. Wannier90 needs the **.eig** file to know the actual energies associated with those wavefunctions. An example of this calculation can be found in the [pw2wannier folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/pw2wannier). The input file can be executed using the following command:
+**The .nnkp file from the previous calculation must be copied to this folder**. 
+```bash
+cp -r ../win-1/diamond.nnkp .
+```
+This calculation generates the **.eig**, **amn**, and **mmn** files. The **.mmn** and **.amn** files only contain information about the shapes and overlaps of your wavefunctions. Wannier90 needs the **.eig** file to know the actual energies associated with those wavefunctions. An example of this calculation can be found in the [pw2wannier folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/pw2wannier). The input file can be executed using the following command:
 ```bash
 pw2wannier90.x -in diamond_pw2wan.in > diamond_pw2wan.out
 ```
@@ -804,7 +808,11 @@ where **1** represents the number of CPU cores used for the calculation.
 ### 2.7.4. Win-2 calculation
 The aim of this calculation is to minimize the spread of the orbitals and calculate the final band structure. It reads the **.eig**, **amn**, and **mmn** files to perform the Marzari–Vanderbilt maximally localized Wannier function (MLWF) minimization algorithm. It transforms the system from reciprocal space (k-space) into a tight-binding-like real-space Hamiltonian (R-space). This highly efficient real-space representation is then used to rapidly interpolate the hybrid-functional bands along any desired high-symmetry path. The input file (.win) is the same as the one used for the **win-1 calculation**.
 
-The **.eig**, **amn**, and **mmn** files from the previous calculation must be copied to this folder. An example of this calculation can be found in the [win-2 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/win-2). The input file can be executed using the following command:
+The **.eig**, **amn**, and **mmn** files from the previous calculation must be copied to this folder. 
+```bash
+cp -r ../pw2wannier/diamond.eig ../pw2wannier/diamond.amn ../pw2wannier/diamond.mmn .
+```
+An example of this calculation can be found in the [win-2 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/win-2). The input file can be executed using the following command:
 ```bash
 wannier90.x diamond.win
 ```
