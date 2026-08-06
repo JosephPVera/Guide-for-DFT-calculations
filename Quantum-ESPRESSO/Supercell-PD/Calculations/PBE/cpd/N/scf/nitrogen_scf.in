@@ -1,0 +1,45 @@
+&CONTROL
+  calculation = 'scf',
+  prefix      = 'nitrogen',
+  outdir      = './tmp/',
+  pseudo_dir  = '../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-8,
+  etot_conv_thr = 1.0d-10,
+  restart_mode = 'from_scratch',
+  disk_io = 'nowf',
+/
+
+&SYSTEM
+  ibrav =  0,
+  nat  = 2,
+  ntyp = 1,
+  ecutwfc = 50.0,
+  ecutrho = 200.0,
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-10,
+  electron_maxstep = 200,
+  mixing_beta = 0.7,
+  mixing_mode = 'plain',
+  scf_must_converge = .TRUE.,
+  startingwfc = 'random',
+/
+
+ATOMIC_SPECIES
+  N  14.0067 N.pbe-n-kjpaw_psl.1.0.0.UPF
+
+K_POINTS (automatic)
+1 1 1 0 0 0
+  
+CELL_PARAMETERS {angstrom}
+   9.999894042   0.000000000   0.000000000
+   0.000000000   9.999395968   0.000000000
+   0.000000000   0.000000000   9.999395968
+
+ATOMIC_POSITIONS (crystal)
+N                0.4445299382        0.0000000000        0.0000000000
+N                0.5555145381        0.0000000000        0.0000000000

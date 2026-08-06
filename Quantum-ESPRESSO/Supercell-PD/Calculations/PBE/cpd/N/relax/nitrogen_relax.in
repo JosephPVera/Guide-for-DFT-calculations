@@ -1,0 +1,43 @@
+&CONTROL
+  calculation = 'vc-relax',
+  prefix      = 'nitrogen',
+  outdir      = './tmp/',
+  pseudo_dir  = '../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-8,
+  etot_conv_thr = 1.0d-10,
+  disk_io = 'nowf',
+/
+
+&SYSTEM
+  ibrav =  1,
+  celldm(1) = 18.90,
+  nat  = 2,
+  ntyp = 1,
+  ecutwfc = 50.0,
+  ecutrho = 200.0,
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-10
+  mixing_beta = 0.7
+/
+
+&IONS
+/
+
+&CELL
+  cell_dofree='all'
+/
+
+ATOMIC_SPECIES
+  N  14.0067 N.pbe-n-kjpaw_psl.1.0.0.UPF
+  
+ATOMIC_POSITIONS (alat)
+N   0.4448828045    0.0000000000    0.0000000000 
+N   0.5551171955    0.0000000000    0.0000000000
+
+K_POINTS (automatic)
+1 1 1 0 0 0

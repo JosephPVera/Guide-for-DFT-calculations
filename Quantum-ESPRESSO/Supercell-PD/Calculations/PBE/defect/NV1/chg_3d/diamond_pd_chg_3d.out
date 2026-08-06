@@ -1,0 +1,59 @@
+
+     Program POST-PROC v.7.4.1 starts on  6Aug2026 at  7: 6:56 
+
+     This program is part of the open-source Quantum ESPRESSO suite
+     for quantum simulation of materials; please cite
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 21 395502 (2009);
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 29 465901 (2017);
+         "P. Giannozzi et al., J. Chem. Phys. 152 154105 (2020);
+          URL http://www.quantum-espresso.org", 
+     in publications or presentations arising from this work. More details at
+     http://www.quantum-espresso.org/quote
+
+     Parallel version (MPI), running on     4 processors
+
+     MPI processes distributed on     1 nodes
+     R & G space division:  proc/nbgrp/npool/nimage =       4
+     21936 MiB available memory on the printing compute node when the environment starts
+
+
+     Reading xml data from directory:
+
+     ../tmp/diamond_pd.save/
+     file C.pbe-n-kjpaw_psl.1.0.0.UPF: wavefunction(s)  2S 2P renormalized
+     file N.pbe-n-kjpaw_psl.1.0.0.UPF: wavefunction(s)  2S renormalized
+
+     IMPORTANT: XC functional enforced from input :
+     Exchange-correlation= PBE
+                           (   1   4   3   4   0   0   0)
+     Any further DFT definition will be discarded
+     Please, verify this is what you really want
+
+
+     Parallelization info
+     --------------------
+     sticks:   dense  smooth     PW     G-vecs:    dense   smooth      PW
+     Min        1469    1469    368                84687    84687   10594
+     Max        1470    1470    369                84692    84692   10597
+     Sum        5877    5877   1473               338755   338755   42379
+
+     Using Slab Decomposition
+
+
+     Check: negative core charge=   -0.000075
+
+     Calling punch_plot, plot_num =   0
+     Writing data to file  tmp.pp
+     Reading data from file  tmp.pp
+
+     Writing data to be plotted to file diamond_pd_chg_3d.xsf
+     Plot Type: 3D                     Output format: XCrySDen     
+
+     POST-PROC    :      7.10s CPU      7.12s WALL
+
+
+   This run was terminated on:   7: 7: 4   6Aug2026            
+
+=------------------------------------------------------------------------------=
+   JOB DONE.
+=------------------------------------------------------------------------------=
