@@ -36,6 +36,9 @@ where:
 $$
 \mu_{A} = \mu^{elemental}_{A} + \mu^{\ast}_{A}
 $$
+$$
+\mu_{A} = \mu^{elemental}_{A} + \mu^{\ast}_{A}
+$$
 
 
 
