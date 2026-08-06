@@ -45,6 +45,9 @@ and where:
 $$
 \mu^{elemental}_{A} = \frac{E_{A}}{N_{A}},
 $$
+$$
+\mu^{elemental}_{B} = \frac{E_{B}}{N_{B}},
+$$
 
 Therefore,
 
