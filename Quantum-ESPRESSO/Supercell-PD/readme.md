@@ -28,18 +28,29 @@ For our example, diamond, we will use a supercell containing 216 atoms (i.e., a 
 Competing phases are essential in point defect calculations because they determine the allowed chemical potentials of the constituent elements. These chemical potentials directly enter the formation energy equation, so ignoring competing phases can lead to physically unrealistic predictions. For a material composed of two atomic species, such as A and B, thermodynamic equilibrium requires:
 
 $$
-\mu_{AB} = \mu_{A} + \mu_{B}
+\mu_{AB} = \mu_{A} + \mu_{B},
 $$
 
 where:
 
 $$
-\mu_{A} = \mu^{elemental}_{A} + \mu^{\ast}_{A}
+\mu_{A} = \mu^{elemental}_{A} + \mu^{\ast}_{A},
 $$
 $$
-\mu_{A} = \mu^{elemental}_{A} + \mu^{\ast}_{A}
+\mu_{B} = \mu^{elemental}_{B} + \mu^{\ast}_{B}.
 $$
 
+Therefore,
+
+$$
+\Delta H_{f}(AB) = \mu^{\ast}_{A} + \mu^{\ast}_{B}.
+$$
+
+Since AB is stable,
+
+$$
+\Delta H_{f}(AB) < 0
+$$
 
 
 For our example, due that the host material (diamond) only is compoud by one atomic species 
