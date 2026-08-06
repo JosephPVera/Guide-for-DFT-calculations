@@ -22,4 +22,6 @@ $$E^{q=0}_{form}[D] = E^{q=0}_{def}[D] - E_{perf} - \sum \mu^{elemental}_{A}$$
 
 Taking into account that, for this simple calculation, the defects will be considered in the neutral charge state (q=0). Now, it is possible to plot the formation energy as a function of the number of atoms and determine the optimal supercell size.
 
+For our example, diamond, we will use a supercell containing 216 atoms (i.e., a 3x3x3 supercell).
+
 ## 1.3. Competing Phases
