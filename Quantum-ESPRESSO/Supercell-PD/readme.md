@@ -25,12 +25,17 @@ Taking into account that, for this simple calculation, the defects will be consi
 For our example, diamond, we will use a supercell containing 216 atoms (i.e., a 3x3x3 supercell).
 
 ## 1.3. Competing Phases
-Competing phases are essential in point-defect calculations because they determine the allowed chemical potentials of the constituent elements. These chemical potentials directly enter the defect formation energy, so ignoring competing phases can lead to physically unrealistic predictions. For a material composed by two atomic species such as A and B, the thermodynamic equilibrium requires: 
+Competing phases are essential in point defect calculations because they determine the allowed chemical potentials of the constituent elements. These chemical potentials directly enter the formation energy equation, so ignoring competing phases can lead to physically unrealistic predictions. For a material composed of two atomic species, such as A and B, thermodynamic equilibrium requires:
 
 $$
 \mu_{AB} = \mu_{A} + \mu_{B}
 $$
 
+where:
+
+$$
+\mu_{A} = \mu^{elemental}_{A} + \mu^{\ast}_{A}
+$$
 
 
 
