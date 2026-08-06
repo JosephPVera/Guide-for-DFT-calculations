@@ -41,6 +41,7 @@ $$
 $$
 
 and where:
+
 $$
 \mu^{elemental}_{A} = \frac{E_{A}}{N_{A}},
 $$
