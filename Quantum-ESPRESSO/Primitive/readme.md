@@ -91,8 +91,8 @@ Now, create the **.in** files, keeping **ecutwfc = 45.0** fixed and modifiying t
   nbnd = 8,
 /
 ```
-An example of these calculations can be found in the [ecutrho folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutrho). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutrho/delta_e_ecutrho.png)
+An example of these calculations can be found in the [ecutrho folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/convergence/ecutrho). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/convergence/ecutrho/delta_e_ecutrho.png)
 
 ⚠️ **WARNING**: **ecutrho** values less than or equal to **ecutwfc** values are not allowed. In case you try to run them, the following error will be encountered:
 ```bash
@@ -102,7 +102,7 @@ An example of these calculations can be found in the [ecutrho folder](https://gi
      ecutrho <= ecutwfc?!?
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ```
-Check an example in [ecutrho error](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/ecutrho/1).
+Check an example in [ecutrho error](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/convergence/ecutrho/1).
 
 ### 1.2.3. K-point mesh
 Now, **ecutwfc** and **ecutrho** values has been selected (for the diamond example, **ecutwfc = 45.0** and **ecutrho = 180.0**), the final step is to perform the convergence test for the **k-point mesh** using the **K_POINTS** section. We must to create several folders named according to the **k-point grid** values to be used. For example:
@@ -116,8 +116,8 @@ Create the **.in** files, keeping **ecutwfc = 45.0** and **ecutrho = 180.0** fix
 K_POINTS (automatic)
 10 10 10 0 0 0
 ```
-An example of these calculations can be found in the [kpoints folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/convergence/kpoints). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/convergence/kpoints/delta_e_kpoint.png)
+An example of these calculations can be found in the [kpoints folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/convergence/kpoints). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/convergence/kpoints/delta_e_kpoint.png)
 
 ## 1.3. Relaxation
 The aim of the relaxation calculation is to find the most stable arrangement of atoms by minimizing total energy, reducing internal forces to zero, and optimizing cell geometry. This type of calculation can be performed by setting up the input file as follows:
@@ -169,7 +169,7 @@ K_POINTS (automatic)
 ```
 Keep in mind that, for this and all subsequent calculations, the converged values of **ecutwfc**, **ecutrho**, and **k-point mesh** should be kept fixed. For the diamond calculation, use the converged values **ecutwfc = 45.0**, **ecutrho = 180.0**, and **K_POINTS = 8 8 8** for all subsequent calculations.
 
-After running the calculation, it is important to extract the lattice parameters of the relaxed system. This can be done using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. For our example, the diamond calculation, this information can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/relax). The lattice parameters of the relaxed system are as follows:
+After running the calculation, it is important to extract the lattice parameters of the relaxed system. This can be done using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. For our example, the diamond calculation, this information can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/relax). The lattice parameters of the relaxed system are as follows:
 ```bash
 CELL_PARAMETERS (alat=  6.74000000)
   -0.500778093   0.000000000   0.500778093
@@ -241,7 +241,7 @@ ATOMIC_POSITIONS (crystal)
 C  -0.0000000000       -0.0000000000       -0.0000000000
 C   0.2503890466        0.2503890466        0.2503890466
 ```
-An example of this calculation can be found in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/scf). The total energy and band gap can be extracted using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) and [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) scripts.
+An example of this calculation can be found in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/scf). The total energy and band gap can be extracted using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) and [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) scripts.
 
 The input file can be executed using the following command:
 ```bash
@@ -274,7 +274,7 @@ The aim of the NSCF calculation is to compute accurate electronic eigenvalues on
 K_POINTS (automatic)
 24 24 24 0 0 0
 ```
-An example of this calculation can be found in the [nscf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/nscf). The true band gap can be extracted using the [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) script.
+An example of this calculation can be found in the [nscf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/nscf). The true band gap can be extracted using the [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) script.
 
 The input file can be executed using the following command:
 ```bash
@@ -300,7 +300,7 @@ The aim of the DOS calculation is to find the number of available electronic ene
   ngauss = 0,
 /
 ```
-The meaning of each tag is described in the [DOS Input Description](https://www.quantum-espresso.org/Doc/INPUT_DOS.html). An example of this calculation can be found in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/dos). The input file can be executed using the following command:
+The meaning of each tag is described in the [DOS Input Description](https://www.quantum-espresso.org/Doc/INPUT_DOS.html). An example of this calculation can be found in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/dos). The input file can be executed using the following command:
 ```bash
 dos.x -i diamond_dos.in > diamond_dos.out
 ```
@@ -310,7 +310,7 @@ mpirun -np 20 dos.x -inp diamond_dos.in > diamond_dos.out
 ```
 where **20** represents the number of CPU cores used for the calculation. In addition, the DOS can be plotted using the [dos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/dos.py) script.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/dos/diamond_dos.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/dos/diamond_dos.png)
 
 ## 1.7. Projected Density Of States (PDOS) calculation
 The aim of the PDOS calculation is to break down the total density of states (DOS) into specific atomic and orbital contributions. It reveals which atoms and angular momentum components (s, p, d, f, and so on) dominate bonding, hybridization, and the states near the Fermi level. Focuses on the chemical character of the states. It tells you how much a specific atom or orbital contributes to the energy levels. Calculated by projecting wavefunctions onto atomic orbital basis sets or angular momentum components. This type of calculation can be performed by setting up the input file as follows:
@@ -327,7 +327,7 @@ The aim of the PDOS calculation is to break down the total density of states (DO
   lsym = .TRUE.,
 /
 ```
-The meaning of each tag is described in the [PDOS Input Description](https://www.quantum-espresso.org/Doc/INPUT_PROJWFC.html). An example of this calculation can be found in the [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/pdos). The input file can be executed using the following command:
+The meaning of each tag is described in the [PDOS Input Description](https://www.quantum-espresso.org/Doc/INPUT_PROJWFC.html). An example of this calculation can be found in the [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/pdos). The input file can be executed using the following command:
 ```bash
 projwfc.x -i diamond_projwfc.in > diamond_projwfc.out
 ```
@@ -337,9 +337,9 @@ mpirun -np 20 projwfc.x -inp diamond_projwfc.in > diamond_projwfc.out
 ```
 where **20** represents the number of CPU cores used for the calculation. The PDOS corresponding to the contribution of each orbital per atom can be plotted using the [pdos-1.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/pdos-1.py) and [pdos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/pdos.py) scripts.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/pdos/diamond_pdos-C-atom_1-1.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/pdos/diamond_pdos-C-atom_1-1.png)
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/pdos/diamond_pdos-C-atom_1.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/pdos/diamond_pdos-C-atom_1.png)
 
 ## 1.8. Band structure calculation
 The aim of the band structure calculation is to determine allowed electron energy levels along high-symmetry paths in reciprocal space, identifying whether a material is a metal, semiconductor, or insulator, and finding its fundamental band gap. This type of calculation can be performed by setting up the input file as follows:
@@ -404,7 +404,7 @@ ATOMIC_POSITIONS (crystal)
 C  -0.0000000000       -0.0000000000       -0.0000000000
 C   0.2503890466        0.2503890466        0.2503890466
 ```
-An example of this calculation can be found in the [band folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/band). The input file can be executed using the following command:
+An example of this calculation can be found in the [band folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/band). The input file can be executed using the following command:
 ```bash
 pw.x -i diamond_bands.in > diamond_bands.out
 ```
@@ -423,7 +423,7 @@ This step generates clean, readable text files containing energy values versus k
   filband = 'diamond_bands.dat'
 /
 ```
-The meaning of each tag is described in the [BANDS Input Description](https://www.quantum-espresso.org/Doc/INPUT_BANDS.html). An example of this calculation can be found in the [band_pp folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/band_pp). The input file can be executed using the following command:
+The meaning of each tag is described in the [BANDS Input Description](https://www.quantum-espresso.org/Doc/INPUT_BANDS.html). An example of this calculation can be found in the [band_pp folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/band_pp). The input file can be executed using the following command:
 ```bash
 bands.x -i diamond_bands_pp.in > diamond_bands_pp.out
 ```
@@ -433,7 +433,7 @@ mpirun -np 20 bands.x -inp diamond_bands_pp.in > diamond_bands_pp.out
 ```
 where **20** represents the number of CPU cores used for the calculation. In addition, the band structure diagram can be plotted using the [bandplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/bandplot.py) script.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/band_pp/diamond_bands.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/band_pp/diamond_bands.png)
 
 ## 1.9. Electronic charge density
 The aim of the charge density extraction is to convert raw, internal binary electronic data into a readable, spatial 3D grid format. This type of calculation can be performed by setting up the input file as follows:
@@ -449,7 +449,7 @@ The aim of the charge density extraction is to convert raw, internal binary elec
     fileout='diamond_chg_3d.xsf'
 /
 ```
-The meaning of each tag is described in the [PP Input Description](https://www.quantum-espresso.org/Doc/INPUT_PP.html). An example of this calculation can be found in the [chg_3d folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/PBE/properties/chg_3d). The input file can be executed using the following command:
+The meaning of each tag is described in the [PP Input Description](https://www.quantum-espresso.org/Doc/INPUT_PP.html). An example of this calculation can be found in the [chg_3d folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/chg_3d). The input file can be executed using the following command:
 ```bash
 pp.x -i diamond_chg_3d.in > diamond_chg_3d.out
 ```
@@ -457,11 +457,11 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 pp.x -inp diamond_chg_3d.in > diamond_chg_3d.out
 ```
-where **20** represents the number of CPU cores used for the calculation. In addition, the 3D charge density can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software along with the [diamond_chg_3d.xsf](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/PBE/properties/chg_3d/diamond_chg_3d.xsf) file.
+where **20** represents the number of CPU cores used for the calculation. In addition, the 3D charge density can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software along with the [diamond_chg_3d.xsf](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/chg_3d/diamond_chg_3d.xsf) file.
 
 # 2. HSE06 functional
 ## 2.1. Workflow
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Figures/QE_workflow_hse06.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Figures/QE_workflow_hse06.png)
 
 ## 2.2. Convergence tests
 ### 2.2.1. From convergence tests with PBE functional
@@ -531,9 +531,9 @@ ATOMIC_POSITIONS (crystal)
 C  -0.0000000000       -0.0000000000       -0.0000000000
 C   0.2503890466        0.2503890466        0.2503890466
 ```
-An example of these calculations can be found in the [q-points folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/convergence/q-points). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
+An example of these calculations can be found in the [q-points folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/convergence/q-points). As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/HSE06/convergence/q-points/bandgap.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/convergence/q-points/bandgap.png)
 
 The plateauing pattern is typical of the q-point mesh convergence and indicates that the q-point mesh should be chosen using divisors of the k-point mesh. This behavior can be observed in the previous figure. For the diamond calculation, since **k = 8**, the q-point mesh should be chosen using its divisors, namely **q = 1, 2, 4**, and **8**. However, for this example, we have chosen to use **q = 3**, i.e., a **3x3x3** q-point mesh.
 
@@ -605,7 +605,7 @@ C   0.2503890466        0.2503890466        0.2503890466
 ```
 🔔**Reminder:** Variable-cell relaxation (**vc-relax**) is not supported for hybrid functionals in the pw.x code of Quantum ESPRESSO. While ionic relaxation (**relax**) and forces can be computed with hybrid functionals, the analytical stress tensor required for changing cell parameters (**vc-relax**) has not been implemented for exact-exchange/hybrid calculations in pw.x. Therefore, **vc-relax** and **relax** calculations only work with NC pseudopotentials.
 
-After running the calculation, it is important to extract the lattice parameters of the relaxed system. This can be done using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. For our example, the diamond calculation, this information can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/relax).
+After running the calculation, it is important to extract the lattice parameters of the relaxed system. This can be done using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. For our example, the diamond calculation, this information can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/relax).
 
 ## 2.4. Self-Consistent Field (SCF) calculation
 At this point, the lattice parameters obtained from the **relaxation calculation** must be used. This type of calculation can be performed by setting up the input file as follows:
@@ -665,17 +665,17 @@ ATOMIC_POSITIONS (crystal)
 C  -0.0000000000       -0.0000000000       -0.0000000000
 C   0.2503890466        0.2503890466        0.2503890466
 ```
-An example of this calculation can be found in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/scf). The total energy and band gap can be extracted using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) and [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) scripts.
+An example of this calculation can be found in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/scf). The total energy and band gap can be extracted using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) and [qe_gap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_gap.py) scripts.
 
 ## 2.5. Density Of States (DOS) calculation
-This type of calculation can be performed in the same way as the PBE calculation. An example of this calculation can be found in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/dos).
+This type of calculation can be performed in the same way as the PBE calculation. An example of this calculation can be found in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/dos).
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/HSE06/properties/dos/diamond_dos.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/dos/diamond_dos.png)
 
 ## 2.6. Projected Density Of States (PDOS) calculation
-This type of calculation can be performed in the same way as the PBE calculation. An example of this calculation can be found in the [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/pdos).
+This type of calculation can be performed in the same way as the PBE calculation. An example of this calculation can be found in the [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/pdos).
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/HSE06/properties/pdos/diamond_pdos-C-atom_1.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/pdos/diamond_pdos-C-atom_1.png)
 
 ## 2.7. Band structure calculation
 Hybrid functional band structure calculations are expensive in Quantum ESPRESSO because exact exchange (Hartree-Fock) evaluation is computationally heavy, non-SCF band steps are unsupported, and dense meshes are required. A standard and efficient way to calculate band structures using hybrid functionals is through [Wannier90](https://wannier90.readthedocs.io/en/latest/user_guide/introduction/). This type of calculation can be performed by setting up the input files as follows:
@@ -688,7 +688,7 @@ Because Quantum ESPRESSO cannot run an NSCF step with hybrid functionals, **open
   outdir = '../tmp'
 /
 ```
-An example of this calculation can be found in the [open_grid folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/open_grid). The input file can be executed using the following command:
+An example of this calculation can be found in the [open_grid folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/open_grid). The input file can be executed using the following command:
 ```bash
 open_grid.x -i diamond_open_grid.in > diamond_open_grid.out
 ```
@@ -768,7 +768,7 @@ begin kpoints
    -0.125000000000000   -0.125000000000000   -0.125000000000000    0.0019531250
 end kpoints
 ```
-Note that the section copied in the previous step should be pasted into the **begin kpoints** section. This calculation generates a **.nnkp** file, which specifies the wavefunctions and overlap matrices that Quantum ESPRESSO must compute for the subsequent Wannier90 calculations. An example of this calculation can be found in the [win-1 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/win-1). The input file can be executed using the following command:
+Note that the section copied in the previous step should be pasted into the **begin kpoints** section. This calculation generates a **.nnkp** file, which specifies the wavefunctions and overlap matrices that Quantum ESPRESSO must compute for the subsequent Wannier90 calculations. An example of this calculation can be found in the [win-1 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/win-1). The input file can be executed using the following command:
 ```bash
 wannier90.x -pp diamond.win
 ```
@@ -795,7 +795,7 @@ The aim of this calculation is to translate the raw quantum mechanical data into
 ```bash
 cp -r ../win-1/diamond.nnkp .
 ```
-This calculation generates the **.eig**, **amn**, and **mmn** files. The **.mmn** and **.amn** files only contain information about the shapes and overlaps of your wavefunctions. Wannier90 needs the **.eig** file to know the actual energies associated with those wavefunctions. An example of this calculation can be found in the [pw2wannier folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/pw2wannier). The input file can be executed using the following command:
+This calculation generates the **.eig**, **amn**, and **mmn** files. The **.mmn** and **.amn** files only contain information about the shapes and overlaps of your wavefunctions. Wannier90 needs the **.eig** file to know the actual energies associated with those wavefunctions. An example of this calculation can be found in the [pw2wannier folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/pw2wannier). The input file can be executed using the following command:
 ```bash
 pw2wannier90.x -in diamond_pw2wan.in > diamond_pw2wan.out
 ```
@@ -812,7 +812,7 @@ The **.eig**, **amn**, and **mmn** files from the previous calculation must be c
 ```bash
 cp -r ../pw2wannier/diamond.eig ../pw2wannier/diamond.amn ../pw2wannier/diamond.mmn .
 ```
-An example of this calculation can be found in the [win-2 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/win-2). The input file can be executed using the following command:
+An example of this calculation can be found in the [win-2 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/win-2). The input file can be executed using the following command:
 ```bash
 wannier90.x diamond.win
 ```
@@ -822,7 +822,7 @@ mpirun -np 1 wannier90.x diamond.win
 ```
 where **1** represents the number of CPU cores used for the calculation. The band structure diagram can be plotted using the [bandplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/bandplot.py) script.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Calculations/HSE06/properties/win-2/diamond_bands_hse.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/win-2/diamond_bands_hse.png)
 
 ## 1.9. Electronic charge density
-This type of calculation can be performed in the same way as the PBE calculation. An example of this calculation can be found in the [chg_3d folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Calculations/HSE06/properties/chg_3d).
+This type of calculation can be performed in the same way as the PBE calculation. An example of this calculation can be found in the [chg_3d folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/chg_3d).
