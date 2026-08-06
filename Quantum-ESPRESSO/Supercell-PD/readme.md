@@ -40,6 +40,11 @@ $$
 \mu_{B} = \mu^{elemental}_{B} + \mu^{\ast}_{B}.
 $$
 
+and where:
+$$
+\mu^{elemental}_{A} = \frac{E_{A}}{N_{A}},
+$$
+
 Therefore,
 
 $$
