@@ -61,5 +61,10 @@ $$
 \Delta H_{f}(AB) < 0
 $$
 
+Furthermore:
+
+$$
+\Delta H_{f}(AB) = \mu_{AB} - \mu^{elemental}_{A} - \mu^{elemental}_{B}
+$$
 
 For our example, due that the host material (diamond) only is compoud by one atomic species 
