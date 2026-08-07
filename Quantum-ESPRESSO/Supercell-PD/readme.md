@@ -67,10 +67,23 @@ $$
 Furthermore:
 
 $$
-\Delta H_{f}(AB) = \mu_{AB} - \mu^{elemental}_{A} - \mu^{elemental}_{B}
+\Delta H_{f}(AB) = \mu_{AB} - \mu^{elemental}_{A} - \mu^{elemental}_{B}.
 $$
 
-Under A-rich condition ---> $$\mu_{A} = \mu^{elemental}_{A}$$
+Under A-rich condition, when $$\mu_{A} = \mu^{elemental}_{A}$$. Then,
+
+$$
+\mu_{B} = \mu_{AB} - \mu^{elemental}_{A}.
+$$
+
+So, replacing:
+
+$$
+\mu^{\ast}_{A} = 0,
+$$
+$$
+\mu^{\ast}_{B} = \mu_{AB} - \mu^{elemental}_{A} - \mu^{elemental}_{B}.
+$$
 
 **Example: For cubic Boron Nitrogen (c-BN)**
 
