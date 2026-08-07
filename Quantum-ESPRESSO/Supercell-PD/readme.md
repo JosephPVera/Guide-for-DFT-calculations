@@ -69,6 +69,6 @@ $$
 
 **Example: For cubic Boron Nitrogen (c-BN)**
 
-The total energy of c-BN is -17.451456 eV, whereas the total energies of rhombohedral (containing 12 atoms) and the nitrogen dimer (N$$_{2}$$) are -80.439555 eV and -16.633160 eV, respectively. 
+The total energy of c-BN is -17.451456 eV, whereas the total energies of rhombohedral (containing 12 atoms) and the nitrogen dimer (N$_{2}$) are -80.439555 eV and -16.633160 eV, respectively. 
 
 For our example, due that the host material (diamond) only is compoud by one atomic species 
