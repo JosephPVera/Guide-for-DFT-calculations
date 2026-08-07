@@ -88,10 +88,40 @@ $$
 Formation enthalpy of c-BN
 
 $$
-\Delta H_{f}(AB) = \mu_{BN} - \mu^{elemental}_{B} - \mu^{elemental}_{N} = -17.451456 - (-17.451456) - (-8.316580) = -2.431580 eV
+\Delta H_{f}(AB) = \mu_{BN} - \mu^{elemental}_{B} - \mu^{elemental}_{N} = -17.451456 - (-6.703296) - (-8.316580) = -2.431580 eV
 $$
 
+Thermodynamic condition: The chemical potentials satisfy,
+$$
+\mu_{B} = \mu^{elemental}_{B} + \mu^{\ast}_{B},
+$$
+$$
+\mu_{N} = \mu^{elemental}_{N} + \mu^{\ast}_{N}.
+$$
 
+gives
+
+$$
+\mu^{\ast}_{B} + \mu^{\ast}_{N} = -2.431580 eV.
+$$
+
+Under B-rich limit:
+
+$$
+\mu^{\ast}_{B} = 0,
+$$
+$$
+\mu^{\ast}_{N} = -2.431580 eV.
+$$
+
+Under N-rich limit:
+
+$$
+\mu^{\ast}_{N} = 0,
+$$
+$$
+\mu^{\ast}_{B} = -2.431580 eV.
+$$
 
 
 
