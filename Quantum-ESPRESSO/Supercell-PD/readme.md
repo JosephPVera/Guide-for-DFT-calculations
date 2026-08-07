@@ -71,4 +71,24 @@ $$
 
 The total energy of c-BN is -17.451456 eV, whereas the total energies of rhombohedral $$\alpha$$-boron (containing 12 atoms) and the nitrogen dimer (N2) are -80.439555 eV and -16.633160 eV, respectively. 
 
+The elemental boron chemical potential is:
+
+$$
+\mu^{elemental}_{B} = \frac{E_{B}}{N_{B}} = \frac{-80.439555}{12} = -6.703296 eV/atom
+$$
+
+while the elemental nitrogen chemical potential is:
+
+$$
+\mu^{elemental}_{N} = \frac{E_{N}}{N_{N}} = \frac{-16.633160}{2} = -8.316580 eV/atom
+$$
+
+
+
+
+
+
+
+
+
 For our example, due that the host material (diamond) only is compoud by one atomic species 
