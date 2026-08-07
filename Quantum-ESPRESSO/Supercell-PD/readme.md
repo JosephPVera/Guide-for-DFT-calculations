@@ -70,6 +70,8 @@ $$
 \Delta H_{f}(AB) = \mu_{AB} - \mu^{elemental}_{A} - \mu^{elemental}_{B}
 $$
 
+Under A-rich condition ---> $$\mu_{A} = \mu^{elemental}_{A}$$
+
 **Example: For cubic Boron Nitrogen (c-BN)**
 
 The total energy of c-BN is -17.451456 eV, whereas the total energies of rhombohedral $$\alpha$$-boron (containing 12 atoms) and the nitrogen dimer (N2) are -80.439555 eV and -16.633160 eV, respectively. 
