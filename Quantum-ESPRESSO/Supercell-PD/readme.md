@@ -41,6 +41,7 @@ $$
 $$
 
 and where:
+
 $$
 \mu_{AB} = E_{AB}
 $$
