@@ -41,7 +41,9 @@ $$
 $$
 
 and where:
-
+$$
+\mu_{AB} = E_{AB}
+$$
 $$
 \mu^{elemental}_{A} = \frac{E_{A}}{N_{A}},
 $$
@@ -83,6 +85,11 @@ $$
 \mu^{elemental}_{N} = \frac{E_{N}}{N_{N}} = \frac{-16.633160}{2} = -8.316580 eV/atom
 $$
 
+Formation enthalpy of c-BN
+
+$$
+\Delta H_{f}(AB) = \mu_{BN} - \mu^{elemental}_{B} - \mu^{elemental}_{N} = -17.451456 - (-17.451456) - (-8.316580) = -2.431580 eV
+$$
 
 
 
