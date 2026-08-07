@@ -92,6 +92,7 @@ $$
 $$
 
 Thermodynamic condition: The chemical potentials satisfy,
+
 $$
 \mu_{B} = \mu^{elemental}_{B} + \mu^{\ast}_{B},
 $$
