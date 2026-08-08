@@ -146,7 +146,7 @@ $$
 \end{equation}
 $$
 
-For our example, since the host material (diamond) is composed of only one atomic species (carbon), the elemental chemical potentials will be used. The total energy for diamond can be extract from the [C folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/scf), while for nitrogen a nitrogen dimer (N2) is used and its total energy can be extract from the [N folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/cpd/N/scf).
+For our example, since the host material (diamond) is composed of only one atomic species (carbon), the elemental chemical potentials will be used. The total energy of diamond can be extracted from the [C folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/scf), while the total energy of nitrogen is obtained using a nitrogen dimer (N2), whose total energy can be extracted from the [N folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/cpd/N/scf).
 
 ## 1.3. Working with Supercells
 ### 1.3.1. Convergence tests
