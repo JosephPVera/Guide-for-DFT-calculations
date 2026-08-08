@@ -25,6 +25,7 @@ where:
 
 $$
 \mu_{A} = \mu^{elemental}_{A} + \mu^{\ast}_{A},
+\tag{2}
 $$
 $$
 \mu_{B} = \mu^{elemental}_{B} + \mu^{\ast}_{B}.
