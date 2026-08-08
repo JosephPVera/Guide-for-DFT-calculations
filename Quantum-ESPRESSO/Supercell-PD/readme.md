@@ -138,16 +138,15 @@ $$
 Under N-rich limit:
 
 $$
-\mu^{\ast}_{N} = 0 \hspace{5cm} \tag{1}
+\mu^{\ast}_{N} = 0,
 $$
-
 $$
 \begin{equation}
 \mu^{\ast}_{B} = -2.431580  eV.
 \end{equation}
 $$
 
-For our example, due that the host material (diamond) only is compoud by one atomic species (carbon) the elemental chemical potentials will be used.  
+For our example, since the host material (diamond) is composed of only one atomic species (carbon), the elemental chemical potentials will be used. The total energy for diamond can be extract from the , while for nitrogen a nitrogen dimer (N2) is used and its total energy can be extract from the 
 
 ## 1.3. Working with Supercells
 ### 1.3.1. Convergence tests
