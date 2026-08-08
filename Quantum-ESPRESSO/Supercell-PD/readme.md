@@ -138,7 +138,7 @@ $$
 Under N-rich limit:
 
 $$
-\mu^{\ast}_{N} = 0 \tag{1}
+\mu^{\ast}_{N} = 0 \hspace{5cm} \tag{1}
 $$
 
 $$
