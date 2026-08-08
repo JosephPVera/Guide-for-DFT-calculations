@@ -149,7 +149,7 @@ $$
 **Diamond:** For our example, since the host material is composed of only one atomic species (carbon), the elemental chemical potentials will be used. The total energy of diamond can be extracted from the [C folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/scf), while the total energy of nitrogen is obtained using a nitrogen dimer (N2), whose total energy can be extracted from the [N folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/cpd/N/scf). Therefore:
 
 $$
-\mu^{elemental}_{C} = \frac{E_{C}}{N_{C}} = \frac{-16.633160}{2} = -8.316580 &  eV/atom
+\mu^{elemental}_{C} = \frac{E_{C}}{N_{C}} = \frac{-16.633160}{2} = -8.316580 \&  eV/atom
 $$
 
 $$
