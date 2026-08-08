@@ -96,19 +96,19 @@ The total energy of c-BN is -17.451456 eV, whereas the total energies of rhomboh
 The elemental boron chemical potential is:
 
 $$
-\mu^{elemental}_{B} = \frac{E_{B}}{N_{B}} = \frac{-80.439555}{12} = -6.703296  eV/atom
+\mu^{elemental}_{B} = \frac{E_{B}}{N_{B}} = \frac{-80.439555}{12} = -6.703296\ \mathrm{eV/atom}
 $$
 
 while the elemental nitrogen chemical potential is:
 
 $$
-\mu^{elemental}_{N} = \frac{E_{N}}{N_{N}} = \frac{-16.633160}{2} = -8.316580  eV/atom
+\mu^{elemental}_{N} = \frac{E_{N}}{N_{N}} = \frac{-16.633160}{2} = -8.316580\ \mathrm{eV/atom}
 $$
 
 Formation enthalpy of c-BN
 
 $$
-\Delta H_{f}(AB) = \mu_{BN} - \mu^{elemental}_{B} - \mu^{elemental}_{N} = -17.451456 - (-6.703296) - (-8.316580) = -2.431580  eV
+\Delta H_{f}(AB) = \mu_{BN} - \mu^{elemental}_{B} - \mu^{elemental}_{N} = -17.451456 - (-6.703296) - (-8.316580) = -2.431580\ \mathrm{eV/atom}
 $$
 
 Thermodynamic condition: The chemical potentials satisfy,
@@ -123,7 +123,7 @@ $$
 gives
 
 $$
-\mu^{\ast}_{B} + \mu^{\ast}_{N} = -2.431580  eV.
+\mu^{\ast}_{B} + \mu^{\ast}_{N} = -2.431580\ \mathrm{eV}.
 $$
 
 Under B-rich limit:
@@ -132,7 +132,7 @@ $$
 \mu^{\ast}_{B} = 0,
 $$
 $$
-\mu^{\ast}_{N} = -2.431580  eV.
+\mu^{\ast}_{N} = -2.431580\ \mathrm{eV}.
 $$
 
 Under N-rich limit:
@@ -142,18 +142,18 @@ $$
 $$
 $$
 \begin{equation}
-\mu^{\ast}_{B} = -2.431580  eV.
+\mu^{\ast}_{B} = -2.431580\ \mathrm{eV}.
 \end{equation}
 $$
 
 **Diamond:** For our example, since the host material is composed of only one atomic species (carbon), the elemental chemical potentials will be used. The total energy of diamond can be extracted from the [C folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/scf), while the total energy of nitrogen is obtained using a nitrogen dimer (N2), whose total energy can be extracted from the [N folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/cpd/N/scf). Therefore:
 
 $$
-\mu^{elemental}_{C} = \frac{E_{C}}{N_{C}} = \frac{-16.633160}{2} = -8.316580\ \mathrm{eV/atom}
+\mu^{elemental}_{C} = \frac{E_{C}}{N_{C}} = \frac{-36.86713357}{2} = −18.433566785\ \mathrm{eV/atom}
 $$
 
 $$
-\mu^{elemental}_{N} = \frac{E_{N}}{N_{N}} = \frac{-16.633160}{2} = -8.316580\ \mathrm{eV/atom}
+\mu^{elemental}_{N} = \frac{E_{N}}{N_{N}} = \frac{-56.43341769}{2} = −28.216708845\ \mathrm{eV/atom}
 $$
 
 ## 1.3. Working with Supercells
