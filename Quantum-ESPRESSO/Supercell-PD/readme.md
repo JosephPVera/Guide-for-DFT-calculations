@@ -19,7 +19,7 @@ Competing phases are essential in point defect calculations because they determi
 $$
 \begin{aligned}
 \mu_{AB} &= \mu_A + \mu_B
-&& \text{(1)}
+&&&&&&&&&& \text{(1)}
 \end{aligned}
 $$
 
