@@ -779,7 +779,7 @@ mpirun -np 1 wannier90.x -pp diamond.win
 where **1** represents the number of CPU cores used for the calculation.
 
 ### 2.7.3. pw2wannier calculation
-The aim of this calculation is to translate the raw quantum mechanical data into Wannier-readable formats. It computes the $$M_{mn}$$ overlap matrix (the overlap between Bloch states at neighboring k-points), and the $$A_{mn}$$ projection matrix (the overlap between your Bloch states and your chosen initial trial orbitals). This type of calculation can be performed by setting up the input file as follows:
+The aim of this calculation is to translate the raw quantum mechanical data into Wannier-readable formats. It computes the $$M_{mn}$$ overlap matrix (the overlap between Bloch states at neighboring k-points), and the $$A_{mn}$$ projection matrix (the overlap between the Bloch states and the chosen initial trial orbitals). This type of calculation can be performed by setting up the input file as follows:
 ```bash
 &INPUTPP
  prefix = 'diamond-HSE06_open'
