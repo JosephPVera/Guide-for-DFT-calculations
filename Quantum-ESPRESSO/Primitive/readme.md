@@ -342,7 +342,7 @@ where **20** represents the number of CPU cores used for the calculation. The PD
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/pdos/diamond_pdos-C-atom_1.png)
 
 ## 1.8. Band structure calculation
-The aim of the band structure calculation is to determine allowed electron energy levels along high-symmetry paths in reciprocal space, identifying whether a material is a metal, semiconductor, or insulator, and finding its fundamental band gap. This type of calculation can be performed by setting up the input file as follows:
+The aim of the band structure calculation is to determine allowed electron energy levels along high-symmetry paths in reciprocal space, identifying whether a material is a metal, semiconductor, or insulator, and finding its fundamental band gap. This type of calculation can be performed by following the next steps:
 
 ### 1.8.1. Bands calculation
 This step calculates the eigenvalues (Kohn–Sham energies) at specific k-points defined along the high-symmetry points of the First Brillouin zone, using the fixed potential. This type of calculation can be performed by setting up the input file as follows:
