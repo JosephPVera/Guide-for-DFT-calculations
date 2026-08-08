@@ -142,7 +142,7 @@ $$
 $$
 $$
 \begin{equation}
-\mu^{\ast}_{B} = -2.431580  eV.
+\mu^{\ast}_{B} = -2.431580  eV \tag{1}.
 \end{equation}
 $$
 
