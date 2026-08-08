@@ -138,11 +138,11 @@ $$
 Under N-rich limit:
 
 $$
-\mu^{\ast}_{N} = 0,
+\mu^{\ast}_{N} = 0, \tag{1}
 $$
 $$
 \begin{equation}
-\mu^{\ast}_{B} = -2.431580  eV \tag{1}.
+\mu^{\ast}_{B} = -2.431580  eV.
 \end{equation}
 $$
 
