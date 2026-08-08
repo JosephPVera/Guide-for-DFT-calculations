@@ -141,10 +141,12 @@ $$
 \mu^{\ast}_{N} = 0,
 $$
 $$
+\begin{equation}
 \mu^{\ast}_{B} = -2.431580  eV.
+\end{equation}
 $$
 
-For our example, due that the host material (diamond) only is compoud by one atomic species 
+For our example, due that the host material (diamond) only is compoud by one atomic species (carbon) the elemental chemical potentials will be used.  
 
 ## 1.3. Working with Supercells
 ### 1.3.1. Convergence tests
