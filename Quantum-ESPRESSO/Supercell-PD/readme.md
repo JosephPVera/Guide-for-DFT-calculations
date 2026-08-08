@@ -11,7 +11,7 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 # 1. PBE functional
 ---
 ## 1.1. Primitive Cell Calculations
-The steps to compute the properties for the primitive cell can be found in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive).
+The steps for computing the properties of the primitive cell can be found in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive).
 
 ## 1.2. Competing Phases
 Competing phases are essential in point defect calculations because they determine the allowed chemical potentials of the constituent elements. These chemical potentials directly enter the formation energy equation, so ignoring competing phases can lead to physically unrealistic predictions. For a material composed of two atomic species, such as A and B, thermodynamic equilibrium requires:
