@@ -17,9 +17,10 @@ The steps for computing the properties of the primitive cell can be found in the
 Competing phases are essential in point defect calculations because they determine the allowed chemical potentials of the constituent elements. These chemical potentials directly enter the formation energy equation, so ignoring competing phases can lead to physically unrealistic predictions. For a material composed of two atomic species, such as A and B, thermodynamic equilibrium requires:
 
 $$
-\begin{equation}
-\mu_{AB} = \mu_{A} + \mu_{B}, \tag{(1)}
-\end{equation}
+\begin{aligned}
+\mu_{AB} &= \mu_A + \mu_B
+&& \text{(1)}
+\end{aligned}
 $$
 
 where:
