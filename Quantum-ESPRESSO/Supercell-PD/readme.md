@@ -11,6 +11,7 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 # 1. PBE functional
 ---
 ## 1.1. Primitive Cell Calculations
+The steps to compute the properties for the primitive cell can be found in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive).
 
 ## 1.2. Competing Phases
 Competing phases are essential in point defect calculations because they determine the allowed chemical potentials of the constituent elements. These chemical potentials directly enter the formation energy equation, so ignoring competing phases can lead to physically unrealistic predictions. For a material composed of two atomic species, such as A and B, thermodynamic equilibrium requires:
@@ -148,7 +149,7 @@ For our example, due that the host material (diamond) only is compoud by one ato
 ## 1.3. Working with Supercells
 ### 1.3.1. Convergence tests
 #### 1.3.1.1. From convergence tests with the primitive cell
-The initial parameters for the subsequent calculations will be taken from the previous calculations, namely those performed using the primitive cell. Furthermore, the relaxed structure obtained with the PBE functional for the primitive cell will be used as the initial structure for constructing the supercells.For the diamond example, in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive), the converged values **ecutwfc = 45.0** and **ecutrho = 180.0** will be used.
+The initial parameters for the subsequent calculations will be taken from the previous calculations, namely those performed using the primitive cell. Furthermore, the relaxed structure obtained with the PBE functional for the primitive cell will be used as the initial structure for constructing the supercells. For the diamond example, in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive), the converged values **ecutwfc = 45.0** and **ecutrho = 180.0** will be used.
 
 #### 1.3.1.2. Supercell
 In this section, the relaxed primitive cell will be used to construct perfect and defective supercells of different sizes. In fact, the supercells will be constructed by simply repeating the primitive cell periodically along its lattice vectors. First, perfect supercells of different sizes (e.g.,1x1x1, 2x2x2, 3x3x3, and so on) will be constructed, depending on the crystal structure of the material. Then, these perfect supercells will be used to introduce simple defects, such as a single vacancy. Finally, the formation energy will be calculated for each case using the following equation:
