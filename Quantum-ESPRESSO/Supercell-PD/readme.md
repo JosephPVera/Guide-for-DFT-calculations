@@ -96,19 +96,19 @@ The total energy of c-BN is -17.451456 eV, whereas the total energies of rhomboh
 The elemental boron chemical potential is:
 
 $$
-\mu^{elemental}_{B} = \frac{E_{B}}{N_{B}} = \frac{-80.439555}{12} = -6.703296 eV/atom
+\mu^{elemental}_{B} = \frac{E_{B}}{N_{B}} = \frac{-80.439555}{12} = -6.703296  eV/atom
 $$
 
 while the elemental nitrogen chemical potential is:
 
 $$
-\mu^{elemental}_{N} = \frac{E_{N}}{N_{N}} = \frac{-16.633160}{2} = -8.316580 eV/atom
+\mu^{elemental}_{N} = \frac{E_{N}}{N_{N}} = \frac{-16.633160}{2} = -8.316580  eV/atom
 $$
 
 Formation enthalpy of c-BN
 
 $$
-\Delta H_{f}(AB) = \mu_{BN} - \mu^{elemental}_{B} - \mu^{elemental}_{N} = -17.451456 - (-6.703296) - (-8.316580) = -2.431580 eV
+\Delta H_{f}(AB) = \mu_{BN} - \mu^{elemental}_{B} - \mu^{elemental}_{N} = -17.451456 - (-6.703296) - (-8.316580) = -2.431580  eV
 $$
 
 Thermodynamic condition: The chemical potentials satisfy,
@@ -123,7 +123,7 @@ $$
 gives
 
 $$
-\mu^{\ast}_{B} + \mu^{\ast}_{N} = -2.431580 eV.
+\mu^{\ast}_{B} + \mu^{\ast}_{N} = -2.431580  eV.
 $$
 
 Under B-rich limit:
@@ -132,7 +132,7 @@ $$
 \mu^{\ast}_{B} = 0,
 $$
 $$
-\mu^{\ast}_{N} = -2.431580 eV.
+\mu^{\ast}_{N} = -2.431580  eV.
 $$
 
 Under N-rich limit:
@@ -141,7 +141,7 @@ $$
 \mu^{\ast}_{N} = 0,
 $$
 $$
-\mu^{\ast}_{B} = -2.431580 eV.
+\mu^{\ast}_{B} = -2.431580  eV.
 $$
 
 For our example, due that the host material (diamond) only is compoud by one atomic species 
