@@ -678,7 +678,7 @@ This type of calculation can be performed in the same way as the PBE calculation
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/properties/pdos/diamond_pdos-C-atom_1.png)
 
 ## 2.7. Band structure calculation
-Hybrid functional band structure calculations are expensive in Quantum ESPRESSO because exact exchange (Hartree-Fock) evaluation is computationally heavy, non-SCF band steps are unsupported, and dense meshes are required. A standard and efficient way to calculate band structures using hybrid functionals is through [Wannier90](https://wannier90.readthedocs.io/en/latest/user_guide/introduction/). This type of calculation can be performed by setting up the input files as follows:
+Hybrid functional band structure calculations are expensive in Quantum ESPRESSO because exact exchange (Hartree-Fock) evaluation is computationally heavy, non-SCF band steps are unsupported, and dense meshes are required. A standard and efficient way to calculate band structures using hybrid functionals is through [Wannier90](https://wannier90.readthedocs.io/en/latest/user_guide/introduction/). This type of calculation can be performed by following the next steps:
 
 ### 2.7.1. Open grid calculation
 Because Quantum ESPRESSO cannot run an NSCF step with hybrid functionals, **open_grid.x** serves as a synthetic NSCF step. It generates the full grid wavefunctions directly from converged SCF data without re-running any self-consistent loops. The main aim of the open grid calculation is to reconstruct and export wavefunctions onto the full, unreduced Brillouin zone grid. This type of calculation can be performed by setting up the input file as follows:
