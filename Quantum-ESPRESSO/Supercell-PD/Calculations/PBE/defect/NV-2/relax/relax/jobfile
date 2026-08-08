@@ -3,8 +3,8 @@
 #SBATCH --job-name=Joseph
 # Specify the number of nodes and the number of CPU's (tasks) per node:
 #SBATCH --nodes=1
-#SBATCH --ntasks=28
-#SBATCH -p medio
+#SBATCH --ntasks=24
+#SBATCH -p normal
 # Specify account. 
 !#SBATCH --account=
 # The maximum time allowed for the job, in hh:mm:ss

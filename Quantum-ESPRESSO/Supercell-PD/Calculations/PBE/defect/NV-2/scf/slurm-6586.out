@@ -1,10 +1,10 @@
-/var/spool/slurmd/job06515/slurm_script: line 9: !#SBATCH: command not found
+/var/spool/slurmd/job06586/slurm_script: line 9: !#SBATCH: command not found
 real-time non-blocking time  (microseconds, -R) unlimited
 core file size              (blocks, -c) unlimited
 data seg size               (kbytes, -d) unlimited
 scheduling priority                 (-e) 0
 file size                   (blocks, -f) unlimited
-pending signals                     (-i) 445453
+pending signals                     (-i) 505933
 max locked memory           (kbytes, -l) unlimited
 max memory size             (kbytes, -m) 114688000
 open files                          (-n) 1024

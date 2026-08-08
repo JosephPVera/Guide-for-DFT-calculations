@@ -1,5 +1,5 @@
 
-     Program POST-PROC v.7.4.1 starts on  6Aug2026 at  6:50:48 
+     Program POST-PROC v.7.4.1 starts on  8Aug2026 at 22:58:58 
 
      This program is part of the open-source Quantum ESPRESSO suite
      for quantum simulation of materials; please cite
@@ -14,7 +14,7 @@
 
      MPI processes distributed on     1 nodes
      R & G space division:  proc/nbgrp/npool/nimage =       4
-     22408 MiB available memory on the printing compute node when the environment starts
+     16746 MiB available memory on the printing compute node when the environment starts
 
 
      Reading xml data from directory:
@@ -49,10 +49,10 @@
      Writing data to be plotted to file diamond_pd_chg_3d.xsf
      Plot Type: 3D                     Output format: XCrySDen     
 
-     POST-PROC    :      6.91s CPU      6.85s WALL
+     POST-PROC    :     12.65s CPU     13.48s WALL
 
 
-   This run was terminated on:   6:50:55   6Aug2026            
+   This run was terminated on:  22:59:11   8Aug2026            
 
 =------------------------------------------------------------------------------=
    JOB DONE.

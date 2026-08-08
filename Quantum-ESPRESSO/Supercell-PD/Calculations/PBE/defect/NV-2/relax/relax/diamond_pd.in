@@ -19,9 +19,9 @@
   ntyp = 2,
   ecutwfc = 45.0,
   ecutrho = 180.0,
-  occupations = 'fixed',
-  !smearing    = 'gaussian'
-  !degauss     = 0.005
+  occupations = 'smearing',
+  smearing    = 'gaussian'
+  degauss     = 0.005
   nspin       = 2
   !starting_magnetization(1) = 0.0
   !starting_magnetization(2) = 0.1
@@ -31,8 +31,8 @@
 /
 
 &ELECTRONS
-  conv_thr = 1.0d-6,
-  electron_maxstep = 200,
+  conv_thr = 1.0d-8,
+  electron_maxstep = 100,
   mixing_beta = 0.7,
   mixing_mode = 'plain',
   scf_must_converge = .TRUE.,
