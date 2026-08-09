@@ -454,7 +454,7 @@ If the calculations are performed using only the Gamma point, the NSCF calculati
 ```bash
 calculation = 'nscf'
 ```
-Once the calculation is done, the Kohn-Sham level diagram can be plotted using the [qe_eig.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_eig.py) script. 
+Once the calculation is done, the Kohn-Sham level diagram can be plotted using the [qe_eig.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_eig.py) script. In this script, the VBM and CBM values must always be entered manually.
 
 🔔**Reminder:** As mentioned previously, this calculation is not necessary when using only the Gamma point. Therefore, the Kohn–Sham level diagram should already be obtained from the SCF calculation.
 
@@ -462,7 +462,26 @@ An example for NV-3 can be found in the [nscf folder](https://github.com/JosephP
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/nscf/eigenplot_qe.png)
 
+#### 1.3.2.5. Projected Density of States (PDOS) calculation
+The PDOS calculation is used to determine how localized a state is. The input file must be set up as follows:
+```bash
+&PROJWFC
+  prefix = 'diamond_pd',
+  outdir = '../tmp/',
+  filpdos= 'diamond_pd_pdos.dat',
+  DeltaE = 0.02,
+  Emax = 50,
+  Emin = -50,
+  degauss = 0.007,
+  ngauss = 0,
+  lsym = .TRUE.,
+/
+```
+Once the calculation is done, information about the orbitals with the largest contributions to each state can be obtained for each band and spin channel using the [qe_loc.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_loc.py) script. Furthermore, the Localization factor diagram can be plotted using the [qe_locplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_locplot.py) script. In this last script, the VBM and CBM values must always be entered manually.
 
+An example for NV-3 can be found in the [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/pdos).
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/pdos/eigenplot_localization.png)
 
 
 
