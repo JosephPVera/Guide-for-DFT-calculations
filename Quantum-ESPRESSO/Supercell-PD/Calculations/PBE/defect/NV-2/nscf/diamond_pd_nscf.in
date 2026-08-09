@@ -23,8 +23,6 @@
   smearing    = 'gaussian'
   degauss     = 0.005
   nspin       = 2
-  !starting_magnetization(1) = 0.0
-  !starting_magnetization(2) = 0.1
   tot_magnetization = 1.0
   nbnd = 863,
   tot_charge = -2.0
