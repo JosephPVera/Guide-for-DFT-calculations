@@ -297,7 +297,7 @@ This shows a list of data for each step, such as:
      total magnetization       =    -0.00 Bohr mag/cell
      total magnetization       =    -0.00 Bohr mag/cell
 ```
-The last value corresponds to the correct total magnetization and will be used in the subsequent calculations. An example can be found in the [NV-3 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/relax/mag_scf).
+The last value corresponds to the correct total magnetization and will be used in the subsequent calculations. An example for NV-3 can be found in the [mag_scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/relax/mag_scf).
 
 #### 1.3.2.2. Relaxation
 In this calculation, the system will be relaxed using the total magnetization obtained previously. This relaxation optimizes only the atomic positions within the supercell. For this purpose, the input file must be set up as follows:
@@ -364,7 +364,20 @@ C     0.000000000         0.000000000         0.333333333
 C     0.750129682         0.916796349         0.916796349
 N     0.416796349         0.416796349         0.416796000  
 ```
-Since the total magnetization is fixed using the **tot_magnetization** tag, **occupations = 'fixed'** must be used. Once the calculation is complete, the relaxed structure can be extracted using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script.
+Since the total magnetization is fixed using the **tot_magnetization** tag, **occupations = 'fixed'** must be used. Once the calculation is complete, the relaxed structure can be extracted using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. The data will be displayed as follows:
+```bash
+ATOMIC_POSITIONS (crystal)
+C                0.0001701107        0.0000647539        0.0000647542
+C                0.0002602508        0.0003236124        0.3334611078
+                          .
+                          .
+                          .
+C                0.7500026446        0.9166624631        0.9166624627
+N                0.4247437727        0.4087117851        0.4087117899
+End final coordinates
+```
+An example for NV-3 can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/relax/relax).
+
 
 
 
