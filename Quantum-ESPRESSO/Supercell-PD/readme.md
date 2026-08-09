@@ -547,7 +547,9 @@ Then, to gather important information such as the chemical potentials, total ene
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Figures/formation_energy.png)
 
-🔔**Reminder:** Energy corrections have not yet been included.
+Including the energy corrections:
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Figures/formation_energy-corrections.png)
 
 ---
 # 2. HSE06 functional
