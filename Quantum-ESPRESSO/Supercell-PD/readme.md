@@ -523,7 +523,7 @@ The main artifact of the supercell approach for point-defect calculations consis
   <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Figures/finite-size-correction.png" alt="Descripción de la imagen">
 </p>
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Figures/finite-size-correction.png)
+As mentioned previously, the output information from the potential **calculation** is relevant for computing the energy corrections. In addition, the dielectric constant is also required for this calculation. To compute these energy corrections, the [sxdefectalign](https://sxrepo.mpie.de/projects/sphinx-add-ons/files) software will be used.
 
 ### 1.3.4. Formation energy diagram
 Then, to gather important information such as the chemical potentials, total energies, charge states, energy of the valence band maximum, and energy corrections, the formation energy diagram can be plotted. 
