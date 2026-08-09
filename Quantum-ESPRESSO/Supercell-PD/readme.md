@@ -157,7 +157,9 @@ $$
 $$
 
 ## 1.3. Working with Supercells
+
 ### 1.3.1. Convergence tests
+
 #### 1.3.1.1. From convergence tests with the primitive cell
 The initial parameters for the subsequent calculations will be taken from the previous calculations, namely those performed using the primitive cell. Furthermore, the relaxed structure obtained with the PBE functional for the primitive cell will be used as the initial structure for constructing the supercells. For the diamond example, in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive), the converged values we found were **ecutwfc = 45.0** and **ecutrho = 180.0**.
 
@@ -173,10 +175,91 @@ Taking into account that, for this simple calculation, the defects will be consi
 ### 1.3.2. Point Defects
 Now the optimal supercell has been chosen, the defect to be studied can be introduced into the system. Once this is done, we will have two systems: the perfect supercell and the defective supercell. A folder will be created for the perfect supercell, such as [perfect folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/perfect). On the other hand, separate folders will be created for the defective supercell, each corresponding to a different charge state (e.g., -q, ..., -1, 0, +1, ..., +q).
 
-**Diamond**: For our example, different folders has been created such as [NV folders](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect).
+**NV center in Diamond**: For our example, separate folders have been created for the different charge states, as shown in the [defect folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect).
 ```bash
 mkdir NV{-3..2..1}
 ```
+
+Once this is done, each system with its respective charge state must follow the steps below:
+
+#### 1.3.2.1. Magnetization SCF
+The aim of this calculation is to determine the total magnetization of the system through a self-consistent field (SCF) calculation. For this purpose, the input file must be set up as follows:
+```bash
+&CONTROL
+  calculation = 'scf',
+  prefix      = 'diamond_pd',
+  outdir      = './tmp/',
+  pseudo_dir  = '../../../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 5.0d-4,
+  etot_conv_thr = 1.0d-4,
+  restart_mode = 'from_scratch',
+  nstep         = 140,
+  disk_io = 'low',
+/
+
+&SYSTEM
+  ibrav =  0,
+  nat  = 215,
+  ntyp = 2,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+  occupations = 'smearing',
+  smearing    = 'gaussian'
+  degauss     = 0.001
+  nspin       = 2
+  starting_magnetization(1) = 0.0
+  starting_magnetization(2) = 0.1
+  nbnd = 863
+  tot_charge = -2.0
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8,
+  electron_maxstep = 100,
+  mixing_beta = 0.7,
+  mixing_mode = 'plain',
+  scf_must_converge = .TRUE.,
+  startingwfc = 'random',
+/
+
+ATOMIC_SPECIES
+  C  12.0107 C.pbe-n-kjpaw_psl.1.0.0.UPF
+  N  14.0067 N.pbe-n-kjpaw_psl.1.0.0.UPF
+
+K_POINTS (automatic)
+1 1 1 0 0 0
+  
+CELL_PARAMETERS {angstrom}
+  -7.5777929652         0.0000000000         7.5777929652
+   4.3750408084         8.7500816165         4.3750408084
+  -6.1872420470         6.1872420472        -6.1872420470
+
+ATOMIC_POSITIONS (crystal)
+C     0.000000000         0.000000000         0.000000000
+C     0.000000000         0.000000000         0.333333333
+                          .
+                          .
+                          .
+C     0.750129682         0.916796349         0.916796349
+N     0.416796349         0.416796349         0.416796000 
+```
+For this calculation, it is important to use the following tags:
+```bash
+  occupations = 'smearing',
+  smearing    = 'gaussian'
+  degauss     = 0.001
+  nspin       = 2
+  starting_magnetization(1) = 0.0
+  starting_magnetization(2) = 0.1
+```
+This is because the **occupations = smearing** tag allows the software to determine the total magnetization that minimizes the total energy of the system. Furthermore, a useful rule of thumb for determining the number of bands (**nbnd**) is to calculate the number of valence electrons, divide it by 2, and multiply the result by 1.5. For our case, NV center in diamond, the number of bands should be:
+
+$$
+nbnd = \frac{N_{C}\times \text{(valence electrons of carbon)} + N_{N}\times \text{(valence electrons of nitrogen)}}{2}\times 1.5 = \frac{214\times 4 + 1\times 5}{2}\times 1.5
+$$
 
 
 
