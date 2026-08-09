@@ -255,7 +255,7 @@ For this calculation, it is important to use the following tags:
   starting_magnetization(1) = 0.0
   starting_magnetization(2) = 0.1
 ```
-This is because the **occupations = smearing** tag allows the software to determine the total magnetization that minimizes the total energy of the system. Furthermore, a useful rule of thumb for determining the number of bands (**nbnd**) is to calculate the number of valence electrons, divide it by 2, and multiply the result by 1.5. 
+This is because the **occupations = 'smearing'** tag allows the software to determine the total magnetization that minimizes the total energy of the system. Furthermore, a useful rule of thumb for determining the number of bands (**nbnd**) is to calculate the number of valence electrons, divide it by 2, and multiply the result by 1.5. 
 
 $$
 nbnd = \frac{N_{C}\times \text{(valence electrons of carbon)} + N_{N}\times \text{(valence electrons of nitrogen)}}{2}\times 1.5.
@@ -324,11 +324,7 @@ In this calculation, the system will be relaxed using the total magnetization ob
   ecutwfc = 45.0,
   ecutrho = 180.0,
   occupations = 'fixed',
-  !smearing    = 'gaussian'
-  !degauss     = 0.005
   nspin       = 2
-  !starting_magnetization(1) = 0.0
-  !starting_magnetization(2) = 0.1
   tot_magnetization = 0.0
   nbnd = 864
   tot_charge = -3.0
@@ -368,7 +364,7 @@ C     0.000000000         0.000000000         0.333333333
 C     0.750129682         0.916796349         0.916796349
 N     0.416796349         0.416796349         0.416796000  
 ```
-
+Since the total magnetization is fixed using the **tot_magnetization** tag, **occupations = 'fixed'** must be used. Once the calculation is complete, the relaxed structure can be extracted using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script.
 
 
 
