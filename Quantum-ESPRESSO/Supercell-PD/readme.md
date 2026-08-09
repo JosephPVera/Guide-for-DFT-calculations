@@ -523,7 +523,20 @@ The main artifact of the supercell approach for point-defect calculations consis
   <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Figures/finite-size-correction.png" alt="Descripción de la imagen">
 </p>
 
-As mentioned previously, the output information from the potential **calculation** is relevant for computing the energy corrections. In addition, the dielectric constant is also required for this calculation. To compute these energy corrections, the [sxdefectalign](https://sxrepo.mpie.de/projects/sphinx-add-ons/files) software will be used.
+As mentioned previously, the output information from the **potential calculation** is relevant for computing the energy corrections. In addition, the **dielectric constant** is also required for this calculation. To compute these energy corrections, the [sxdefectalign](https://sxrepo.mpie.de/projects/sphinx-add-ons/files) software will be used.
+
+**NV center in diamond:** For our example, the information has been processing in the [Finite_Size_correction folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/Finite_Size_correction). The following energy corrections were obtained:
+
+<div align="center">
+| Charge State | Energy Correction (meV) |
+|:------------:| :----------------------:|
+|   -3         |       1400.70           | 
+|   -2         |       535.632           |
+|   -1         |       54.2815           |
+|    0         |           0.0           |
+|   +1         |       297.506           |
+|   +2         |       1053.18           |
+</div>
 
 ### 1.3.4. Formation energy diagram
 Then, to gather important information such as the chemical potentials, total energies, charge states, energy of the valence band maximum, and energy corrections, the formation energy diagram can be plotted. 
