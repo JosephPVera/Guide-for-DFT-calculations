@@ -269,4 +269,31 @@ $$
 
 However, for the purposes of this example and testing, we decided to use a larger number of bands.
 
+Finally, the total magnetization of the system can be obtained using the following command:
+```bash
+grep "total magnetization" diamond_pd.out
+```
+This shows a list of data for each step, such as:
+```bash
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =     0.01 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =     0.00 Bohr mag/cell
+     total magnetization       =     0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+     total magnetization       =    -0.00 Bohr mag/cell
+```
+The last value corresponds to the correct total magnetization.
 
