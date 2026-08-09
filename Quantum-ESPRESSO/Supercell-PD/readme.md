@@ -484,7 +484,21 @@ An example for NV-3 can be found in the [pdos folder](https://github.com/JosephP
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/pdos/eigenplot_localization.png)
 
 
-
+#### 1.3.2.6. Electronic charge density
+This calculation can be performed by setting up the input file as follows:
+```bash
+&INPUTPP
+    prefix='diamond_pd'
+    outdir='../tmp'
+    plot_num=0
+/
+&PLOT
+    iflag=3
+    output_format=5
+    fileout='diamond_pd_chg_3d.xsf'
+/
+```
+The 3D charge density can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software along with the [diamond_pd_chg_3d.xsf](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/chg_3d/diamond_pd_chg_3d.xsf) file.
 
 
 
