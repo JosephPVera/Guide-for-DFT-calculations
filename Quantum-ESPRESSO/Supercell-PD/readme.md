@@ -299,7 +299,7 @@ This shows a list of data for each step, such as:
 ```
 The last value corresponds to the correct total magnetization and will be used in the subsequent calculations. An example for NV-3 can be found in the [mag_scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/relax/mag_scf).
 
-The spin state (S) can be determined from the total magnetization (M) using the following relation:
+The **spin state** (**S**) can be determined from the total **magnetization** (**M**) using the following relation:
 
 $$
 M = 2S
