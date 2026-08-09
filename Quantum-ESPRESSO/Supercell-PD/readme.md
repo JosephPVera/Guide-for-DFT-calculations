@@ -297,7 +297,7 @@ This shows a list of data for each step, such as:
      total magnetization       =    -0.00 Bohr mag/cell
      total magnetization       =    -0.00 Bohr mag/cell
 ```
-The last value corresponds to the correct total magnetization and will be used in the subsequent calculations. An example can be found in [NV-3 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/relax/mag_scf).
+The last value corresponds to the correct total magnetization and will be used in the subsequent calculations. An example can be found in the [NV-3 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/relax/mag_scf).
 
 #### 1.3.2.2. Relaxation
 In this calculation, the system will be relaxed using the total magnetization obtained previously. This relaxation optimizes only the atomic positions within the supercell. For this purpose, the input file must be set up as follows:
