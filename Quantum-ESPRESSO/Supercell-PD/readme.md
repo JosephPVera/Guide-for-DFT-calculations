@@ -514,9 +514,12 @@ This calculation can be performed by setting up the input file as follows:
     fileout='diamond_v_elec_defect.cube'
 /
 ```
-An example for NV-3 can be found in the
+This calculation will be important because it will help us compute the energy corrections. An example for NV-3 can be found in the [potential folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/potential).
 
-### 1.3.3. Formation energy diagram
+### 1.3.3. Finite-Size Correction
+The main artifact of the supercell approach for point-defect calculations consists in the introduction of periodic images of the defect located in the simulation cell. Such periodically-repeated array of defects corresponds to very high defect concentrations for commonly used supercell types. In such case, defect-defect interactions are large and can considerably affect the predicted formation energy of the point defect. Among the kinds of defect-defect interactions, electrostatic ones are never negligible for any practical supercell size. The study of point defects in the dilute limit then requires some scheme to correct for such spurious electrostatic interactions.
+
+### 1.3.4. Formation energy diagram
 Then, to gather important information such as the chemical potentials, total energies, charge states, energy of the valence band maximum, and energy corrections, the formation energy diagram can be plotted. 
 
 **NV center in diamond:** For our example, information such as the chemical potentials, total energies, charge states, and energy of the valence band maximum has been computed. However, energy corrections have not yet been included.
