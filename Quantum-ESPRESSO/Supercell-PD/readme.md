@@ -258,7 +258,10 @@ For this calculation, it is important to use the following tags:
 This is because the **occupations = smearing** tag allows the software to determine the total magnetization that minimizes the total energy of the system. Furthermore, a useful rule of thumb for determining the number of bands (**nbnd**) is to calculate the number of valence electrons, divide it by 2, and multiply the result by 1.5. For our case, NV center in diamond, the number of bands should be:
 
 $$
-nbnd = \frac{N_{C}\times \text{(valence electrons of carbon)} + N_{N}\times \text{(valence electrons of nitrogen)}}{2}\times 1.5 = \frac{214\times 4 + 1\times 5}{2}\times 1.5
+nbnd = \frac{N_{C}\times \text{(valence electrons of carbon)} + N_{N}\times \text{(valence electrons of nitrogen)}}{2}\times 1.5 
+$$
+$$
+nbnd = \frac{214\times 4 + 1\times 5}{2}\times 1.5 = 645.75 \approx 646
 $$
 
 
