@@ -170,3 +170,7 @@ Taking into account that, for this simple calculation, the defects will be consi
 
 **Diamond:** For our example, we will use a supercell containing 216 atoms (i.e., a 3x3x3 supercell).
 
+### 1.3.1. Point Defects
+Now the optimal supercell has been chosen, the defect to be studied can be introduced into the system.
+
+
