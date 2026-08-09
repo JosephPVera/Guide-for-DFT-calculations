@@ -447,9 +447,20 @@ C                0.0002602508        0.0003236124        0.3334611078
 C                0.7500026446        0.9166624631        0.9166624627
 N                0.4247437727        0.4087117851        0.4087117899
 ```
-Once the calculation is done, the total energy can be extract using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) script.
+Once the calculation is done, the total energy can be extract using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) script. An example for NV-3 can be found in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/scf).
 
+#### 1.3.2.4. Non-Self-Consistent Field (NSCF) calculation
+If the calculations are performed using only the Gamma point, the NSCF calculation is not necessary. However, this step is included here for testing purposes. The input file is similar to the one used for the SCF calculation, with only the **calculation** tag changed as follows:
+```bash
+calculation = 'nscf'
+```
+Once the calculation is done, the Kohn-Sham level diagram can be plotted using the [qe_eig.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_eig.py) script. 
 
+🔔**Reminder:** As mentioned previously, this calculation is not necessary when using only the Gamma point. Therefore, the Kohn–Sham level diagram should already be obtained from the SCF calculation.
+
+An example for NV-3 can be found in the [nscf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/nscf).
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/nscf/eigenplot_qe.png)
 
 
 
