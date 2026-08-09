@@ -171,7 +171,12 @@ Taking into account that, for this simple calculation, the defects will be consi
 **Diamond:** For our example, we will use a supercell containing 216 atoms (i.e., a 3x3x3 supercell).
 
 ### 1.3.2. Point Defects
-Now the optimal supercell has been chosen, the defect to be studied can be introduced into the system. Once this is done, we will have two systems: the perfect supercell and the defective supercell. A folder will be created for the perfect supercell such as [perfect folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/perfect), while another folders will be created for the defective supercell with different charge states.
+Now the optimal supercell has been chosen, the defect to be studied can be introduced into the system. Once this is done, we will have two systems: the perfect supercell and the defective supercell. A folder will be created for the perfect supercell, such as [perfect folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/perfect). On the other hand, separate folders will be created for the defective supercell, each corresponding to a different charge state (e.g., -q, ..., -1, 0, +1, ..., +q).
+
+**Diamond**: For our example, different folders has been created such as [NV folders](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect).
+```bash
+mkdir NV{-3..2..1}
+```
 
 
 
