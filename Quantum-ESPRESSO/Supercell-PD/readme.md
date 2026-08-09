@@ -208,12 +208,12 @@ The aim of this calculation is to determine the total magnetization of the syste
   ecutrho = 180.0,
   occupations = 'smearing',
   smearing    = 'gaussian'
-  degauss     = 0.001
+  degauss     = 0.005
   nspin       = 2
   starting_magnetization(1) = 0.0
   starting_magnetization(2) = 0.1
-  nbnd = 863
-  tot_charge = -2.0
+  nbnd = 864
+  tot_charge = -3.0
 /
 
 &ELECTRONS
@@ -261,6 +261,8 @@ $$
 nbnd = \frac{N_{C}\times \text{(valence electrons of carbon)} + N_{N}\times \text{(valence electrons of nitrogen)}}{2}\times 1.5.
 $$
 
+Since supercells contain a large number of atoms, these calculations can be computationally demanding. Therefore, it is recommended to perform the calculation using only the Gamma point.
+
 **NV center in diamond:** For our example, the number of bands should be:
 
 $$
@@ -295,5 +297,87 @@ This shows a list of data for each step, such as:
      total magnetization       =    -0.00 Bohr mag/cell
      total magnetization       =    -0.00 Bohr mag/cell
 ```
-The last value corresponds to the correct total magnetization.
+The last value corresponds to the correct total magnetization and will be used in the subsequent calculations. An example can be found in [NV-3 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/relax/mag_scf).
+
+#### 1.3.2.2. Relaxation
+In this calculation, the system will be relaxed using the total magnetization obtained previously. This relaxation optimizes only the atomic positions within the supercell. For this purpose, the input file must be set up as follows:
+```bash
+&CONTROL
+  calculation = 'relax',
+  prefix      = 'diamond_pd',
+  outdir      = './tmp/',
+  pseudo_dir  = '../../../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 5.0d-4,
+  etot_conv_thr = 1.0d-4,
+  restart_mode = 'from_scratch',
+  nstep         = 140,
+  disk_io = 'low',
+/
+
+&SYSTEM
+  ibrav =  0,
+  nat  = 215,
+  ntyp = 2,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+  occupations = 'fixed',
+  !smearing    = 'gaussian'
+  !degauss     = 0.005
+  nspin       = 2
+  !starting_magnetization(1) = 0.0
+  !starting_magnetization(2) = 0.1
+  tot_magnetization = 0.0
+  nbnd = 864
+  tot_charge = -3.0
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8,
+  electron_maxstep = 100,
+  mixing_beta = 0.7,
+  mixing_mode = 'plain',
+  scf_must_converge = .TRUE.,
+  startingwfc = 'random',
+/
+
+&IONS
+  ion_dynamics = 'bfgs'  
+/
+
+ATOMIC_SPECIES
+  C  12.0107 C.pbe-n-kjpaw_psl.1.0.0.UPF
+  N  14.0067 N.pbe-n-kjpaw_psl.1.0.0.UPF
+
+K_POINTS (automatic)
+1 1 1 0 0 0
+  
+CELL_PARAMETERS {angstrom}
+  -7.5777929652         0.0000000000         7.5777929652
+   4.3750408084         8.7500816165         4.3750408084
+  -6.1872420470         6.1872420472        -6.1872420470
+
+ATOMIC_POSITIONS (crystal)
+C     0.000000000         0.000000000         0.000000000
+C     0.000000000         0.000000000         0.333333333
+                          .
+                          .
+                          .
+C     0.750129682         0.916796349         0.916796349
+N     0.416796349         0.416796349         0.416796000  
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
