@@ -528,6 +528,7 @@ As mentioned previously, the output information from the **potential calculation
 **NV center in diamond:** For our example, the information has been processing in the [Finite_Size_correction folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/Finite_Size_correction). The following energy corrections were obtained:
 
 <div align="center">
+  
 | Charge State | Energy Correction (meV) |
 |:------------:| :----------------------:|
 |   -3         |       1400.70           | 
@@ -536,6 +537,7 @@ As mentioned previously, the output information from the **potential calculation
 |    0         |           0.0           |
 |   +1         |       297.506           |
 |   +2         |       1053.18           |
+
 </div>
 
 ### 1.3.4. Formation energy diagram
