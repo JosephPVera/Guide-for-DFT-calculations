@@ -1,0 +1,28 @@
+Reading mesh+cell...
+mesh=90 x 90 x 90
+Reading atoms...
+New species Z=6
+New species Z=7
+Reading potential...
+cell defect = [a1={-14.32,0,14.32},a2={8.26767,16.5353,8.26767},a3={-11.6922,11.6922,-11.6922}]
+Reading mesh+cell...
+mesh=90 x 90 x 90
+Reading atoms...
+New species Z=6
+Reading potential...
+cell bulk = [a1={-14.32,0,14.32},a2={8.26767,16.5353,8.26767},a3={-11.6922,11.6922,-11.6922}]
+Excess Electrons = -3 located at {0,0,0}
+Atomic structure specified.
+ng=42378
+V average: 0.0308781 eV
+vAlign=0 eV
++-----------------------------------------------------------------------------
+=== Intermediate results (unscreened) ===
+Isolated energy       : 3.59048
+Periodic energy       : 2.96002
+Difference (Hartree)  : -0.630464
+Difference (eV)       : -17.1558
++-----------------------------------------------------------------------------
+Calculation performed with epsilon = 5.8953
++-----------------------------------------------------------------------------
+Defect correction (eV): 2.91008 (incl. screening & alignment)

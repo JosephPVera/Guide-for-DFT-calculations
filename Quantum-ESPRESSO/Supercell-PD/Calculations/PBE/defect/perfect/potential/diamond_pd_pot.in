@@ -1,0 +1,10 @@
+&INPUTPP
+    prefix='diamond_pd'
+    outdir='../tmp'
+    plot_num=11
+/
+&PLOT
+    iflag=3
+    output_format=6
+    fileout='diamond_v_elec_pristine.cube'
+/
