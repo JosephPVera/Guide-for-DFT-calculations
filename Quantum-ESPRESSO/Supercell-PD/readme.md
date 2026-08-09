@@ -299,6 +299,12 @@ This shows a list of data for each step, such as:
 ```
 The last value corresponds to the correct total magnetization and will be used in the subsequent calculations. An example for NV-3 can be found in the [mag_scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/relax/mag_scf).
 
+The spin state (S) can be determined from the total magnetization (M) using the following relation:
+
+$$
+M = 2S
+$$
+
 #### 1.3.2.2. Relaxation
 In this calculation, the system will be relaxed using the total magnetization obtained previously. This relaxation optimizes only the atomic positions within the supercell. For this purpose, the input file must be set up as follows:
 ```bash
@@ -364,7 +370,7 @@ C     0.000000000         0.000000000         0.333333333
 C     0.750129682         0.916796349         0.916796349
 N     0.416796349         0.416796349         0.416796000  
 ```
-Since the total magnetization is fixed using the **tot_magnetization** tag, **occupations = 'fixed'** must be used. Once the calculation is complete, the relaxed structure can be extracted using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. The data will be displayed as follows:
+Since the total magnetization is fixed using the **tot_magnetization** tag, **occupations = 'fixed'** must be used. Once the calculation is done, the relaxed structure can be extracted using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. The data will be displayed as follows:
 ```bash
 ATOMIC_POSITIONS (crystal)
 C                0.0001701107        0.0000647539        0.0000647542
@@ -377,6 +383,73 @@ N                0.4247437727        0.4087117851        0.4087117899
 End final coordinates
 ```
 An example for NV-3 can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/relax/relax).
+
+⚠️ **WARNING**: If the system has convergence problems and does not reach self-consistency, continue using **occupations = 'smearing'** for the calculations. It is recommended to use a small **degauss** value. An example for NV-2 can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-2/relax/relax).
+
+#### 1.3.2.3. Self-Consistent Field (SCF) calculation
+For this calculation, the relaxed supercell must be used. Copy the **ATOMIC_POSITIONS** from the previous calculation and paste them into the input file. The input file must be set up as follows:
+```bash
+&CONTROL
+  calculation = 'scf',
+  prefix      = 'diamond_pd',
+  outdir      = '../tmp/',
+  pseudo_dir  = '../../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 5.0d-4,
+  etot_conv_thr = 1.0d-4,
+  restart_mode = 'from_scratch',
+  nstep         = 140,
+  disk_io = 'low',
+/
+
+&SYSTEM
+  ibrav =  0,
+  nat  = 215,
+  ntyp = 2,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+  occupations = 'fixed',
+  nspin       = 2
+  tot_magnetization = 0.0
+  nbnd = 864,
+  tot_charge = -3.0
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8,
+  electron_maxstep = 100,
+  mixing_beta = 0.7,
+  mixing_mode = 'plain',
+  scf_must_converge = .TRUE.,
+  startingwfc = 'random',
+/
+
+ATOMIC_SPECIES
+  C  12.0107 C.pbe-n-kjpaw_psl.1.0.0.UPF
+  N  14.0067 N.pbe-n-kjpaw_psl.1.0.0.UPF
+
+K_POINTS (automatic)
+1 1 1 0 0 0
+
+CELL_PARAMETERS {angstrom}
+  -7.5777929652         0.0000000000         7.5777929652
+   4.3750408084         8.7500816165         4.3750408084
+  -6.1872420470         6.1872420472        -6.1872420470
+
+ATOMIC_POSITIONS (crystal)
+C                0.0001701107        0.0000647539        0.0000647542
+C                0.0002602508        0.0003236124        0.3334611078
+                          .
+                          .
+                          .
+C                0.7500026446        0.9166624631        0.9166624627
+N                0.4247437727        0.4087117851        0.4087117899
+```
+Once the calculation is done, the total energy can be extract using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) script.
+
+
 
 
 
