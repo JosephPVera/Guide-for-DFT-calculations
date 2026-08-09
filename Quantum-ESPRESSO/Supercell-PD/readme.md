@@ -500,6 +500,22 @@ This calculation can be performed by setting up the input file as follows:
 ```
 An example for NV-3 can be found in the [chg_3d folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/chg_3d). The 3D charge density can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software along with the [diamond_pd_chg_3d.xsf](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/chg_3d/diamond_pd_chg_3d.xsf) file.
 
+#### 1.3.2.7. Electrostatic Potential
+This calculation can be performed by setting up the input file as follows:
+```bash
+&INPUTPP
+    prefix='diamond_pd'
+    outdir='../tmp'
+    plot_num=11
+/
+&PLOT
+    iflag=3
+    output_format=6
+    fileout='diamond_v_elec_defect.cube'
+/
+```
+An example for NV-3 can be found in the
+
 ### 1.3.3. Formation energy diagram
 Then, to gather important information such as the chemical potentials, total energies, charge states, energy of the valence band maximum, and energy corrections, the formation energy diagram can be plotted. 
 
