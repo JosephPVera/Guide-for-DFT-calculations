@@ -8,9 +8,10 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/Figures/phon_qe_workflow.png)
 
 ## 1. Relaxation
+The aim of the relaxation calculation is to find the most stable arrangement of atoms by minimizing total energy, reducing internal forces to zero, and optimizing cell geometry.
 
 ## 2. Self-Consistent Field (SCF) calculation
-Run a SCF calculation to get the converged charge density and wavefunctions of the unperturbed system.
+The aim of this calculation is to get the converged charge density and wavefunctions of the unperturbed system.
 
 ## 3. Dynamic Matrix (DM) calculation
 Quantum ESPRESSO uses Density-Functional Perturbation Theory (DFPT) via the **ph.x** code to compute the dynamical matrix and phonon properties without needing supercells. By evaluating the second derivatives of the total energy with respect to atomic displacements, DFPT efficiently yields the interatomic force constants and vibrational frequencies for specific **q**-vectors. Therefore, the aim of this calculation is to compute the first-order change in the potential and wavefunctions for a chosen wavevector **q**, generating the dynamical matrix elements.
