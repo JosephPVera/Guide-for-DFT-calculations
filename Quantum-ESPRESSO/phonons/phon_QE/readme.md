@@ -41,7 +41,7 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
 ```
-where **20** represents the number of CPU cores used for the calculation.  Once the calculation is done, several **.dyn** files will be created. In addition, the dielectric tensor can also be extracted.
+where **20** represents the number of CPU cores used for the calculation.  Once the calculation is done, several **.dyn** files will be created. In addition, the dielectric tensor can also be extracted from the **.out** file..
 
 An example of these calculations can be found in the [folder]().
 
