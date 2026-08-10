@@ -18,7 +18,9 @@ Quantum ESPRESSO uses Density-Functional Perturbation Theory (DFPT) via the **ph
 
 ---
 **NOTE:**
+
 Instead of physically moving an atom and repeating a complete ground-state calculation for every possible displacement, DFPT calculates the response mathematically for an infinitesimally small disturbance. When an atom moves, the electrons rearrange, and this changes the forces acting on all the atoms around it. The calculation determines these changes in force and therefore learns how strongly the atoms interact when they vibrate. It does this for different wavelengths and directions of vibration throughout the crystal's reciprocal space. The main result is information describing the vibrational behavior of the crystal at those sampled points.
+
 ---
 
 ## 4. Inverse Fourier Transform of the DM calculation 
