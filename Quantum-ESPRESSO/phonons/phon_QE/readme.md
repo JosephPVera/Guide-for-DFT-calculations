@@ -33,7 +33,7 @@ This type of calculation can be performed by setting up the input file as follow
   fildyn = 'diamond.dyn'
 /
 ```
-The meaning of each tag is described in the [hp.x Input Description](https://www.quantum-espresso.org/Doc/INPUT_HP.html). The input file can be executed using the following command:
+The meaning of each tag is described in the [HP Input Description](https://www.quantum-espresso.org/Doc/INPUT_HP.html). The input file can be executed using the following command:
 ```bash
 ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
 ```
