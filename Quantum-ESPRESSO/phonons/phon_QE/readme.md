@@ -34,3 +34,9 @@ The resulting phonon dispersion tells you how the allowed vibrational frequencie
 ## 7. Density Of States (DOS) calculation
 
 ## 8. Projected Density Of States (PDOS) calculation
+
+```diff
+- This is a red colored line
++ This is a green colored line
+@@ This is a purple colored line @@
+```
