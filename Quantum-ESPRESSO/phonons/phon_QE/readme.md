@@ -13,15 +13,22 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 Run a SCF calculation to get the converged charge density and wavefunctions of the unperturbed system.
 
 ## 3. Dynamic Matrix (DM) calculation
-Quantum ESPRESSO uses Density-Functional Perturbation Theory (DFPT) via the **ph.x** code to compute the dynamical matrix and phonon properties without needing supercells. By evaluating the second derivatives of the total energy with respect to atomic displacements, DFPT efficiently yields the interatomic force constants and vibrational frequencies for specific q-vectors. Therefore, the aim of this calculation is to compute the first-order change in the potential and wavefunctions for a chosen wavevector **q**, generating the dynamical matrix elements.
+Quantum ESPRESSO uses Density-Functional Perturbation Theory (DFPT) via the **ph.x** code to compute the dynamical matrix and phonon properties without needing supercells. By evaluating the second derivatives of the total energy with respect to atomic displacements, DFPT efficiently yields the interatomic force constants and vibrational frequencies for specific **q**-vectors. Therefore, the aim of this calculation is to compute the first-order change in the potential and wavefunctions for a chosen wavevector **q**, generating the dynamical matrix elements.
+
+Instead of physically moving an atom and repeating a complete ground-state calculation for every possible displacement, DFPT calculates the response mathematically for an infinitesimally small disturbance. When an atom moves, the electrons rearrange, and this changes the forces acting on all the atoms around it. The calculation determines these changes in force and therefore learns how strongly the atoms interact when they vibrate. It does this for different wavelengths and directions of vibration throughout the crystal's reciprocal space. The main result is information describing the vibrational behavior of the crystal at those sampled points.
 
 ## 4. Inverse Fourier Transform of the DM calculation 
-Transform the dynamical matrices from a uniform **q**-mesh into real-space Interatomic Force Constants (IFCs).
+Transform the dynamical matrices from a uniform **q**-mesh into real-space Interatomic Force Constants (IFCs). The **ph.x** calculation gives information in reciprocal space, but we want to know something more intuitive: how does one atom affect another atom when it moves?. **q2r.x** performs a Fourier transformation of the dynamical matrices and produces the real-space interatomic force constants.
+
+This calculation takes the vibrational information obtained at different points in reciprocal space (from the previous calculation) and converts it into a real-space description of the interactions between atoms. Conceptually, it changes the question from "how does the crystal respond to a vibration with this particular wavelength?" to "how does the force on one atom change when another atom moves?" The result is a collection of force constants describing the strength of interactions between atoms at different positions in the crystal. This step is essentially a change of representation: the physical information from the phonon calculation is reorganized into a form that describes the crystal's local atomic interactions.
 
 ## 5. Fourier Transformation of the real space calculation 
-Perform an inverse Fourier transform back to any arbitrary **q**-point to plot phonon dispersions or calculate density of states (DOS).
+Perform an inverse Fourier transform back to any arbitrary **q**-point to plot phonon dispersions or calculate density of states (DOS). Now we have the real-space force constants, so **matdyn.x** can calculate phonons at whatever q-points we want. At each point along the high-symmetry path, **matdyn.x** constructs the dynamical matrix and solves an eigenvalue problem.
+
+This calculation uses those real-space atomic interactions to determine the vibrational modes at any wavevector you are interested in. This is important because the previous calculation only explicitly sampled a finite grid of points. Once the real-space force constants are known, the program can reconstruct the vibrational behavior at new points without performing another expensive DFPT calculation at every one of them. You therefore specify a path through reciprocal space, usually passing through important high-symmetry points, and the program calculates the possible vibrational frequencies along that path.
 
 ## 6. Phonon Dispersion Relation (Band Structure) calculation
+The resulting phonon dispersion tells you how the allowed vibrational frequencies change with the wavelength and direction of the vibration.
 
 ## 7. Density Of States (DOS) calculation
 
