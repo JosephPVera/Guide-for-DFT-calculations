@@ -33,6 +33,15 @@ This type of calculation can be performed by setting up the input file as follow
   fildyn = 'diamond.dyn'
 /
 ```
+The meaning of each tag is described in the [hp.x Input Description](https://www.quantum-espresso.org/Doc/INPUT_HP.html). The input file can be executed using the following command:
+```bash
+ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
+```
+where **20** represents the number of CPU cores used for the calculation. An example of these calculations can be found in the [folder]().
 
 ## 4. Inverse Fourier Transform of the DM calculation 
 Transform the dynamical matrices from a uniform **q**-mesh into real-space Interatomic Force Constants (IFCs). The **ph.x** calculation gives information in reciprocal space, but we want to know something more intuitive: how does one atom affect another atom when it moves?. **q2r.x** performs a Fourier transformation of the dynamical matrices and produces the real-space IFCs.
