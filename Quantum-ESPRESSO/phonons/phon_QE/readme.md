@@ -12,6 +12,7 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 ## 2. Self-Consistent Field (SCF) calculation
 
 ## 3. Dynamic Matrix (DM) calculation
+Density-Functional Perturbation Theory (DFPT)
 
 ## 4. Inverse Fourier Transform of the DM calculation 
 
