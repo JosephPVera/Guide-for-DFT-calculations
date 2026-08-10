@@ -8,5 +8,5 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/Figures/phon_qe_workflow.png)
 
 ---
-# 1. PBE functional
+# 1. Relaxation
 ---
