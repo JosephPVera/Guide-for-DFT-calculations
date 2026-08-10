@@ -8,7 +8,7 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/Figures/phon_qe_workflow.png)
 
 ## 1. Relaxation
-The aim of the relaxation calculation is to find the most stable arrangement of atoms by minimizing total energy, reducing internal forces to zero, and optimizing cell geometry.
+The aim of the relaxation calculation is to find the most stable arrangement of atoms by minimizing total energy, reducing internal forces to zero, and optimizing cell geometry. The way how perform the calculation is the same how the step **1.3. Relaxation** in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive).
 
 ## 2. Self-Consistent Field (SCF) calculation
 The aim of this calculation is to get the converged charge density and wavefunctions of the unperturbed system.
