@@ -41,7 +41,7 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
 ```
-where **20** represents the number of CPU cores used for the calculation.  Once the calculation is done, several **.dyn** files will be created. In addition, the dielectric tensor can also be extracted from the **.out** file..
+where **20** represents the number of CPU cores used for the calculation.  Once the calculation is done, several **.dyn** files will be created. In addition, the dielectric tensor can also be extracted from the **.out** file.
 
 An example of these calculations can be found in the [folder]().
 
@@ -49,6 +49,27 @@ An example of these calculations can be found in the [folder]().
 Transform the dynamical matrices from a uniform **q**-mesh into real-space Interatomic Force Constants (IFCs). The **ph.x** calculation gives information in reciprocal space, but we want to know something more intuitive: how does one atom affect another atom when it moves?. **q2r.x** performs a Fourier transformation of the dynamical matrices and produces the real-space IFCs.
 
 > **NOTE:** This calculation takes the vibrational information obtained at different points in reciprocal space (from the previous calculation) and converts it into a real-space description of the interactions between atoms. Conceptually, it changes the question from "how does the crystal respond to a vibration with this particular wavelength?" to "how does the force on one atom change when another atom moves?" The result is a collection of force constants describing the strength of interactions between atoms at different positions in the crystal. This step is essentially a change of representation: the physical information from the phonon calculation is reorganized into a form that describes the crystal's local atomic interactions.
+
+This type of calculation can be performed by setting up the input file as follows:
+```bash
+&INPUT
+  fildyn = 'diamond.dyn'
+  zasr = 'crystal'
+  flfrc = 'diamond.fc'
+/
+```
+The meaning of each tag is described in the [Q2R Input Description](https://www.quantum-espresso.org/Doc/INPUT_Q2R.html). The input file can be executed using the following command:
+```bash
+q2r.x -inp dyn-matrix_q2r.in > dyn-matrix_q2r.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 q2r.x -inp dyn-matrix_q2r.in > dyn-matrix_q2r.out
+```
+where **20** represents the number of CPU cores used for the calculation. Before to run the input, the several files with the extension **.dyn** must be copy to this folder as follows: 
+```bash
+cp -r ../ph/diamond.dyn{1..32..1} .
+```
 
 ## 5. Fourier Transformation of the real space calculation 
 Perform an inverse Fourier transform back to any arbitrary **q**-point to plot phonon dispersions or calculate density of states (DOS). Now we have the real-space force constants, so **matdyn.x** can calculate phonons at whatever q-points we want. At each point along the high-symmetry path, **matdyn.x** constructs the dynamical matrix and solves an eigenvalue problem.
