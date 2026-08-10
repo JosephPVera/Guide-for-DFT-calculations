@@ -20,16 +20,12 @@ Quantum ESPRESSO uses Density-Functional Perturbation Theory (DFPT) via the **ph
 Instead of physically moving an atom and repeating a complete ground-state calculation for every possible displacement, DFPT calculates the response mathematically for an infinitesimally small disturbance. When an atom moves, the electrons rearrange, and this changes the forces acting on all the atoms around it. The calculation determines these changes in force and therefore learns how strongly the atoms interact when they vibrate. It does this for different wavelengths and directions of vibration throughout the crystal's reciprocal space. The main result is information describing the vibrational behavior of the crystal at those sampled points.
 </div>
 
-<table>
-  <tr>
-    <th bgcolor="#24292f" style="color:white">Feature</th>
-    <th bgcolor="#0969da" style="color:white">Status</th>
-  </tr>
-  <tr>
-    <td bgcolor="#f6f8fa">Authentication</td>
-    <td bgcolor="#d1e7dd">✅ Complete</td>
-  </tr>
-</table>
+---
+**NOTE**
+
+It works with almost all markdown flavours (the below blank line matters).
+
+---
 
 ## 4. Inverse Fourier Transform of the DM calculation 
 Transform the dynamical matrices from a uniform **q**-mesh into real-space Interatomic Force Constants (IFCs). The **ph.x** calculation gives information in reciprocal space, but we want to know something more intuitive: how does one atom affect another atom when it moves?. **q2r.x** performs a Fourier transformation of the dynamical matrices and produces the real-space interatomic force constants.
