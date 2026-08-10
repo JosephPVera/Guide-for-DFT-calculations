@@ -22,7 +22,7 @@ Instead of physically moving an atom and repeating a complete ground-state calcu
 
 <table>
   <tr>
-    <td bgcolor="#d4edda">
+    <td bgcolor="#fff3cd">
 
 ✅ **Success:** Everything is working correctly!
 
