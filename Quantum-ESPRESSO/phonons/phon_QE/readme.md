@@ -23,11 +23,11 @@ Instead of physically moving an atom and repeating a complete ground-state calcu
 <table>
   <tr>
     <th bgcolor="#24292f" style="color:white">Feature</th>
-    <td bgcolor="#fff3cd">
-
-✅ **Success:** Everything is working correctly!
-
-  </td>
+    <th bgcolor="#0969da" style="color:white">Status</th>
+  </tr>
+  <tr>
+    <td bgcolor="#f6f8fa">Authentication</td>
+    <td bgcolor="#d1e7dd">✅ Complete</td>
   </tr>
 </table>
 
