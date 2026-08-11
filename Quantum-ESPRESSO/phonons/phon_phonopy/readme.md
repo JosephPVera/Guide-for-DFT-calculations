@@ -90,6 +90,7 @@ phonopy -f dis-001/supercell-001.out dis-002/supercell-002.out
 ```
 
 ## 1.3. Non-analytical term correction (NAC)
+The non-analytical term correction (NAC) in Phonopy is a correction applied to the phonon dynamical matrix to account for the long-range electrostatic interaction between atoms in polar or ionic materials. In such materials, vibrations of the ions can create a macroscopic electric polarization, which produces a long-range electric field that is not properly captured by the short-range force constants obtained from a conventional supercell calculation. This effect is especially important near the $\Gamma$-point (**q** $\longrightarrow$)
 
 ### 1.3.1. Without NAC
 
