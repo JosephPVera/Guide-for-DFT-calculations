@@ -129,6 +129,10 @@ The resulting phonon dispersion tells you how the allowed vibrational frequencie
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn/phonon_band-1.png)
 
+Since diamond contains two atoms in the primitive cell, and each atom has three degrees of freedom, there should be six branches in the phonon band structure. These can be plotted separately using the **--split** tag.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn/phonon_band.png)
+
 ## 7. Density Of States (DOS) calculation
 
 ## 8. Projected Density Of States (PDOS) calculation
