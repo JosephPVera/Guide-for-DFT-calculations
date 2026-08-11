@@ -17,6 +17,12 @@ The aim of the relaxation calculation is to find the most stable arrangement of 
 ## 1.2. Supercell
 [Phonopy](https://phonopy-github-io.translate.goog/phonopy/qe.html?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc#) uses the finite-displacement and supercell approach to calculate phonon properties by first creating a larger supercell of the crystal and then slightly displacing atoms from their equilibrium positions. For each displacement, it calculates the resulting atomic forces using a first-principles method such as DFT. Phonopy uses these forces to determine the interatomic force constants, which describe how strongly atoms interact when displaced. It then constructs the dynamical matrix and diagonalizes it to obtain the phonon frequencies and eigenvectors throughout the Brillouin zone.
 
+Once the primitive cell has been relaxed, it will be used to construct the supercell with displacements using the following command:
+```bash
+phonopy -d --dim="3 3 3"
+```
+After running the command, several files will be created (such as **supercell-001.in**, **supercell-002.in**, and so on).
+
 ## 1.3. Non-analytical term correction (NAC)
 
 ### 1.3.1. Without NAC
