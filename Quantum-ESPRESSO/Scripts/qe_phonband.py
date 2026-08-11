@@ -3,18 +3,10 @@
 # 2026-08
 
 """
-Plot phonon band structure from matdyn.x output, reading the high-symmetry
-q-point path (labels + points-per-segment) directly from the matdyn.x input
-file instead of hardcoding indices/labels in the plotting script.
-
 Usage:
-    python plot_phonon_bands.py name.in
-    (if no argument is given, it auto-detects the single *.in file
-    in the current directory — any filename works, e.g. matdyn.in,
-    diamond.in, name.in)
+    qe_phonband.py [--split]
 
-    Add --split to plot each frequency (band) column in its own color:
-    python plot_phonon_bands.py name.in --split
+    Add --split to plot each frequency (band) column in its own color
 """
 
 import argparse
@@ -23,13 +15,7 @@ import re
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 def find_input_file():
-    """
-    Locate the matdyn.x input file when the user doesn't name it explicitly.
-    Any file ending in .in in the current directory qualifies (e.g. name.in,
-    matdyn.in, diamond.matdyn.in) — no fixed filename is assumed.
-    """
     candidates = sorted(glob.glob("*.in"))
     if not candidates:
         raise FileNotFoundError(
@@ -43,19 +29,12 @@ def find_input_file():
         )
     return candidates[0]
 
-
 def parse_matdyn_input(filename):
     """
     Parse a matdyn.x input file (q_in_band_form = .true.) to extract:
       - flfrq  : the frequency output file prefix (namelist variable)
       - labels : high-symmetry point labels (from the "! label" comments)
       - npts   : number of points requested for each segment (4th column)
-
-    Assumes the standard band-path format:
-        &INPUT ... /
-        <nq>
-        qx qy qz npts   ! Label
-        ...
     """
     with open(filename) as f:
         lines = f.readlines()
@@ -82,7 +61,6 @@ def parse_matdyn_input(filename):
 
     return flfrq, labels, npts_list
 
-
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Plot a phonon band structure from matdyn.x output."
@@ -98,7 +76,6 @@ def parse_args():
              "of uniform black.",
     )
     return parser.parse_args()
-
 
 def main():
     args = parse_args()
@@ -139,7 +116,7 @@ def main():
         ax.legend(fontsize="small", ncol=2, loc="best")
     else:
         for band in range(nbands):
-            ax.plot(data[:, 0], data[:, band + 1], color="xkcd:blue") # , linewidth=1, alpha=0.5
+            ax.plot(data[:, 0], data[:, band + 1], linewidth=1, color="xkcd:blue") # , alpha=0.5
 
     for x in tick_positions:
         ax.axvline(x=x, linewidth=0.5, color="k", alpha=0.5)
