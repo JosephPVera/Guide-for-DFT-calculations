@@ -67,15 +67,7 @@ This type of calculation can be performed by setting up the input file as follow
   flfrc = 'diamond.fc'
 /
 ```
-The meaning of each tag is described in the [Q2R Input Description](https://www.quantum-espresso.org/Doc/INPUT_Q2R.html). The input file can be executed using the following command:
-```bash
-q2r.x -inp dyn-matrix_q2r.in > dyn-matrix_q2r.out
-```
-Alternatively, the input file can be executed using parallelization:
-```bash
-mpirun -np 20 q2r.x -inp dyn-matrix_q2r.in > dyn-matrix_q2r.out
-```
-where **20** represents the number of CPU cores used for the calculation. Before running the input, the files with the **.dyn** extension must be copied to this folder as follows:
+The meaning of each tag is described in the [Q2R Input Description](https://www.quantum-espresso.org/Doc/INPUT_Q2R.html). Before running the input, the files with the **.dyn** extension must be copied to this folder as follows:
 ```bash
 cp -r ../ph/diamond.dyn* .
 ```
