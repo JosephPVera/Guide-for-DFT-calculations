@@ -1,16 +1,10 @@
 #!/usr/bin/env python3
 # Written by Joseph P.Vera
-# 2024-11
+# 2026-08
 
-#!/usr/bin/env python3
-"""Plot phonon DOS / PDOS from a QE-style .dos file.
-
-Automatically finds the .dos file in the current directory.
-Frequency axis is converted from cm^-1 to THz.
-
+"""
 Usage:
-    python plot_dos.py            # plots only the total DOS
-    python plot_dos.py --pdos     # plots only pdos1, pdos2, ...
+    qe_phondos.py [--pdos]     # [plots only pdos1, pdos2, ...]
 """
 import argparse
 import glob
@@ -20,7 +14,6 @@ import matplotlib.pyplot as plt
 
 CM1_TO_THZ = 0.0299792458  # 1 cm^-1 = 0.0299792458 THz
 
-
 def find_dos_file():
     matches = sorted(glob.glob("*.dos"))
     if not matches:
@@ -29,7 +22,6 @@ def find_dos_file():
         print(f"Warning: multiple .dos files found {matches}, using '{matches[0]}'.")
     return matches[0]
 
-
 def parse_args():
     p = argparse.ArgumentParser(description="Plot DOS or PDOS from a .dos file")
     p.add_argument("--pdos", action="store_true",
@@ -37,7 +29,6 @@ def parse_args():
     p.add_argument("-o", "--output", default=None,
                     help="output image filename (default: <file_stem>_dos.png or _pdos.png)")
     return p.parse_args()
-
 
 def main():
     args = parse_args()
@@ -78,7 +69,6 @@ def main():
     outname = args.output or f"{stem}{default_suffix}"
     fig.savefig(outname, dpi=150)
     #print(f"Saved: {outname}")
-
 
 if __name__ == "__main__":
     main()
