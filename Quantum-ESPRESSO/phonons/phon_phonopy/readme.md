@@ -82,6 +82,12 @@ ATOMIC_POSITIONS {crystal}
 K_POINTS (automatic)
 8 8 8 0 0 0
 ```
+🔔**Reminder:** The order of the **CELL_PARAMETERS**, **ATOMIC_SPECIES**, **ATOMIC_POSITIONS** and **K_POINTS** sections in the input file is important for Phonopy to work properly.
+
+Once the calculations are done, the **FORCE_SETS** file can be created using the following command:
+```bash
+phonopy -f dis-001/supercell-001.out dis-002/supercell-002.out
+```
 
 ## 1.3. Non-analytical term correction (NAC)
 
