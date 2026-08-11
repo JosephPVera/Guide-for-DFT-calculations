@@ -10,3 +10,21 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 ---
 # 1. PBE functional
 ---
+
+## 1.1. Relaxation
+
+## 1.2. Supercell
+
+## 1.3. Non-analytical term correction (NAC)
+
+### 1.3.1. Without NAC
+
+#### 1.3.1.1. Density Of States (DOS) calculation
+
+#### 1.3.1.2. Thermal Properties calculation
+
+#### 1.3.1.3. Projected Density Of States (PDOS) calculation
+
+#### 1.3.1.4. Phonon Dispersion Relation (Band Structure) calculation
+
+### 1.3.2. With NAC
