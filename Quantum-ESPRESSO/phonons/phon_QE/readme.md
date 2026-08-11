@@ -79,15 +79,55 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 q2r.x -inp dyn-matrix_q2r.in > dyn-matrix_q2r.out
 ```
-where **20** represents the number of CPU cores used for the calculation.
+where **20** represents the number of CPU cores used for the calculation. An example of this calculation for diamond can be found in the [q2r folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/q2r). This calculation will generate a **dimond.fc** file.
 
 ## 5. Fourier Transformation of the real space calculation 
 Perform an inverse Fourier transform back to any arbitrary **q**-point to plot phonon dispersions or calculate density of states (DOS). Now we have the real-space force constants, so **matdyn.x** can calculate phonons at whatever q-points we want. At each point along the high-symmetry path, **matdyn.x** constructs the dynamical matrix and solves an eigenvalue problem.
 
 > **NOTE:** This calculation uses those real-space atomic interactions to determine the vibrational modes at any wavevector you are interested in. This is important because the previous calculation only explicitly sampled a finite grid of points. Once the real-space force constants are known, the program can reconstruct the vibrational behavior at new points without performing another expensive DFPT calculation at every one of them. You therefore specify a path through reciprocal space, usually passing through important high-symmetry points, and the program calculates the possible vibrational frequencies along that path.
 
+This type of calculation can be performed by setting up the input file as follows:
+```bash
+&INPUT
+  asr = 'crystal'
+  flfrc = 'diamond.fc'
+  flfrq = 'diamond.freq'
+  flvec = 'diamond.modes'
+!  loto_2d = .true.
+  loto_disable = .false.
+  q_in_band_form = .true.
+  q_in_cryst_coord = .true.
+/
+10
+0.0000 0.0000 0.0000 200  !G
+0.5000 0.0000 0.5000 200  !X
+0.5000 0.2500 0.7500 200  !W
+0.3750 0.3750 0.7500 200  !K
+0.0000 0.0000 0.0000 200  !G
+0.5000 0.5000 0.5000 200  !L
+0.6250 0.2500 0.6250 200  !U
+0.5000 0.2500 0.7500 200  !W
+0.5000 0.5000 0.5000 200  !L
+0.3750 0.3750 0.7500   1  !K
+```
+The meaning of each tag is described in the [MATDYN Input Description](https://www.quantum-espresso.org/Doc/INPUT_MATDYN.html). Before running the input, the file with the **.fc** extension must be copied to this folder as follows:
+```bash
+cp -r ../q2r/diamond.fc .
+```
+Now, run the input file using the following command:
+```bash
+matdyn.x -inp dyn-matrix_matdyn.in > dyn-matrix_matdyn.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 matdyn.x -inp dyn-matrix_matdyn.in > dyn-matrix_matdyn.out
+```
+where **20** represents the number of CPU cores used for the calculation. An example of this calculation for diamond can be found in the [matdyn folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn).
+
 ## 6. Phonon Dispersion Relation (Band Structure) calculation
-The resulting phonon dispersion tells you how the allowed vibrational frequencies change with the wavelength and direction of the vibration.
+The resulting phonon dispersion tells you how the allowed vibrational frequencies change with the wavelength and direction of the vibration. This diagram can be plotted using the output from the previous calculation, which is available in the [matdyn folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn). The [qe_phonband.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_phonband.py) script allows you to plot the phonon band structure:
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn/phonon_band-1.png)
 
 ## 7. Density Of States (DOS) calculation
 
