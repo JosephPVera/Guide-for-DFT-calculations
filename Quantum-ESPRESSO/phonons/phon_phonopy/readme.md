@@ -21,7 +21,67 @@ Once the primitive cell has been relaxed, it will be used to construct the super
 ```bash
 phonopy -d --dim="3 3 3"
 ```
-After running the command, several files will be created (such as **supercell-001.in**, **supercell-002.in**, and so on).
+After running the command, several files will be created (such as **supercell-001.in**, **supercell-002.in**, and so on). Now we must create a folder for each supercell:
+```bash
+mkdir dis-001 dis-002
+```
+Each input must be copied in their corresponding folder. For example:
+```bash
+cp -r supercell-001.in dis-001
+```
+The **supercell-001.in** input file must be set up as follows:
+```bash
+&CONTROL
+  calculation = 'scf',
+  prefix      = 'diamond',
+  outdir      = './tmp/',
+  pseudo_dir  = '../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-6,
+  etot_conv_thr = 1.0d-8,
+  restart_mode = 'from_scratch',
+  disk_io = 'low',
+/
+
+&SYSTEM
+  ibrav =  0,
+  nat  = 54,
+  ntyp = 1,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8,
+  electron_maxstep = 200,
+  mixing_beta = 0.7,
+  mixing_mode = 'plain',
+  scf_must_converge = .TRUE.,
+  startingwfc = 'random',
+/
+
+CELL_PARAMETERS {bohr}
+  -10.1257353488152297    0.0000000000000000   10.1257353488152297
+    0.0000000000000000   10.1257353488152297   10.1257353488152297
+  -10.1257353488152297   10.1257353488152297    0.0000000000000000
+  
+ATOMIC_SPECIES
+  C   12.01070   C.pbe-n-kjpaw_psl.1.0.0.UPF
+  
+ATOMIC_POSITIONS {crystal}
+  C   0.0013966527009207  0.0000000000000000  0.0000000000000000
+  C   0.3333333333333333  0.0000000000000000  0.0000000000000000
+                                   .
+                                   .
+                                   .
+  C   0.4167963488666666  0.7501296822000000  0.7501296822000000
+  C   0.7501296822000000  0.7501296822000000  0.7501296822000000
+  
+K_POINTS (automatic)
+8 8 8 0 0 0
+```
 
 ## 1.3. Non-analytical term correction (NAC)
 
