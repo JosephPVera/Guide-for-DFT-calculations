@@ -102,7 +102,12 @@ ATOM_NAME = C
 DIM = 3 3 3
 MP = 8 8 8
 ```
-and finally, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **dos** folder. An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos).
+and finally, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **dos** folder. Finally, use the following command to plot the DOS:
+```bash
+phonopy -p -s mesh.conf
+```
+
+An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos).
 
 #### 1.3.1.2. Thermal Properties calculation
 
