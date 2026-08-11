@@ -11,7 +11,9 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 The aim of the relaxation calculation is to find the most stable arrangement of atoms by minimizing total energy, reducing internal forces to zero, and optimizing cell geometry. The calculation is performed in the same way as described in section **1.3. Relaxation** in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive).
 
 ## 2. Self-Consistent Field (SCF) calculation
-The aim of this calculation is to get the converged charge density and wavefunctions of the unperturbed system. The calculation is performed in the same way as described in section **1.4. Self-Consistent Field (SCF) calculation** in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive).
+The aim of this calculation is to get the converged charge density and wavefunctions of the unperturbed system. The calculation is performed in the same way as described in section **1.4. Self-Consistent Field (SCF) calculation** in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive). 
+
+An example for diamond is also included in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/scf).
 
 ## 3. Dynamic Matrix (DM) calculation
 Quantum ESPRESSO uses Density-Functional Perturbation Theory (DFPT) via the **ph.x** code to compute the dynamical matrix and phonon properties without needing supercells. By evaluating the second derivatives of the total energy with respect to atomic displacements, DFPT efficiently yields the interatomic force constants and vibrational frequencies for specific **q**-vectors. Therefore, the aim of this calculation is to compute the first-order change in the potential and wavefunctions for a chosen wavevector **q**, generating the dynamical matrix elements.
@@ -43,7 +45,7 @@ mpirun -np 20 ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
 ```
 where **20** represents the number of CPU cores used for the calculation.  Once the calculation is done, several **.dyn** files will be created. In addition, the dielectric tensor can also be extracted from the **.out** file.
 
-An example of these calculations can be found in the [folder](). The dielectric tensor can be extract using the [qe_dielectric.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_dielectric.py) script.
+An example of this calculation for diamond can be found in the [ph folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/ph). The dielectric tensor can be extract using the [qe_dielectric.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_dielectric.py) script.
 
 ## 4. Inverse Fourier Transform of the DM calculation 
 Transform the dynamical matrices from a uniform **q**-mesh into real-space Interatomic Force Constants (IFCs). The **ph.x** calculation gives information in reciprocal space, but we want to know something more intuitive: how does one atom affect another atom when it moves?. **q2r.x** performs a Fourier transformation of the dynamical matrices and produces the real-space IFCs.
