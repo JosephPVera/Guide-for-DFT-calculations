@@ -43,7 +43,7 @@ mpirun -np 20 ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
 ```
 where **20** represents the number of CPU cores used for the calculation.  Once the calculation is done, several **.dyn** files will be created. In addition, the dielectric tensor can also be extracted from the **.out** file.
 
-An example of these calculations can be found in the [folder]().
+An example of these calculations can be found in the [folder](). The dielectric tensor can be extract using the [qe_dielectric.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_dielectric.py) script.
 
 ## 4. Inverse Fourier Transform of the DM calculation 
 Transform the dynamical matrices from a uniform **q**-mesh into real-space Interatomic Force Constants (IFCs). The **ph.x** calculation gives information in reciprocal space, but we want to know something more intuitive: how does one atom affect another atom when it moves?. **q2r.x** performs a Fourier transformation of the dynamical matrices and produces the real-space IFCs.
