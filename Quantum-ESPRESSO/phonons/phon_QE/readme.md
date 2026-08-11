@@ -43,7 +43,7 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
 ```
-where **20** represents the number of CPU cores used for the calculation.  Once the calculation is done, several **.dyn** files will be created. In addition, the dielectric tensor can also be extracted from the **.out** file.
+where **20** represents the number of CPU cores used for the calculation. Once the calculation is done, several **.dyn** files will be created. In addition, the dielectric tensor can also be extracted from the **.out** file.
 
 An example of this calculation for diamond can be found in the [ph folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/ph). The dielectric tensor can be extract using the [qe_dielectric.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_dielectric.py) script. The extracted information looks as follows:
 ```bash
@@ -75,10 +75,19 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 q2r.x -inp dyn-matrix_q2r.in > dyn-matrix_q2r.out
 ```
-where **20** represents the number of CPU cores used for the calculation. Before to run the input, the several files with the extension **.dyn** must be copy to this folder as follows: 
+where **20** represents the number of CPU cores used for the calculation. Before running the input, the files with the **.dyn** extension must be copied to this folder as follows:
 ```bash
 cp -r ../ph/diamond.dyn{1..32..1} .
 ```
+Now, run the input file using the following command:
+```bash
+q2r.x -inp dyn-matrix_q2r.in > dyn-matrix_q2r.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 q2r.x -inp dyn-matrix_q2r.in > dyn-matrix_q2r.out
+```
+where **20** represents the number of CPU cores used for the calculation.
 
 ## 5. Fourier Transformation of the real space calculation 
 Perform an inverse Fourier transform back to any arbitrary **q**-point to plot phonon dispersions or calculate density of states (DOS). Now we have the real-space force constants, so **matdyn.x** can calculate phonons at whatever q-points we want. At each point along the high-symmetry path, **matdyn.x** constructs the dynamical matrix and solves an eigenvalue problem.
