@@ -12,6 +12,7 @@ A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO rep
 ---
 
 ## 1.1. Relaxation
+The aim of the relaxation calculation is to find the most stable arrangement of atoms by minimizing total energy, reducing internal forces to zero, and optimizing cell geometry. The calculation is performed in the same way as described in section **1.3. Relaxation** in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive).
 
 ## 1.2. Supercell
 
