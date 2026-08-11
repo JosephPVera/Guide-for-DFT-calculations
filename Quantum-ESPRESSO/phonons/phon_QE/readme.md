@@ -148,7 +148,11 @@ A phonon DOS calculation counts the number of available vibrational modes at eac
   nk3   = 25
 /
 ```
-The input file can be executed using the following command:
+Before running the input, the file with the .fc extension must be copied to this folder as follows: 
+```bash
+cp -r ../q2r/diamond.fc .
+```
+Now, run the input file using the following command:
 ```bash
 matdyn.x -inp phon_dos.in > phon_dos.out
 ```
@@ -156,10 +160,11 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 matdyn.x -inp phon_dos.in > phon_dos.out
 ```
-where **20** represents the number of CPU cores used for the calculation. An example of this calculation for diamond can be found in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dos).
+where **20** represents the number of CPU cores used for the calculation. An example of this calculation for diamond can be found in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dos). The [qe_phondos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_phondos.py) script allows you to plot the phonon DOS:
 
-
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dos/diamond_dos.png)
 
 ## 8. Projected Density Of States (PDOS) calculation
-A phonon PDOS calculation breaks down the vibrations to show the specific contributions of individual atoms (projects the total vibrational modes onto individual atoms).
+A phonon PDOS calculation breaks down the vibrations to show the specific contributions of individual atoms (projects the total vibrational modes onto individual atoms). This plot can be obtained using the output from the previous calculation, which is available in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dos). The [qe_phondos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_phondos.py) script, together with the **--pdos** tag, allows you to plot the phonon DOS:
 
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dos/diamond_pdos.png)
