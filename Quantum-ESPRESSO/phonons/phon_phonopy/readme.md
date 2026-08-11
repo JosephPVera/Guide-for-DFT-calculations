@@ -88,6 +88,7 @@ Once the calculations are done, the **FORCE_SETS** file can be created using the
 ```bash
 phonopy -f dis-001/supercell-001.out dis-002/supercell-002.out
 ```
+Examples of these calculations for diamond can be found in the [dis-001](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/dis-001) and [dis-002](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/dis-002) folders.
 
 ## 1.3. Non-analytical term correction (NAC)
 The NAC is a correction applied to the phonon dynamical matrix to account for the long-range electrostatic interaction between atoms in polar or ionic materials. In such materials, vibrations of the ions can create a macroscopic electric polarization, which produces a long-range electric field that is not properly captured by the short-range force constants obtained from a conventional supercell calculation. This effect is especially important near the $\Gamma$-point (**q** $\longrightarrow$ 0), where it can cause the longitudinal optical (LO) and transverse optical (TO) phonon modes to split, known as **LO–TO splitting**. Phonopy incorporates this effect using the **Born effective charge tensors** and the **high-frequency dielectric constant**, which are obtained from a Density-Functional Perturbation Theory (DFPT) calculation in Quantum ESPRESSO using **ph.x**. These quantities are then stored in a **BORN** file and used by Phonopy to add the non-analytical contribution to the dynamical matrix.
@@ -95,6 +96,13 @@ The NAC is a correction applied to the phonon dynamical matrix to account for th
 ### 1.3.1. Without NAC
 
 #### 1.3.1.1. Density Of States (DOS) calculation
+A phonon DOS calculation counts the number of available vibrational modes at each frequency. This type of calculation can be performed by setting up a **mesh.conf** file as follows:
+```bash
+ATOM_NAME = C	 
+DIM = 3 3 3
+MP = 8 8 8
+```
+and finally, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **dos** folder. An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos).
 
 #### 1.3.1.2. Thermal Properties calculation
 
