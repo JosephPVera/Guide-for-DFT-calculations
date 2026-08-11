@@ -1,0 +1,11 @@
+&INPUT
+  asr   = 'crystal'
+  flfrc = 'diamond.fc'
+  flfrq = 'diamond.dos.freq'
+  flvec = 'diamond.dos.modes'
+  dos   = .true.
+  fldos = 'diamond.dos'
+  nk1   = 25
+  nk2   = 25
+  nk3   = 25
+/

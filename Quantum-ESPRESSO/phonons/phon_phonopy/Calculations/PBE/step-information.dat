@@ -1,0 +1,10 @@
+phonon
+
+phonopy --qe -d --dim="2 2 2" -c NaCl.in
+
+
+
+
+phonopy-qe-born ../scf/diamond_scf.in dyn-matrix_ph.out | tee BORN
+
+

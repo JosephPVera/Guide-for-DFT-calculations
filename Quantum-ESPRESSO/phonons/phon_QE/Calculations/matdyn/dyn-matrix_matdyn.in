@@ -1,0 +1,21 @@
+&INPUT
+  asr = 'crystal'
+  flfrc = 'diamond.fc'
+  flfrq = 'diamond.freq'
+  flvec = 'diamond.modes'
+!  loto_2d = .true.
+  loto_disable = .false.
+  q_in_band_form = .true.
+  q_in_cryst_coord = .true.
+/
+10
+0.0000 0.0000 0.0000 200  !G
+0.5000 0.0000 0.5000 200  !X
+0.5000 0.2500 0.7500 200  !W
+0.3750 0.3750 0.7500 200  !K
+0.0000 0.0000 0.0000 200  !G
+0.5000 0.5000 0.5000 200  !L
+0.6250 0.2500 0.6250 200  !U
+0.5000 0.2500 0.7500 200  !W
+0.5000 0.5000 0.5000 200  !L
+0.3750 0.3750 0.7500   1  !K
