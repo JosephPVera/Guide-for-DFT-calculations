@@ -122,7 +122,11 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 matdyn.x -inp dyn-matrix_matdyn.in > dyn-matrix_matdyn.out
 ```
-where **20** represents the number of CPU cores used for the calculation. An example of this calculation for diamond can be found in the [matdyn folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn).
+where **20** represents the number of CPU cores used for the calculation. 
+
+🔔**Reminder:** This calculation already includes the LO–TO splitting, which is useful for polar materials, via **loto_disable = .false.**. This phenomenon typically occurs at the $\Gamma$-point.
+
+An example of this calculation for diamond can be found in the [matdyn folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn).
 
 ## 6. Phonon Dispersion Relation (Band Structure) calculation
 The resulting phonon dispersion tells you how the allowed vibrational frequencies change with the wavelength and direction of the vibration. This diagram can be plotted using the output from the previous calculation, which is available in the [matdyn folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn). The [qe_phonband.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_phonband.py) script allows you to plot the phonon band structure:
