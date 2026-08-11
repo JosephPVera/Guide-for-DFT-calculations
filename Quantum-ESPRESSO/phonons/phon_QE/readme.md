@@ -134,6 +134,32 @@ Since diamond contains two atoms in the primitive cell, and each atom has three 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn/phonon_band.png)
 
 ## 7. Density Of States (DOS) calculation
+A phonon DOS calculation counts the number of available vibrational modes at each frequency. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&INPUT
+  asr   = 'crystal'
+  flfrc = 'diamond.fc'
+  flfrq = 'diamond.dos.freq'
+  flvec = 'diamond.dos.modes'
+  dos   = .true.
+  fldos = 'diamond.dos'
+  nk1   = 25
+  nk2   = 25
+  nk3   = 25
+/
+```
+The input file can be executed using the following command:
+```bash
+matdyn.x -inp phon_dos.in > phon_dos.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 matdyn.x -inp phon_dos.in > phon_dos.out
+```
+where **20** represents the number of CPU cores used for the calculation. An example of this calculation for diamond can be found in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dos).
+
+
 
 ## 8. Projected Density Of States (PDOS) calculation
+A phonon PDOS calculation breaks down the vibrations to show the specific contributions of individual atoms (projects the total vibrational modes onto individual atoms).
 
