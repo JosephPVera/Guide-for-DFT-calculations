@@ -77,7 +77,7 @@ mpirun -np 20 q2r.x -inp dyn-matrix_q2r.in > dyn-matrix_q2r.out
 ```
 where **20** represents the number of CPU cores used for the calculation. Before running the input, the files with the **.dyn** extension must be copied to this folder as follows:
 ```bash
-cp -r ../ph/diamond.dyn{1..32..1} .
+cp -r ../ph/diamond.dyn* .
 ```
 Now, run the input file using the following command:
 ```bash
