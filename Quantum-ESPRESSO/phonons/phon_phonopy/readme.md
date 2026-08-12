@@ -107,7 +107,7 @@ Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **dos folder**. F
 phonopy -p -s mesh.conf
 ```
 
-An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos).
+An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos). The DOS can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos/tdos.png)
 
@@ -118,7 +118,7 @@ Use the same **mesh.conf** file as in the previous calculation. Also, copy the *
 ```bash
 phonopy -p -s -t  mesh.conf > thermal.dat
 ```
-An example for diamond can be found in [thermal folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/thermal).
+An example for diamond can be found in [thermal folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/thermal). The thermal properties can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/thermal/thermal_properties.png)
 
@@ -134,7 +134,7 @@ Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **pdos folder**. 
 ```bash
 phonopy -p -s pdos.conf
 ```
-An example for diamond can be found in [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/pdos).
+An example for diamond can be found in [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/pdos). The PDOS can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/pdos/pdos.png)
 
@@ -152,8 +152,12 @@ Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **band folder**. 
 phonopy -p -s band.conf
 phonopy-bandplot --gnuplot band.yaml > band.dat
 ```
-An example for diamond can be found in [band folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band).
+An example for diamond can be found in [band folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band). The band structure can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band/band.png)
+
+Since diamond contains two atoms in the primitive cell, and each atom has three degrees of freedom, there should be six branches in the phonon band structure. These can be plotted separately using the **--split** tag.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band/band-1.png)
 
 ### 1.3.2. With NAC
