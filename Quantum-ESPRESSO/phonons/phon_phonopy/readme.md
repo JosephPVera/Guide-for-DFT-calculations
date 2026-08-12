@@ -211,5 +211,42 @@ Once the calculation is done, the **BORN** file can be created using the followi
 phonopy-qe-born ../scf/diamond_scf.in dyn-matrix_ph.out | tee BORN
 ```
 This file contains the **dielectric constant tensor** in the second line, followed by the **Born effective charge tensors** for each atom in the primitive cell. This information is essential for applying the **NAC**.
+```bash
+# epsilon and Z* of atoms 1
+   5.89528482   -0.00768084   -0.00768084   -0.00768084    5.89528482    0.00768084   -0.00768084    0.00768084    5.89528482 
+   0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000
+```
+#### 1.3.2.3. Density Of States (DOS) calculation
+For this calculation, the **mesh.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **dos file**. Finally, use the following command to plot the DOS:
+```bash
+phonopy -p -s --nac mesh.conf
+```
+An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-nac/dos). Since diamond is a non-polar material, no changes are observed in the plot.
+
+#### 1.3.2.4. Thermal Properties calculation
+For this calculation, the **mesh.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **thermal file**. Finally, use the following command to plot the thermal properties:
+```bash
+phonopy -p -s -t --nac mesh.conf > thermal.dat
+```
+An example for diamond can be found in [thermal folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-nac/thermal). Since diamond is a non-polar material, no changes are observed in the plot.
+
+#### 1.3.2.4. Projected Density Of States (PDOS) calculation
+For this calculation, the **pdos.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **pdos file**. Finally, use the following command to plot the PDOS:
+```bash
+phonopy -p -s --nac pdos.conf
+```
+An example for diamond can be found in [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-nac/pdos). Since diamond is a non-polar material, no changes are observed in the plot.
+
+#### 1.3.2.5. Phonon Dispersion Relation (Band Structure) calculation
+For this calculation, the **band.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **band file**. Finally, use the following command to plot the band structure:
+```bash
+phonopy -p -s --nac band.conf
+phonopy-bandplot --gnuplot band.yaml > band.dat
+```
+An example for diamond can be found in [band folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-nac/band). Since diamond is a non-polar material, no changes are observed in the plot.
+
+![Alt text]()
+
+
 
 
