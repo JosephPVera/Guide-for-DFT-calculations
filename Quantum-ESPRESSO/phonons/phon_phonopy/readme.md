@@ -19,7 +19,7 @@ The aim of the relaxation calculation is to find the most stable arrangement of 
 
 Once the primitive cell has been relaxed, it will be used to construct the supercell with displacements using the following command:
 ```bash
-phonopy -d --dim="3 3 3"
+phonopy --qe -d --dim="3 3 3" -c diamond_scf.in
 ```
 After running the command, several files will be created (such as **supercell-001.in**, **supercell-002.in**, and so on). Now we must create a folder for each supercell:
 ```bash
