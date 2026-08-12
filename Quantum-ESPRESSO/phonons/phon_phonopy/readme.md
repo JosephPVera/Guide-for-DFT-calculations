@@ -102,7 +102,7 @@ ATOM_NAME = C
 DIM = 3 3 3
 MP = 8 8 8
 ```
-and finally, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **dos** folder. Finally, use the following command to plot the DOS:
+Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **dos** folder. Finally, use the following command to plot the DOS:
 ```bash
 phonopy -p -s mesh.conf
 ```
