@@ -113,9 +113,6 @@ def _plot_band_blocks_split(data, ax, colors=BRANCH_COLORS):
         ax.plot(block[:, 0], block[:, 1], linestyle='-', markersize=1,
                  c=color, label=f'Branch {i + 1}')
                  
-# --------------------------------------------------------------------------- #
-# Plot functions
-# --------------------------------------------------------------------------- #
 def plot_total_dos(file_path='total_dos.dat', x_range=None, y_range=None):
     x, y = np.loadtxt(file_path, comments='#', skiprows=1, unpack=True, usecols=(0, 1))
 
