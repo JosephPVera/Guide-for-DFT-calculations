@@ -245,8 +245,17 @@ phonopy-bandplot --gnuplot band.yaml > band.dat
 ```
 An example for diamond can be found in [band folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-nac/band). Since diamond is a non-polar material, no changes are observed in the plot.
 
-![Alt text]()
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-nac/band/band.png)
 
+
+## 1.4. Extra example 
+Cubic boron nitride is a polar material; therefore, the effects of applying the NAC can be clearly observed in its phonon band structure. Band structure without NAC:
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Figures/cBN-band-no-NAC-PBE.png)
+
+Band structure with NAC:
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Figures/cBN-band-NAC-PBE.png)
 
 
 
