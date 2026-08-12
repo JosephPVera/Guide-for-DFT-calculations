@@ -523,7 +523,7 @@ The main artifact of the supercell approach for point-defect calculations consis
   <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Figures/finite-size-correction.png" alt="Descripción de la imagen">
 </p>
 
-As mentioned previously, the output information from the **potential calculation** is relevant for computing the energy corrections. In addition, the **dielectric constant** is also required for this calculation. To compute these energy corrections, the [sxdefectalign](https://sxrepo.mpie.de/projects/sphinx-add-ons/files) software will be used.
+As mentioned previously, the output information from the **potential calculation** is relevant for computing the energy corrections. In addition, the **dielectric constant** is also required for this calculation. The **dielectric constant** can be computed by following the steps described in the [phonons folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons). To compute these energy corrections, the [sxdefectalign](https://sxrepo.mpie.de/projects/sphinx-add-ons/files) software will be used.
 
 **NV center in diamond:** For our example, the information has been processing in the [Finite_Size_correction folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/Finite_Size_correction). The following energy corrections were obtained:
 
