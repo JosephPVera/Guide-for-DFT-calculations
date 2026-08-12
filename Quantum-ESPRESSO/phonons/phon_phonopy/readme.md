@@ -161,3 +161,55 @@ Since diamond contains two atoms in the primitive cell, and each atom has three 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band/band-1.png)
 
 ### 1.3.2. With NAC
+If the material being studied is polar, the NAC must be applied. For this, the following steps must be performed:
+
+#### 1.3.2.1. Self-Consistent Field (SCF) calculation
+The aim of this calculation is to get the converged charge density and wavefunctions of the unperturbed system. The calculation is performed in the same way as described in section **1.4. Self-Consistent Field (SCF) calculation** in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive). 
+
+An example for diamond is also included in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/nac/scf).
+
+#### 1.3.2.2. Dynamic Matrix (DM) calculation
+Quantum ESPRESSO uses **Density-Functional Perturbation Theory (DFPT)** via the **ph.x** code to compute the dynamical matrix and phonon properties without needing supercells. By evaluating the second derivatives of the total energy with respect to atomic displacements, DFPT efficiently yields the interatomic force constants and vibrational frequencies for specific **q**-vectors. Therefore, the aim of this calculation is to compute the first-order change in the potential and wavefunctions for a chosen wavevector **q**, generating the dynamical matrix elements.
+
+> **NOTE:** Instead of physically moving an atom and repeating a complete ground-state calculation for every possible displacement, DFPT calculates the response mathematically for an infinitesimally small disturbance (linear-response calculation, **linear** because the displacement is considered infinitesimally small). When an atom moves, the electrons rearrange, and this changes the forces acting on all the atoms around it. The calculation determines these changes in force and therefore learns how strongly the atoms interact when they vibrate. It does this for different wavelengths and directions of vibration throughout the crystal's reciprocal space. The main result is information describing the vibrational behavior of the crystal at those sampled points.
+
+This type of calculation can be performed by setting up the input file as follows:
+```bash
+&INPUTPH
+  outdir = '../tmp/'
+  prefix = 'diamond'
+  tr2_ph = 1d-14
+  ldisp = .true.
+  epsil = .true.
+!  recover = .true.
+  nq1 = 6
+  nq2 = 6
+  nq3 = 6
+  fildyn = 'diamond.dyn'
+/
+```
+The meaning of each tag is described in the [HP Input Description](https://www.quantum-espresso.org/Doc/INPUT_HP.html). The input file can be executed using the following command:
+```bash
+ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
+```
+where **20** represents the number of CPU cores used for the calculation. Once the calculation is done, several **.dyn** files will be created. In addition, the dielectric tensor can also be extracted from the **.out** file.
+
+An example of this calculation for diamond can be found in the [ph folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/nac/ph). The dielectric tensor can be extract using the [qe_dielectric.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_dielectric.py) script. The extracted information looks as follows:
+```bash
+          Dielectric constant in cartesian axis 
+
+          (       5.895284817      -0.007680836      -0.007680836 )
+          (      -0.007680836       5.895284817       0.007680836 )
+          (      -0.007680836       0.007680836       5.895284817 )
+```
+Once the calculation is done, the **BORN** file can be created using the following command:
+```bash
+phonopy-qe-born ../scf/diamond_scf.in dyn-matrix_ph.out | tee BORN
+```
+This file contains the **dielectric constant tensor** in the second line, followed by the **Born effective charge tensors** for each atom in the primitive cell. This information is essential for applying the **NAC**.
+
+
