@@ -38,8 +38,8 @@ def main():
     data = np.loadtxt(dos_file)
 
     freq = data[:, 0] * CM1_TO_THZ    # cm^-1 -> THz
-    dos = data[:, 1]
-    pdos_cols = data[:, 2:]           # 0, 1, 2, ... pdos columns (may be empty)
+    dos = data[:, 1] * (1 / CM1_TO_THZ)
+    pdos_cols = data[:, 2:] * (1 / CM1_TO_THZ)  # 0, 1, 2, ... pdos columns (may be empty)
     n_pdos = pdos_cols.shape[1]
 
     fig, ax = plt.subplots()
