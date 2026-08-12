@@ -109,6 +109,8 @@ phonopy -p -s mesh.conf
 
 An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos).
 
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos/tdos.png)
+
 #### 1.3.1.2. Thermal Properties calculation
 
 #### 1.3.1.3. Projected Density Of States (PDOS) calculation
