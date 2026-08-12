@@ -202,7 +202,7 @@ def _plot_band(bands, config_file='band.conf', x_range=None, y_range=None,
 
 def plot_single_band(nac_file='band.dat', color_nac='r', x_range=None, y_range=None, split=False):
     _plot_band([(nac_file, color_nac, None)], # 'Without NAC'
-               x_range=x_range, y_range=y_range, outfile='band.png', split=split)
+               x_range=x_range, y_range=y_range, outfile='band-split.png' if split else 'band.png', split=split)
 
 def plot_mix_band(nac_file='band_nac.dat', no_nac_file='band_nonac.dat',
                    color_nac='xkcd:red', color_no_nac='xkcd:blue', x_range=None, y_range=None):
