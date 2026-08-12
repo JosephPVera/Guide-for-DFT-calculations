@@ -102,7 +102,7 @@ ATOM_NAME = C
 DIM = 3 3 3
 MP = 8 8 8
 ```
-Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **dos** folder. Finally, use the following command to plot the DOS:
+Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **dos folder**. Finally, use the following command to plot the DOS:
 ```bash
 phonopy -p -s mesh.conf
 ```
@@ -112,7 +112,9 @@ An example for diamond can be found in [dos folder](https://github.com/JosephPVe
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos/tdos.png)
 
 #### 1.3.1.2. Thermal Properties calculation
-Use the same **mesh.conf** file as in the previous calculation. Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **thermal** folder. Finally, use the following command to plot the PDOS:
+Thermal properties calculation refers to computing free energy, heat capacity, and entropy of a crystal as functions of temperature, using standard statistical thermodynamics formulas applied to the phonon spectrum. The idea is that once phonon frequencies are known across a sampling mesh in reciprocal space, each phonon mode is treated as a quantum harmonic oscillator, and the thermodynamic quantities are obtained by summing contributions from all these modes at each temperature. Since it relies on a mesh, this calculation must be run together with the mesh-sampling tags (MESH, MP, etc.), and its accuracy depends on how dense that mesh is, though it converges quickly and isn't computationally expensive.
+
+Use the same **mesh.conf** file as in the previous calculation. Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **thermal folder**. Finally, use the following command to plot the PDOS:
 ```bash
 phonopy -p -s -t  mesh.conf > thermal.dat
 ```
