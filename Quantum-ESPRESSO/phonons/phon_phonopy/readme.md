@@ -112,6 +112,13 @@ An example for diamond can be found in [dos folder](https://github.com/JosephPVe
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos/tdos.png)
 
 #### 1.3.1.2. Thermal Properties calculation
+Use the same **mesh.conf** file as in the previous calculation. Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **thermal** folder. Finally, use the following command to plot the PDOS:
+```bash
+phonopy -p -s -t  mesh.conf > thermal.dat
+```
+An example for diamond can be found in [thermal folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/thermal).
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/thermal/thermal_properties.png)
 
 #### 1.3.1.3. Projected Density Of States (PDOS) calculation
 
