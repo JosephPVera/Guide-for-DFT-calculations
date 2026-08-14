@@ -86,12 +86,6 @@ for i, s in enumerate(scale_factors):
     folder = os.path.join(outdir, f"{s:.2f}")
     os.makedirs(folder, exist_ok=True)
     tag = f"{i:02d}_s{s:.2f}"
-    # cell_fname = os.path.join(folder, f"CELL_PARAMETERS_{tag}.dat")
-    # with open(cell_fname, "w") as f:
-    #     f.write("CELL_PARAMETERS {angstrom}\n")
-    #     f.write(format_cell(scaled))
-    #     f.write("\n")
-    # --- full QE input ---
     qe_fname = os.path.join(folder, f"{name}.in")
     qe_content = TEMPLATE.format(tag=tag, cell=format_cell(scaled))
     with open(qe_fname, "w") as f:
