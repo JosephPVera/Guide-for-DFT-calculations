@@ -189,14 +189,3 @@ with open("results.dat", "w") as output:
 
         print(line)
         output.write(line + "\n")
-
-# units footnote
-#lat_units = {r[2] for r in results if r[2]}
-#vol_units = {r[4] for r in results if r[4]}
-#if lat_units or vol_units:
-#    print()
-#    if lat_units:
-#        print(f"lattice units:  {', '.join(sorted(lat_units))}")
-#    if vol_units:
-#        print(f"volumen units:  {', '.join(sorted(vol_units))}")
-#    print("total energy units: Ry (as written in the .out file)")
