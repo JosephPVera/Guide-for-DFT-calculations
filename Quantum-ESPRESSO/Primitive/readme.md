@@ -538,6 +538,8 @@ An example of these calculations can be found in the [q-points folder](https://g
 The plateauing pattern is typical of the q-point mesh convergence and indicates that the q-point mesh should be chosen using divisors of the k-point mesh. This behavior can be observed in the previous figure. For the diamond calculation, since **k = 8**, the q-point mesh should be chosen using its divisors, namely **q = 1, 2, 4**, and **8**. However, for this example, we have chosen to use **q = 3**, i.e., a **3x3x3** q-point mesh.
 
 ## 2.3. Relaxation
+
+### 2.3.1. relax and vc-relax calculations
 At this point, all the parameters have been chosen: **ecutwfc**, **ecutrho**, **k-point mesh**, and **q-point mesh**. This type of calculation can be performed by setting up the input file as follows:
 ```bash
 &CONTROL
@@ -606,6 +608,18 @@ C   0.2503890466        0.2503890466        0.2503890466
 🔔**Reminder:** Variable-cell relaxation (**vc-relax**) is not supported for hybrid functionals in the pw.x code of Quantum ESPRESSO. While ionic relaxation (**relax**) and forces can be computed with hybrid functionals, the analytical stress tensor required for changing cell parameters (**vc-relax**) has not been implemented for exact-exchange/hybrid calculations in pw.x. Therefore, **vc-relax** and **relax** calculations only work with NC pseudopotentials.
 
 After running the calculation, it is important to extract the lattice parameters of the relaxed system. This can be done using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. For our example, the diamond calculation, this information can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/relax).
+
+### 2.3.2. Birch-Murnaghan equation of state
+The Birch–Murnaghan equation of state is commonly used in DFT calculations to fit the relationship between the total energy **E** and the volume **V** of a crystal. It predicts the equilibrium volume of a crystal and its corresponding minimum energy.
+$$
+E(V) = E_0 + \frac{9V_0B_0}{16}
+\left[
+\left(\left(\frac{V_0}{V}\right)^{2/3} - 1\right)^3 B_0'
++
+\left(\left(\frac{V_0}{V}\right)^{2/3} - 1\right)^2
+\left(6 - 4\left(\frac{V_0}{V}\right)^{2/3}\right)
+\right]
+$$
 
 ## 2.4. Self-Consistent Field (SCF) calculation
 At this point, the lattice parameters obtained from the **relaxation calculation** must be used. This type of calculation can be performed by setting up the input file as follows:
