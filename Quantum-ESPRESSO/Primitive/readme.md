@@ -624,6 +624,24 @@ $$
 
 Since **relax** and **vc-relax** do not allow calculations using hybrid functionals with US/PAW pseudopotentials, the BM-EOS is a good alternative for determining the equilibrium lattice parameters of a crystal. For this, several crystal structures will be created by modifying the lattice parameters. The reference lattice parameters can be obtained from the system relaxed using the PBE functional. Then, vary the lattice constant ($$a$$) by applying the following scaling factors: $$a \times$$ {0.94, 0.95, 0.96, 0.97, 0.98, 0.99, 1.00, 1.01, 1.02, 1.03, 1.04, 1.05, 1.06}. This can be done using the [qe_cells.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_cells.py) script. An SCF calculation must be performed for each case to extract the lattice constants, total energies, and volumes. This information can be extracted and saved using the [qe_bm.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_bm.py) script. Finally, the BM-EOS is used to fit the total energy curve and determine the volume at which the energy is minimized.
 
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/relax-BM/bm_eos.png)
+
+This curve can be plotted using the [bm_eos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/bm_eos.py) script, which also allows the equilibrium volume and lattice constant to be estimated.
+```bash
+Results from the Birch-Murnaghan fit
+-------------------------------------------------
+N points fitted: 13
+
+V0  (Angstrom^3)      = 11.208266 +/- 0.000645
+a0  (Angstrom)        = 2.511915 +/- 0.000048
+E0  (Ry)              = -33.535649 +/- 0.000009
+B0  (Ry/Angstrom^3)   = 0.216403 +/- 0.000102
+B0' (dimensionless)   = 3.6308 +/- 0.0142
+
+Fit RMSE (Ry)         = 1.829e-05
+```
+An example for diamond can be found in the [relax-BM folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/relax-BM).
+
 ## 2.4. Self-Consistent Field (SCF) calculation
 At this point, the lattice parameters obtained from the **relaxation calculation** must be used. This type of calculation can be performed by setting up the input file as follows:
 ```bash
