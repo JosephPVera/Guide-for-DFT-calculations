@@ -622,7 +622,7 @@ E(V) = E_0 + \frac{9V_0B_0}{16}
 \right]
 $$
 
-Since relax and vc-relax do not allow calculations using hybrid functionals with US/PAW pseudopotentials, the BM-EOS is a good alternative for determining the equilibrium lattice parameters of a crystal.
+Since **relax** and **vc-relax** do not allow calculations using hybrid functionals with US/PAW pseudopotentials, the BM-EOS is a good alternative for determining the equilibrium lattice parameters of a crystal.
 
 ## 2.4. Self-Consistent Field (SCF) calculation
 At this point, the lattice parameters obtained from the **relaxation calculation** must be used. This type of calculation can be performed by setting up the input file as follows:
