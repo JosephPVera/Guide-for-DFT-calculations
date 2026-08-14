@@ -127,8 +127,6 @@ a0_err = abs(da_dV) * perr[0]
 lines = []
 lines.append("Results from the Birch-Murnaghan fit")
 lines.append("-------------------------------------------------")
-#tag_note = "converted Ry -> eV" if CONVERT_RY_TO_EV else "no unit conversion applied"
-#lines.append("Energy unit tag: {0} ({1})".format(ENERGY_UNIT, tag_note))
 lines.append("N points fitted: {0}".format(len(V)))
 lines.append("")
 lines.append("V0  (Angstrom^3)      = {0:.6f} +/- {1:.6f}".format(V0, perr[0]))
@@ -137,22 +135,9 @@ lines.append("E0  ({0})              = {1:.6f} +/- {2:.6f}".format(ENERGY_UNIT, 
 lines.append("B0  ({0}/Angstrom^3)   = {1:.6f} +/- {2:.6f}".format(ENERGY_UNIT, B0, perr[2]))
 if ENERGY_UNIT == "eV":
     lines.append("B0  (GPa)             = {0:.4f} +/- {1:.4f}".format(B0 * GPa, perr[2] * GPa))
-#else:
-#    lines.append("B0  (GPa)             = not shown -- data is tagged Ry;")
-#    lines.append("                        run with --ev if total_energy is really in eV")
 lines.append("B0' (dimensionless)   = {0:.4f} +/- {1:.4f}".format(B0p, perr[3]))
 lines.append("")
 lines.append("Fit RMSE ({0})         = {1:.3e}".format(ENERGY_UNIT, rmse))
-#lines.append("")
-#lines.append("NOTE: a0 is obtained by fitting a smooth a(V) curve to")
-#lines.append("your own (a, volume) data points and evaluating it at")
-#lines.append("V0 -- it does NOT assume a cubic (V=a^3) cell, so it is")
-#lines.append("valid for hexagonal/other cells too. Check that a0 falls")
-#lines.append("within your scanned a range (not extrapolated).")
-#lines.append("")
-#lines.append("Also check that RMSE is well below your SCF energy")
-#lines.append("convergence threshold, and that residuals look random")
-#lines.append("(not systematic) in the saved plot.")
 
 report = "\n".join(lines)
 #print()
@@ -174,4 +159,3 @@ ax1.set_title('Birch-Murnaghan EOS fit')
 
 fig.tight_layout()
 fig.savefig(OUT_PREFIX + ".png", dpi=150)
-#print("\nSaved: {0}.png , {0}_results.txt".format(OUT_PREFIX))
