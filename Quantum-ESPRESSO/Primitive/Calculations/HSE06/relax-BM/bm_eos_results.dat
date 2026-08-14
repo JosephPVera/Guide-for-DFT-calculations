@@ -1,0 +1,11 @@
+Results from the Birch-Murnaghan fit
+-------------------------------------------------
+N points fitted: 13
+
+V0  (Angstrom^3)      = 11.208266 +/- 0.000645
+a0  (Angstrom)        = 2.511915 +/- 0.000048
+E0  (Ry)              = -33.535649 +/- 0.000009
+B0  (Ry/Angstrom^3)   = 0.216403 +/- 0.000102
+B0' (dimensionless)   = 3.6308 +/- 0.0142
+
+Fit RMSE (Ry)         = 1.829e-05

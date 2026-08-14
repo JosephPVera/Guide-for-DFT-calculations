@@ -1,0 +1,52 @@
+&CONTROL
+  calculation = 'scf',
+  prefix      = 'diamond-HSE06',
+  outdir      = './tmp/',
+  pseudo_dir  = '../../pseudos/',
+  verbosity = 'high',
+  tprnfor = .true.,
+  tstress = .true.,
+  forc_conv_thr = 1.0d-6,
+  etot_conv_thr = 1.0d-8,
+  restart_mode = 'from_scratch',
+  disk_io = 'nowf',
+/
+
+&SYSTEM
+  ibrav =  0,
+  nat  = 2,
+  ntyp = 1,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+  nbnd = 8,
+  input_dft='hse',
+  exx_fraction = 0.25,
+  screening_parameter = 0.2, 
+  nqx1 = 1, nqx2 = 1, nqx3 = 1, 
+  x_gamma_extrapolation = .true.,
+  exxdiv_treatment = 'gygi-baldereschi',
+/
+
+&ELECTRONS
+  conv_thr = 1.0d-8,
+  electron_maxstep = 200,
+  mixing_beta = 0.7,
+  mixing_mode = 'plain',
+  scf_must_converge = .TRUE.,
+  startingwfc = 'random',
+/
+
+ATOMIC_SPECIES
+  C  12.0107 C.pbe-n-kjpaw_psl.1.0.0.UPF
+
+K_POINTS (automatic)
+8 8 8 0 0 0
+  
+CELL_PARAMETERS {angstrom}
+  -1.750380729    0.000000000    1.750380729
+  -0.000000000    1.750380729    1.750380729
+  -1.750380729    1.750380729    0.000000000
+
+ATOMIC_POSITIONS (crystal)
+C  -0.0000000000       -0.0000000000       -0.0000000000
+C   0.2503890466        0.2503890466        0.2503890466
