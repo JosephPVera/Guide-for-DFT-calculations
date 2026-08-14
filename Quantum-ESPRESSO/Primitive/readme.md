@@ -611,6 +611,7 @@ After running the calculation, it is important to extract the lattice parameters
 
 ### 2.3.2. Birch-Murnaghan equation of state
 The Birch–Murnaghan equation of state is commonly used in DFT calculations to fit the relationship between the total energy **E** and the volume **V** of a crystal. It predicts the equilibrium volume of a crystal and its corresponding minimum energy.
+
 $$
 E(V) = E_0 + \frac{9V_0B_0}{16}
 \left[
