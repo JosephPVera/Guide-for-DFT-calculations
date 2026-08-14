@@ -610,7 +610,7 @@ C   0.2503890466        0.2503890466        0.2503890466
 After running the calculation, it is important to extract the lattice parameters of the relaxed system. This can be done using the [qe_lattice.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_lattice.py) script. For our example, the diamond calculation, this information can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/HSE06/relax).
 
 ### 2.3.2. Birch-Murnaghan equation of state
-The Birch–Murnaghan equation of state is commonly used in DFT calculations to fit the relationship between the total energy **E** and the volume **V** of a crystal. It predicts the equilibrium volume of a crystal and its corresponding minimum energy.
+The Birch–Murnaghan equation of state (BM-EOS) is commonly used in DFT calculations to fit the relationship between the total energy (**E**) and the volume (**V**) of a crystal. It predicts the equilibrium volume of a crystal and its corresponding minimum energy. The third-order BM-EOS is written as follows:
 
 $$
 E(V) = E_0 + \frac{9V_0B_0}{16}
@@ -621,6 +621,8 @@ E(V) = E_0 + \frac{9V_0B_0}{16}
 \left(6 - 4\left(\frac{V_0}{V}\right)^{2/3}\right)
 \right]
 $$
+
+Since relax and vc-relax do not allow calculations using hybrid functionals with US/PAW pseudopotentials, the BM-EOS is a good alternative for determining the equilibrium lattice parameters of a crystal.
 
 ## 2.4. Self-Consistent Field (SCF) calculation
 At this point, the lattice parameters obtained from the **relaxation calculation** must be used. This type of calculation can be performed by setting up the input file as follows:
