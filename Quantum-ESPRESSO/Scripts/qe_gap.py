@@ -9,7 +9,6 @@ import os
 
 # Find all .out files in the current directory
 all_out_files = glob.glob("*.out")
-
 out_files = [f for f in all_out_files if not re.match(r"^slurm-\d+\.out$", os.path.basename(f))]
 
 if not out_files:
@@ -27,6 +26,7 @@ with open(filename) as f:
 
 vbm = None
 cbm = None
+fermi = None
 
 for line in lines:
     match = re.search(
@@ -37,13 +37,24 @@ for line in lines:
         vbm = match.group(1)
         cbm = match.group(2)
 
+    fermi_match = re.search(
+        r"the Fermi energy is\s*(-?\d+\.\d+)\s*ev",
+        line,
+        re.IGNORECASE
+    )
+    if fermi_match:
+        fermi = fermi_match.group(1)  
+
 if vbm is not None and cbm is not None:
-    # Determine number of decimals from the VBM string to keep consistent precision
     decimals = len(vbm.split(".")[1])
     gap = round(float(cbm) - float(vbm), decimals)
-
+    
     print(f"{'VBM (eV)':<14} {'CBM (eV)':<15} {'Gap (eV)':<15}")
     print("-" * 40)
     print(f"{vbm:<14} {cbm:<15} {gap:<15.{decimals}f}")
+elif fermi is not None:
+    print(f"{'Fermi energy (eV)':<20}")
+    print("-" * 17)
+    print(f"{fermi:<20}")
 else:
-    print("No 'highest occupied, lowest unoccupied level' line found.")
+    print("Neither 'highest occupied, lowest unoccupied level' nor 'Fermi energy' line found.")
