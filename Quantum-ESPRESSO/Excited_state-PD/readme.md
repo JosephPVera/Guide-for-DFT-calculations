@@ -13,4 +13,5 @@ Within the Franck-Condon approximation, the electronic excitation is much faster
 ## 2. Zero Phonon Line (ZPL) calculation
 ![Alt text]()
 
+## 3. Configuration Coordinate
 
