@@ -1,0 +1,21 @@
+#!/bin/bash
+# Specify jobname:
+#SBATCH --job-name=Joseph
+# Specify the number of nodes and the number of CPU's (tasks) per node:
+#SBATCH --nodes=1
+#SBATCH --ntasks=24
+#SBATCH -p medio
+# Specify account. 
+!#SBATCH --account=
+# The maximum time allowed for the job, in hh:mm:ss
+#SBATCH --time=24:00:00
+# Maximum memory allowed per cpu
+#SBATCH --mem-per-cpu=4G
+
+ulimit -s unlimited
+ulimit -a
+
+## Run command 
+mpirun -np $SLURM_NTASKS pw.x -inp scf.in > scf.out
+
+exit 0
