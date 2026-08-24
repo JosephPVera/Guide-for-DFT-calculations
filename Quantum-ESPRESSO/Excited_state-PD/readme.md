@@ -121,11 +121,22 @@ $$
 $$
    
 3. Relaxation energies
-   
-4. Absorption and emission energies
+   How much energy each state releases when its geometry relaxes from the other state's minimum to its own:
 
-5. Zero Phonon Line (ZPL)
+$$
+\Delta _{AS} = E_{g}(Q_{e}) - E_{g}(Q_{g})
+$$
 
-6. Effective phonon frequencies
+$$
+\Delta _{S} = E_{e}(Q_{g}) - E_{e}(Q_{e})
+$$
 
-7. Huang-Rhys factor
+Here, $$\Delta _{AS}$$ is the energy the ground state surface drops by, moving from $$Q_{e}$$ down to its true minimum $$Q_{g}$$ know as Anti-Stokes shift, while $$\Delta _{S}$$ is the analogous drop on the excited surface moving from $$Q_{g}$$ to $$Q_{e}$$.
+
+5. Absorption and emission energies
+
+6. Zero Phonon Line (ZPL)
+
+7. Effective phonon frequencies
+
+8. Huang-Rhys factor
