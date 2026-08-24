@@ -11,6 +11,10 @@ Within the Franck-Condon approximation, the electronic excitation is much faster
 ΔSCF can be used for calculating excited state properties such as vertical absorption and vertical emission energy. Furthermore, this method can also be used to calculate the Zero Phonon Line (ZPL) by performing a full atomic relaxation in the excited state configuration and thus account for the Stockes shifts. This method is commonly used for calculating the optical properties of point defects in semiconductors and insulators.
 
 ## 2. Zero Phonon Line (ZPL) calculation
+The ZPL is the optical transition between the electronic ground and excited states without creating or absorbing phonons, meaning the lattice remains in the same vibrational state. It corresponds to the purely electronic transition energy and is therefore directly related to the energy difference between the relaxed ground- and excited-state configurations. In experiments, the ZPL appears as a sharp spectral feature, while the surrounding phonon sidebands arise from electron–phonon coupling.
+
+>Note:
+The ZPL quantity represents the electronic transition without phonon participation between the lowest Potential Energy Surfaces (PESs) of the ground and excited states.
 
 
 ## 3. Configuration Coordinate
