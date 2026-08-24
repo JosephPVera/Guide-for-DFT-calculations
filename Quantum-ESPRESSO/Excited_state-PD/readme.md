@@ -113,12 +113,9 @@ A Configuration Coordinate Diagram (CCD) is a way to describe how the total ener
 Here, the blue curve represents the ground state PES, while the orange curve represents the excited state PES. In addition, the following quantities are also defined:
 1. Configuration coordinate ΔQ
    The mass-weighted generalized displacement between the two relaxed geometries (ground and excited configurations):
-
-   $$
-   \begin{equation}
-   ΔQ^{2} = \sum_{a}m_{a}|R_{e,a} - R_{g,a}|^{2}
-   \end{equation}
-   $$
+$$
+\Delta Q^{2} = \sum_{a} m_{a} \left| R_{e,a} - R_{g,a} \right|^{2}
+$$
    
 3. Relaxation energies
    
