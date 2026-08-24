@@ -109,3 +109,21 @@ A Configuration Coordinate Diagram (CCD) is a way to describe how the total ener
 <p align="center">
   <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/Figures/ccd.png" alt="Descripción de la imagen">
 </p>
+
+Here, the blue curve represents the ground state PES, while the orange curve represents the excited state PES. In addition, the following quantities are also defined:
+1. Configuration coordinate ΔQ
+   The mass-weighted generalized displacement between the two relaxed geometries (ground and excited configurations):
+
+   $$
+   \Delta Q^{2} = \sum_{a}m_{a}\abs{R_{e,a} - R_{g,a}}^{2}
+   $$
+   
+3. Relaxation energies
+   
+4. Absorption and emission energies
+
+5. Zero Phonon Line (ZPL)
+
+6. Effective phonon frequencies
+
+7. Huang-Rhys factor
