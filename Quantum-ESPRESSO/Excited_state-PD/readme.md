@@ -69,6 +69,14 @@ OCCUPATIONS
 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
 0.0 0.0
 ```
+**Reminder:** Keep in mind that the occupations must be specified for both the spin up and spin down channels and must be consistent with the number of bands (**nbnd**). 
+
+An example can be found in the [NV-1_excited](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Excited_state-PD/ZPL/PBE/NV-1_excited) folder, where the 
+
+<pre>
+1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 <span style="color:blue">0.0</span>
+<span style="color:red">0.5 0.5</span> 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+</pre>
 
 ## 3. Configuration Coordinate
 <p align="center">
