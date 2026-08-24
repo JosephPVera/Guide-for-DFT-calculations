@@ -206,3 +206,5 @@ D = e^{-S}
 $$
 
  >Note: For a point defect intended as a single-photon emitter, a high Debye–Waller factor is generally desirable because it means a larger fraction of photons are emitted into the sharp ZPL, rather than the broad phonon sideband.
+
+To compute all the quantities outlined above, several configurations must be generated between the ground state configuration ($$Q_{g}$$) and the excited state configuration ($$Q_{e}$$). This can be done by interpolating configurations between $$Q_{g}$$ and $$Q_{e}$$ (remember to use the relaxed configurations in both cases). Now, run an SCF calculation for each case, first using the ground state input and then using the excited state input.
