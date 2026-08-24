@@ -173,4 +173,9 @@ $$
      * The ZPL becomes relatively weak compared with the phonon sideband.
      * Many vibrational replicas can appear in the optical spectrum.
 
-     >Note: A particularly useful interpretation is that **S** is approximately the average number of phonons involved in the optical transition 
+   >Note: A particularly useful interpretation is that **S** is approximately the average number of phonons involved in the optical transition.
+
+   Therefore, **S** can be computed using the following relation:
+   $$
+   S_{i} = \frac{\Delta _{i}}{\hbar \omega}
+   $$
