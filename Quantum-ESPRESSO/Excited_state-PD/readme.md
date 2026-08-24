@@ -111,7 +111,7 @@ A Configuration Coordinate Diagram (CCD) is a way to describe how the total ener
 </p>
 
 Here, the blue curve represents the ground state PES, while the orange curve represents the excited state PES. In addition, the following quantities are also defined:
-1. Configuration coordinate ΔQ
+#### 1. Configuration coordinate ΔQ
    The mass-weighted generalized displacement between the two relaxed geometries (ground and excited configurations):
    
 $$
@@ -120,7 +120,7 @@ $$
 \end{equation}
 $$
    
-2. Relaxation energies
+#### 2. Relaxation energies
    How much energy each state releases when its geometry relaxes from the other state's minimum to its own:
 
 $$
@@ -133,7 +133,7 @@ $$
 
 Here, $$Δ_{AS}$$ is the energy the ground state surface drops by, moving from $$Q_{e}$$ down to its true minimum $$Q_{g}$$, known as the anti-Stokes shift. Meanwhile, $$Δ_{S}$$ is the analogous   drop on the excited surface moving from $$Q_{g}$$ to $$Q_{e}$$, known as the Stokes shift.
 
-3. Absorption and emission energies
+#### 3. Absorption and emission energies
 These are vertical transitions (Franck–Condon: the nuclei don't move during the fast electronic transition), so each keeps $$Q$$ fixed and only changes electronic state:
 
 $$
@@ -143,22 +143,23 @@ $$
 $$
 E_{em} = E_{e}(Q_{e}) - E_{g}(Q_{e})
 $$
+
 Absorption starts from the ground-state equilibrium ($$Q_{g}$$) and jumps vertically onto the excited surface. Emission starts from the excited-state equilibrium ($$Q_{e}$$) and jumps vertically onto the ground surface.
 
-4. Zero Phonon Line (ZPL)
+#### 4. Zero Phonon Line (ZPL)
 The purely electronic transition energy, between the two minima directly (not vertical):
 
 $$
 E_{ZPL} = E_{e}(Q_{e}) - E_{g}(Q_{g}),
 $$
 
-5. Effective phonon frequencies
+#### 5. Effective phonon frequencies
 Each surface is modeled as a 1D harmonic oscillator in $$Q$$, with the origin at its own minimum:
 
 $$
 $$
 
-6. Huang-Rhys factor
+#### 6. Huang-Rhys factor
    The Huang–Rhys factor (**S**) is a dimensionless parameter that measures the strength of electron–phonon (or electron–vibrational) coupling in a material. In simple terms, it tells you how strongly an electronic excitation changes the equilibrium position of the atoms, causing the excitation to couple to lattice/molecular vibrations.
    - S <<< 1: weak electron–phonon coupling
      * The electronic transition produces relatively little lattice distortion.
@@ -182,7 +183,7 @@ $$
 
   where $$i$$ can take either the Anti-Stokes (AS) or Stokes (S) value.
 
-7. Debye–Waller factor
+#### 7. Debye–Waller factor
    The Debye–Waller factor (**D**) tells you what fraction of an optical transition occurs without creating or absorbing phonons. This factor is computed using **S** via the following relation:
 
 $$
