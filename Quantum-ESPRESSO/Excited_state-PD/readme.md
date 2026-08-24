@@ -131,12 +131,24 @@ $$
 \Delta _{S} = E_{e}(Q_{g}) - E_{e}(Q_{e})
 $$
 
-Here, $$Δ_{AS}$$ is the energy the ground state surface drops by, moving from $$Q_{e}$$ down to its true minimum $$Q_{g}$$ know as Anti-Stokes shift, while $$Δ_{S}$$ is the analogous drop on the excited surface moving from $$Q_{g}$$ to $$Q_{e}$$.
+Here, $$Δ_{AS}$$ is the energy the ground state surface drops by, moving from $$Q_{e}$$ down to its true minimum $$Q_{g}$$, known as the anti-Stokes shift. Meanwhile, $$Δ_{S}$$ is the analogous drop on the excited surface moving from $$Q_{g}$$ to $$Q_{e}$$, known as the Stokes shift.
 
-5. Absorption and emission energies
+3. Absorption and emission energies
+These are vertical transitions (Franck–Condon: the nuclei don't move during the fast electronic transition), so each keeps $$Q$$ fixed and only changes electronic state:
 
-6. Zero Phonon Line (ZPL)
+$$
+E_{abs} = E_{e}(Q_{g}) - E_{g}(Q_{g})
+$$
 
-7. Effective phonon frequencies
+$$
+E_{em} = E_{e}(Q_{e}) - E_{g}(Q_{e})
+$$
 
-8. Huang-Rhys factor
+Absorption starts from the ground-state equilibrium ($$Q_{g}$$) and jumps vertically onto the excited surface. Emission starts from the excited-state equilibrium ($$Q_{e}$$) and jumps vertically onto the ground surface.
+
+
+5. Zero Phonon Line (ZPL)
+
+6. Effective phonon frequencies
+
+7. Huang-Rhys factor
