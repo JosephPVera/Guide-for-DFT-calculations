@@ -76,7 +76,7 @@ An example can be found in the [NV-1_excited](https://github.com/JosephPVera/Gui
 $$
 \begin{aligned}
 &1.0\quad 1.0\quad 1.0\quad 1.0\quad 1.0\quad 1.0\quad 1.0\quad 1.0\quad 1.0\quad \color{blue}{0.0} \\
-&\color{red}{0.5\quad 0.5}\quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0
+&\color{red}{0.5\quad 0.5} \quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0
 \end{aligned}
 $$
 
