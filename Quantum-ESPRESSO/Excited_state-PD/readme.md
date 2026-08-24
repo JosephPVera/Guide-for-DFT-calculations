@@ -28,7 +28,47 @@ For our example, NV center in diamond, $$E_{e}(Q_{e})$$ is obtained from our pre
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/Figures/transition-KSLD-ground_state.png) 
 
-In this case, the most promising electronic transition occurs in the spin down channel, from the occupied energy level with band index 430 to the doubly degenerate unoccupied energy levels with band indices 431 and 432. Now that the electronic transition has been determined, the input file for the excited-state calculation can be created using the ground-state input file, but with the **occupations = 'from_input'** tag added. This setting allows the electron to be promoted from energy level 430 to the degenerate levels 431–432 by specifying their occupations in the OCCUPATIONS section.
+In this case, the most promising electronic transition occurs in the spin down channel, from the occupied energy level with band index 430 to the doubly degenerate unoccupied energy levels with band indices 431 and 432, given that these states are highly localized and isolated from the VBM and CBM. Now that the electronic transition has been determined, the input file for the excited-state calculation can be created using the ground-state input file, but with the **occupations = 'from_input'** tag added. This setting allows the electron to be promoted from energy level 430 to the degenerate levels 431–432 by specifying their occupations in the OCCUPATIONS section.
+```bash
+&SYSTEM
+  ibrav =  0,
+  nat  = 215,
+  ntyp = 2,
+  ecutwfc = 45.0,
+  ecutrho = 180.0,
+  occupations = 'from_input',
+  nspin       = 2
+  tot_magnetization = 2.0
+  nbnd = 862,
+  tot_charge = -1.0
+/
+```
+```bash
+OCCUPATIONS
+1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0
+                 .
+                 .
+                 .
+1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0
+1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+                 .
+                 .
+                 .
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0
+
+1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0
+                 .
+                 .
+                 .
+1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 0.0
+0.5 0.5 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+                 .
+                 .
+                 .
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0
+```
 
 ## 3. Configuration Coordinate
 <p align="center">
