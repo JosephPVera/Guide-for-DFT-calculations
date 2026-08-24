@@ -209,4 +209,50 @@ $$
 
 To compute all the quantities outlined above, several configurations must be generated between the ground state configuration ($$Q_{g}$$) and the excited state configuration ($$Q_{e}$$). This can be done by interpolating configurations between $$Q_{g}$$ and $$Q_{e}$$ (remember to use the relaxed configurations in both cases). Now, run an SCF calculation for each case, first using the ground state input and then using the excited state input. Finally, after the calculations are completed, extract the total energies.
 
-For our example, NV center in diamond, the ground configurations can be found in the [ground_configs](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/ground_configs) folder. In addition, the excited configurations can be found in the [excited_configs](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/excited_configs) folder. These configurations, between $$Q_{g}$$ and $$Q_{e}$$, can be created using the [SCRIPT](). Here, the ground state configuration and input are specified in the [ground_state.in](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/ground_state.in) file, while the excited state configuration and input are specified in the [excited_state.in](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/excited_state.in) file.
+For our example, NV center in diamond, the ground configurations can be found in the [ground_configs](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/ground_configs) folder. In addition, the excited configurations can be found in the [excited_configs](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/excited_configs) folder. These configurations, between $$Q_{g}$$ and $$Q_{e}$$, can be created using the [SCRIPT](). Here, the ground state configuration and input are specified in the [ground_state.in](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/ground_state.in) file, while the excited state configuration and input are specified in the [excited_state.in](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/excited_state.in) file. Once the total energies have been extracted, they can be used to compute the relevant quantities and plot the CCD using the [SCRIPT]().
+<p align="center">
+  <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/ccd.png" alt="Descripción de la imagen">
+</p>
+
+The details are saved in a **ccd.dat** file, such as [ccd.dat](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/ccd.dat).
+```bash
+Configuration Coordinate Diagram
+
+ΔQ = 0.558406 amu^(1/2)*Angstrom
+
+-----------------------------------------
+Zero Phonon Line (ZPL)
+-----------------------------------------
+ZPL = 1.703938 eV
+
+-----------------------------------------
+Absorption and emission energy
+-----------------------------------------
+E (absorption) = 1.886615 eV
+E (emission) = 1.541674 eV
+
+-----------------------------------------
+Relaxation energy
+-----------------------------------------
+Anti-Stokes shift (ground) = 0.162264 eV
+Stokes shift (excited) = 0.182677 eV
+
+-----------------------------------------
+Effective phonon modes (frecuencies)
+-----------------------------------------
+ℏω (ground) = 65.0572 meV
+ℏω (excited) = 69.8755 meV
+
+-----------------------------------------
+Huang-Rhys factor
+-----------------------------------------
+S (ground) = 2.4942
+S (excited) = 2.6143
+
+-----------------------------------------
+Debye-Waller factor
+-----------------------------------------
+D (ground) = 0.082564
+D (excited) = 0.073217
+```
+
