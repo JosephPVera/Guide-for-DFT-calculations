@@ -112,23 +112,23 @@ A Configuration Coordinate Diagram (CCD) is a way to describe how the total ener
 
 Here, the blue curve represents the ground state PES, while the orange curve represents the excited state PES. In addition, the following quantities are also defined:
 #### 1. Configuration coordinate ΔQ
-   The mass-weighted generalized displacement between the two relaxed geometries (ground and excited configurations):
+The mass-weighted generalized displacement between the two relaxed geometries (ground and excited configurations):
    
 $$
 \begin{equation}
-\Delta Q^{2} = \sum_{a} m_{a} \left| R_{\{e,a\}} - R_{\{g,a\}} \right|^{2}
+\Delta Q^{2} = \sum_{a} m_{a} \left| R_{\{e,a\}} - R_{\{g,a\}} \right|^{2}.
 \end{equation}
 $$
    
 #### 2. Relaxation energies
-   How much energy each state releases when its geometry relaxes from the other state's minimum to its own:
+How much energy each state releases when its geometry relaxes from the other state's minimum to its own:
 
 $$
-\Delta _{AS} = E_{g}(Q_{e}) - E_{g}(Q_{g})
+\Delta _{AS} = E_{g}(Q_{e}) - E_{g}(Q_{g}),
 $$
 
 $$
-\Delta _{S} = E_{e}(Q_{g}) - E_{e}(Q_{e})
+\Delta _{S} = E_{e}(Q_{g}) - E_{e}(Q_{e}).
 $$
 
 Here, $$Δ_{AS}$$ is the energy the ground state surface drops by, moving from $$Q_{e}$$ down to its true minimum $$Q_{g}$$, known as the anti-Stokes shift. Meanwhile, $$Δ_{S}$$ is the analogous   drop on the excited surface moving from $$Q_{g}$$ to $$Q_{e}$$, known as the Stokes shift.
@@ -137,11 +137,11 @@ Here, $$Δ_{AS}$$ is the energy the ground state surface drops by, moving from $
 These are vertical transitions (Franck–Condon: the nuclei don't move during the fast electronic transition), so each keeps $$Q$$ fixed and only changes electronic state:
 
 $$
-E_{abs} = E_{e}(Q_{g}) - E_{g}(Q_{g})
+E_{abs} = E_{e}(Q_{g}) - E_{g}(Q_{g}),
 $$
 
 $$
-E_{em} = E_{e}(Q_{e}) - E_{g}(Q_{e})
+E_{em} = E_{e}(Q_{e}) - E_{g}(Q_{e}).
 $$
 
 Absorption starts from the ground-state equilibrium ($$Q_{g}$$) and jumps vertically onto the excited surface. Emission starts from the excited-state equilibrium ($$Q_{e}$$) and jumps vertically onto the ground surface.
@@ -150,17 +150,18 @@ Absorption starts from the ground-state equilibrium ($$Q_{g}$$) and jumps vertic
 The purely electronic transition energy, between the two minima directly (not vertical):
 
 $$
-E_{ZPL} = E_{e}(Q_{e}) - E_{g}(Q_{g}),
+E_{ZPL} = E_{e}(Q_{e}) - E_{g}(Q_{g}).
 $$
 
 #### 5. Effective phonon frequencies
 Each surface is modeled as a 1D harmonic oscillator in $$Q$$, with the origin at its own minimum:
 
 $$
+E_{i}(Q) = E_{i}(Q_{i}) + \frac{1}{2}\omega_{i}^{2}(Q - Q_{i})^{2}
 $$
 
 #### 6. Huang-Rhys factor
-   The Huang–Rhys factor (**S**) is a dimensionless parameter that measures the strength of electron–phonon (or electron–vibrational) coupling in a material. In simple terms, it tells you how strongly an electronic excitation changes the equilibrium position of the atoms, causing the excitation to couple to lattice/molecular vibrations.
+The Huang–Rhys factor (**S**) is a dimensionless parameter that measures the strength of electron–phonon (or electron–vibrational) coupling in a material. In simple terms, it tells you how strongly an electronic excitation changes the equilibrium position of the atoms, causing the excitation to couple to lattice/molecular vibrations.
    - S <<< 1: weak electron–phonon coupling
      * The electronic transition produces relatively little lattice distortion.
      * The optical spectrum tends to be dominated by ZPL.
@@ -173,18 +174,18 @@ $$
      * The ZPL becomes relatively weak compared with the phonon sideband.
      * Many vibrational replicas can appear in the optical spectrum.
 
-   >Note: A particularly useful interpretation is that **S** is approximately the average number of phonons involved in the optical transition.
+>Note: A particularly useful interpretation is that **S** is approximately the average number of phonons involved in the optical transition.
 
-   Therefore, **S** can be computed using the following relation:
+Therefore, **S** can be computed using the following relation:
 
 $$
-S_{i} = \frac{\Delta _{i}}{\hbar \omega_{i}}
+S_{i} = \frac{\Delta _{i}}{\hbar \omega_{i}},
 $$
 
-  where $$i$$ can take either the Anti-Stokes (AS) or Stokes (S) value.
+where $$i$$ can take either the Anti-Stokes (AS) or Stokes (S) value.
 
 #### 7. Debye–Waller factor
-   The Debye–Waller factor (**D**) tells you what fraction of an optical transition occurs without creating or absorbing phonons. This factor is computed using **S** via the following relation:
+The Debye–Waller factor (**D**) tells you what fraction of an optical transition occurs without creating or absorbing phonons. This factor is computed using **S** via the following relation:
 
 $$
 D = e^{-S}
