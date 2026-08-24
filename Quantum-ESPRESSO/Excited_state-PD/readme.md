@@ -19,8 +19,10 @@ The ZPL represents the purely electronic transition, i.e., a transition without 
 This quantity is computed as follows:
 
 $$
-E_{ZPL} = E_{e}(Q_{e}) - E_{g}(Q_{g})
+E_{ZPL} = E_{e}(Q_{e}) - E_{g}(Q_{g}),
 $$
+
+where $$E_{ZPL}$$ is the ZPL energy, $$E_{e}(Q_{e})$$ is the energy of the excited state at its equilibrium configuration $$Q_{e}$$, and $$E_{g}(Q_{g})$$ is the energy of the ground state at its equilibrium configuration $$Q_{g}$$.
 
 ## 3. Configuration Coordinate
 <p align="center">
