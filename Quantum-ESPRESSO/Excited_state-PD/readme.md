@@ -193,7 +193,7 @@ The Huang–Rhys factor (**S**) is a dimensionless parameter that measures the s
 Therefore, **S** can be computed using the following relation (single harmonic mode model):
 
 $$
-S_{i} \approx <n_{phonon}> = \frac{\Delta _{i}}{\hbar \omega_{i}},
+S_{i} \approx \langle n_{phonon}\rangle = \frac{\Delta _{i}}{\hbar \omega_{i}},
 $$
 
 where $$i$$ can take either the ground ($$g$$) or excited ($$e$$) state value.
