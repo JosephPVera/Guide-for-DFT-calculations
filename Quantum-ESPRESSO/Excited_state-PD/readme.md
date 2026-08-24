@@ -74,11 +74,9 @@ OCCUPATIONS
 An example can be found in the [NV-1_excited](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Excited_state-PD/ZPL/PBE/NV-1_excited) folder, where the 
 
 $$
+\begin{align}
 1.0\quad 1.0\quad 1.0\quad 1.0\quad 1.0\quad 1.0\quad 1.0\quad 1.0\quad 1.0\quad
-\color{blue}{0.0}
-$$
-
-$$
+\color{blue}{0.0} \
 \color{red}{0.5\quad 0.5}\quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0\quad 0.0
 $$
 
