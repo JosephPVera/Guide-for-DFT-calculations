@@ -115,7 +115,9 @@ Here, the blue curve represents the ground state PES, while the orange curve rep
    The mass-weighted generalized displacement between the two relaxed geometries (ground and excited configurations):
    
 $$
+\begin{equation}
 \Delta Q^{2} = \sum_{a} m_{a} \left| R_{\{e,a\}} - R_{\{g,a\}} \right|^{2}
+\end{equation}
 $$
    
 3. Relaxation energies
