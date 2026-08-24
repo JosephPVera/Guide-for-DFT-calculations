@@ -146,9 +146,17 @@ $$
 
 Absorption starts from the ground-state equilibrium ($$Q_{g}$$) and jumps vertically onto the excited surface. Emission starts from the excited-state equilibrium ($$Q_{e}$$) and jumps vertically onto the ground surface.
 
+4. Zero Phonon Line (ZPL)
+The purely electronic transition energy, between the two minima directly (not vertical):
 
-5. Zero Phonon Line (ZPL)
+$$
+E_{ZPL} = E_{e}(Q_{e}) - E_{g}(Q_{g}),
+$$
 
-6. Effective phonon frequencies
+5. Effective phonon frequencies
+Each surface is modeled as a 1D harmonic oscillator in $$Q$$, with the origin at its own minimum:
 
-7. Huang-Rhys factor
+$$
+$$
+
+8. Huang-Rhys factor
