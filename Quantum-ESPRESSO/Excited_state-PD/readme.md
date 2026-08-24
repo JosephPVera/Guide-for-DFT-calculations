@@ -73,10 +73,16 @@ OCCUPATIONS
 
 An example can be found in the [NV-1_excited](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Excited_state-PD/ZPL/PBE/NV-1_excited) folder, where the 
 
-<pre>
-1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 <span style="color:blue">0.0</span>
-<span style="color:red">0.5 0.5</span> 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
-</pre>
+<table>
+<tr>
+<td>1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0</td>
+<td><b>0.0</b></td>
+</tr>
+<tr>
+<td><b>0.5 0.5</b></td>
+<td>0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0</td>
+</tr>
+</table>
 
 ## 3. Configuration Coordinate
 <p align="center">
