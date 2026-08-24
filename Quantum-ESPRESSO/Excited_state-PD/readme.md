@@ -190,10 +190,10 @@ The Huang–Rhys factor (**S**) is a dimensionless parameter that measures the s
 
 >Note: A particularly useful interpretation is that **S** is approximately the average number of phonons involved in the optical transition.
 
-Therefore, **S** can be computed using the following relation:
+Therefore, **S** can be computed using the following relation (single harmonic mode model):
 
 $$
-S_{i} = \frac{\Delta _{i}}{\hbar \omega_{i}},
+S_{i} \approx <n_{phonon}> = \frac{\Delta _{i}}{\hbar \omega_{i}},
 $$
 
 where $$i$$ can take either the ground ($$g$$) or excited ($$e$$) state value.
