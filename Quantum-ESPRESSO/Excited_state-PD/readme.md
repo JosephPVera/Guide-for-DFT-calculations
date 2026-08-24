@@ -17,6 +17,7 @@ The ZPL is the optical transition between the electronic ground and excited stat
 The ZPL represents the purely electronic transition, i.e., a transition without phonon participation, between the lowest potential energy surfaces (PESs) of the ground and excited states.
 
 This quantity is computed as follows:
+
 $$
 E_{ZPL} = E_{e}(Q_{e}) - E_{g}(Q_{g})
 $$
