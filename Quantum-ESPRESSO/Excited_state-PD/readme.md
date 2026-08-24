@@ -181,4 +181,4 @@ $$
 S_{i} = \frac{\Delta _{i}}{\hbar \omega_{i}}
 $$
 
-   \ where $$i$$ can take values of Anti-Stokes (AS) or Stokes (S).
+  where $$i$$ can take either the Anti-Stokes (AS) or Stokes (S) value.
