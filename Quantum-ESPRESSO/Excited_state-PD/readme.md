@@ -143,7 +143,6 @@ $$
 $$
 E_{em} = E_{e}(Q_{e}) - E_{g}(Q_{e})
 $$
-
 Absorption starts from the ground-state equilibrium ($$Q_{g}$$) and jumps vertically onto the excited surface. Emission starts from the excited-state equilibrium ($$Q_{e}$$) and jumps vertically onto the ground surface.
 
 4. Zero Phonon Line (ZPL)
