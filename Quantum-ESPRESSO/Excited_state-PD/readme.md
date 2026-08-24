@@ -182,3 +182,10 @@ S_{i} = \frac{\Delta _{i}}{\hbar \omega_{i}}
 $$
 
   where $$i$$ can take either the Anti-Stokes (AS) or Stokes (S) value.
+
+7. Debye–Waller factor
+   The Debye–Waller factor (**D**) tells you what fraction of an optical transition occurs without creating or absorbing phonons. This factor is computed using **S** via the following relation:
+
+$$
+D = \exp{S}
+$$
