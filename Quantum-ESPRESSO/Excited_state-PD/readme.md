@@ -93,6 +93,16 @@ $$
 
 **Reminder:** The excited state calculations must start with a **magnetization calculation** if the total magnetization is unknown. Then, the calculation proceeds with the **relaxation**, **SCF**, **NSCF**, and **PDOS** calculations. Check the steps in the [Supercell-PD](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD) folder, specifically Section 1.3.2.
 
+Finally, the ZPL energy is:
+
+$$
+E_{ZPL} = -3971.22599987 - (-3971.35123692) = 0.12523705 Ry
+$$
+
+$$
+E_{ZPL} = 1.7039382292 eV
+$$
+
 ## 3. Configuration Coordinate
 <p align="center">
   <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/Figures/ccd.png" alt="Descripción de la imagen">
