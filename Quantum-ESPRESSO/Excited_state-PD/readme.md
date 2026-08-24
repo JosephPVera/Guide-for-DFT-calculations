@@ -96,11 +96,11 @@ $$
 Finally, the ZPL energy is:
 
 $$
-E_{ZPL} = -3971.22599987 - (-3971.35123692) = 0.12523705 Ry
+E_{ZPL} = -3971.22599987 - (-3971.35123692) = 0.12523705\ \mathrm{Ry}
 $$
 
 $$
-E_{ZPL} = 1.7039382292 eV
+E_{ZPL} = 1.7039382292\ \mathrm{eV}
 $$
 
 ## 3. Configuration Coordinate
