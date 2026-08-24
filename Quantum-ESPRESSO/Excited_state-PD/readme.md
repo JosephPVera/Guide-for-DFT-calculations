@@ -124,11 +124,11 @@ $$
 How much energy each state releases when its geometry relaxes from the other state's minimum to its own:
 
 $$
-\Delta _{AS} = E_{g}(Q_{e}) - E_{g}(Q_{g}),
+\Delta _{g} = \Delta _{AS} = E_{g}(Q_{e}) - E_{g}(Q_{g}),
 $$
 
 $$
-\Delta _{S} = E_{e}(Q_{g}) - E_{e}(Q_{e}).
+\Delta _{e} = \Delta _{S} = E_{e}(Q_{g}) - E_{e}(Q_{e}).
 $$
 
 Here, $$Δ_{AS}$$ is the energy the ground state surface drops by, moving from $$Q_{e}$$ down to its true minimum $$Q_{g}$$, known as the anti-Stokes shift. Meanwhile, $$Δ_{S}$$ is the analogous   drop on the excited surface moving from $$Q_{g}$$ to $$Q_{e}$$, known as the Stokes shift.
@@ -166,7 +166,7 @@ $$
 \Delta _{i} = \frac{1}{2}\omega_{i}^{2}\Delta Q^{2},
 $$
 
-where $$i$$ can take either the Anti-Stokes (AS) or Stokes (S) value. Therefore, 
+where $$i$$ can take either the ground ($$g$$) or excited ($$e$$) state value. Therefore, 
 
 $$
 \hbar \omega_{i} = \hbar \frac{\sqrt{2\Delta _{i}}}{\Delta Q}.
@@ -196,7 +196,7 @@ $$
 S_{i} = \frac{\Delta _{i}}{\hbar \omega_{i}},
 $$
 
-where $$i$$ can take either the Anti-Stokes (AS) or Stokes (S) value.
+where $$i$$ can take either the ground ($$g$$) or excited ($$e$$) state value.
 
 #### 7. Debye–Waller factor
 The Debye–Waller factor (**D**) tells you what fraction of an optical transition occurs without creating or absorbing phonons. This factor is computed using **S** via the following relation:
