@@ -169,8 +169,10 @@ $$
 where $$i$$ can take either the Anti-Stokes (AS) or Stokes (S) value. Therefore, 
 
 $$
-\hbar \omega_{i} = \hbar \frac{\sqrt{2\Delta _{i}}}{\Delta Q}
+\hbar \omega_{i} = \hbar \frac{\sqrt{2\Delta _{i}}}{\Delta Q}.
 $$
+
+The two curves generally have different curvature, hence different frequencies.
 
 #### 6. Huang-Rhys factor
 The Huang–Rhys factor (**S**) is a dimensionless parameter that measures the strength of electron–phonon (or electron–vibrational) coupling in a material. In simple terms, it tells you how strongly an electronic excitation changes the equilibrium position of the atoms, causing the excitation to couple to lattice/molecular vibrations.
