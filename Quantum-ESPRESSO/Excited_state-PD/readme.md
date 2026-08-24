@@ -14,7 +14,7 @@ Within the Franck-Condon approximation, the electronic excitation is much faster
 The ZPL is the optical transition between the electronic ground and excited states without creating or absorbing phonons, meaning the lattice remains in the same vibrational state. It corresponds to the purely electronic transition energy and is therefore directly related to the energy difference between the relaxed ground- and excited-state configurations. In experiments, the ZPL appears as a sharp spectral feature, while the surrounding phonon sidebands arise from electron–phonon coupling.
 
 >Note:
-The ZPL quantity represents the electronic transition without phonon participation between the lowest Potential Energy Surfaces (PESs) of the ground and excited states.
+The ZPL represents the purely electronic transition, i.e., a transition without phonon participation, between the lowest potential energy surfaces (PESs) of the ground and excited states.
 
 
 ## 3. Configuration Coordinate
