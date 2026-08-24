@@ -131,7 +131,7 @@ $$
 \Delta _{S} = E_{e}(Q_{g}) - E_{e}(Q_{e})
 $$
 
-  Here, $$Δ_{AS}$$ is the energy the ground state surface drops by, moving from $$Q_{e}$$ down to its true minimum $$Q_{g}$$, known as the anti-Stokes shift. Meanwhile, $$Δ_{S}$$ is the analogous   drop on the excited surface moving from $$Q_{g}$$ to $$Q_{e}$$, known as the Stokes shift.
+Here, $$Δ_{AS}$$ is the energy the ground state surface drops by, moving from $$Q_{e}$$ down to its true minimum $$Q_{g}$$, known as the anti-Stokes shift. Meanwhile, $$Δ_{S}$$ is the analogous   drop on the excited surface moving from $$Q_{g}$$ to $$Q_{e}$$, known as the Stokes shift.
 
 3. Absorption and emission energies
 These are vertical transitions (Franck–Condon: the nuclei don't move during the fast electronic transition), so each keeps $$Q$$ fixed and only changes electronic state:
@@ -159,4 +159,18 @@ Each surface is modeled as a 1D harmonic oscillator in $$Q$$, with the origin at
 $$
 $$
 
-8. Huang-Rhys factor
+6. Huang-Rhys factor
+   The Huang–Rhys factor (**S**) is a dimensionless parameter that measures the strength of electron–phonon (or electron–vibrational) coupling in a material. In simple terms, it tells you how strongly an electronic excitation changes the equilibrium position of the atoms, causing the excitation to couple to lattice/molecular vibrations.
+   - S <<< 1: weak electron–phonon coupling
+     * The electronic transition produces relatively little lattice distortion.
+     * The optical spectrum tends to be dominated by ZPL.
+     * Phonon sidebands are weak.
+   - S ~ 1: intermediate coupling
+     * Vibrational/phonon-assisted transitions become significant.
+     * Both the ZPL and phonon sidebands can be important.
+   - S >>> 1: strong electron–phonon coupling
+     * The electronic excitation substantially distorts the lattice.
+     * The ZPL becomes relatively weak compared with the phonon sideband.
+     * Many vibrational replicas can appear in the optical spectrum.
+
+     >Note: A particularly useful interpretation is that **S** is approximately the average number of phonons involved in the optical transition 
