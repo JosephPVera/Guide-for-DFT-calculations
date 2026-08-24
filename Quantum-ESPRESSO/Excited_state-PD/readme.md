@@ -189,3 +189,5 @@ $$
 $$
 D = e^{-S}
 $$
+
+ >Note: For a point defect intended as a single-photon emitter, a high Debye–Waller factor is generally desirable because it means a larger fraction of photons are emitted into the sharp ZPL, rather than the broad phonon sideband.
