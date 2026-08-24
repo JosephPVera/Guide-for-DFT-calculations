@@ -157,7 +157,19 @@ $$
 Each surface is modeled as a 1D harmonic oscillator in $$Q$$, with the origin at its own minimum:
 
 $$
-E_{i}(Q) = E_{i}(Q_{i}) + \frac{1}{2}\omega_{i}^{2}(Q - Q_{i})^{2}
+E_{i}(Q) = E_{i}(Q_{i}) + \frac{1}{2}\omega_{i}^{2}(Q - Q_{i})^{2}.
+$$
+
+Solving for $$\omega_{i}$$ using the relaxation energy:
+
+$$
+\Delta _{i} = \frac{1}{2}\omega_{i}^{2}\Delta Q^{2},
+$$
+
+where $$i$$ can take either the Anti-Stokes (AS) or Stokes (S) value. Therefore, 
+
+$$
+\hbar \omega_{i} = \hbar \frac{\sqrt{2\Delta _{i}}}{\Delta Q}
 $$
 
 #### 6. Huang-Rhys factor
