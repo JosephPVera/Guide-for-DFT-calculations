@@ -187,5 +187,5 @@ $$
    The Debye–Waller factor (**D**) tells you what fraction of an optical transition occurs without creating or absorbing phonons. This factor is computed using **S** via the following relation:
 
 $$
-D = e^{S}
+D = e^{-S}
 $$
