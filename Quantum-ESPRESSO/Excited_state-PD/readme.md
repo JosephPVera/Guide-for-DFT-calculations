@@ -176,6 +176,7 @@ $$
    >Note: A particularly useful interpretation is that **S** is approximately the average number of phonons involved in the optical transition.
 
    Therefore, **S** can be computed using the following relation:
+   
    $$
-   S_{i} = \frac{\Delta _{i}}{\hbar \omega}
+   S_{i} = \frac{\Delta _{i}}{\hbar \omega_{i}}
    $$
