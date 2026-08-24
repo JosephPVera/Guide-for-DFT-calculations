@@ -202,7 +202,7 @@ where $$i$$ can take either the Anti-Stokes (AS) or Stokes (S) value.
 The Debye–Waller factor (**D**) tells you what fraction of an optical transition occurs without creating or absorbing phonons. This factor is computed using **S** via the following relation:
 
 $$
-D = e^{-S}
+D_{i} = e^{-S_{i}}
 $$
 
  >Note: For a point defect intended as a single-photon emitter, a high Debye–Waller factor is generally desirable because it means a larger fraction of photons are emitted into the sharp ZPL, rather than the broad phonon sideband.
