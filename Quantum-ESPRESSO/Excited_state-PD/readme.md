@@ -188,7 +188,7 @@ The Huang–Rhys factor (**S**) is a dimensionless parameter that measures the s
      * The ZPL becomes relatively weak compared with the phonon sideband.
      * Many vibrational replicas can appear in the optical spectrum.
 
->Note: A particularly useful interpretation is that **S** is approximately the average number of phonons involved in the optical transition.
+>Note: A particularly useful interpretation is that **S** is approximately the average number of phonons involved in the optical transition. It is important because it quantifies how strongly an electronic transition is coupled to lattice vibrations (phonons).
 
 Therefore, **S** can be computed using the following relation (single harmonic mode model):
 
