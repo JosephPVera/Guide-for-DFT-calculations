@@ -90,7 +90,7 @@ Electronic dielectric permittivity tensor (relative, adimensional)
 Since that:
 
 $$
-\varepsilon _{o} = \varepsilon _{\inf} + \varepsilon _{ion}
+\varepsilon _{o} = \varepsilon _{∞} + \varepsilon _{ion}
 $$
 
 Therefore:
@@ -107,6 +107,13 @@ $$
 5.895298 & -0.007681 & -0.007681 \\
 -0.007681 & 5.895298 & 0.007681 \\
 -0.007681 & 0.007681 & 5.895298
+\end{pmatrix}
+
+=
+\begin{pmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & 0
 \end{pmatrix}
 $$
 
