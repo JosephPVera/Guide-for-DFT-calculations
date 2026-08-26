@@ -87,7 +87,7 @@ Electronic dielectric permittivity tensor (relative, adimensional)
         -0.007681    5.895298    0.007681
         -0.007681    0.007681    5.895298
 ```
-Since that:
+Given that:
 
 $$
 \varepsilon _{o} = \varepsilon _{∞} + \varepsilon _{ion}
