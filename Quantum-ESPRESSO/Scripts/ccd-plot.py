@@ -3,39 +3,12 @@
 # 2025-06
 
 """
-Configuration Coordinate Diagram (CCD) builder and Huang-Rhys analysis.
-
 Works with either VASP (default) or Quantum ESPRESSO (--qe) outputs.
 
-Workflow this script expects:
-  1. Ground state relaxed geometry + total energy E_g(Qg)
-  2. Excited state relaxed geometry + total energy E_e(Qe)
-  3. Single-point ground-state Hamiltonian at excited geometry -> E_g(Qe)
-  4. Single-point excited-state Hamiltonian at ground geometry -> E_e(Qg)
-  5. (Optional) a series of interpolated structures between the two
-     minima, each with a single-point energy on the relevant surface,
-     for a proper parabola fit instead of the two-point estimate.
-
 Usage:
-    - Fill in the INPUTS section below (paths to relaxed structures,
-      and the four total energies from VASP or QE output files).
-    - Optionally add interpolated (lambda, E_g, E_e) points for a
-      real parabola fit; leave those lists empty to fall back to the
-      two-point estimate.
-    - Run:
-        python plotccd.py            # VASP (default)
-        python plotccd.py --qe       # Quantum ESPRESSO
-    - Produces ccd.png and prints dQ, effective phonon energies,
-      Huang-Rhys factors, and Debye-Waller factors for both branches.
+python3 ccd-plot.py [--qe]    
 
-Note on Stokes / anti-Stokes naming (see e.g. Huang, Ke & Lei,
-J. Appl. Phys. 137, 134303 (2025), Fig. 5):
-    Stokes shift (Delta S)       = relaxation energy on the EXCITED
-                                    branch (dE_excited)
-    anti-Stokes shift (Delta AS) = relaxation energy on the GROUND
-                                    branch (dE_ground)
-Both names are written to ccd.dat alongside the Relaxation_energy_*
-labels so the file matches either convention.
+ --qe: Quantum ESPRESSO. Convert energies from Ry to eV
 """
 
 import argparse
@@ -43,10 +16,6 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 from ase.io import read
-
-# ---------------------------------------------------------------- #
-# CLI -- pick the code the inputs below come from
-# ---------------------------------------------------------------- #
 
 parser = argparse.ArgumentParser(
     description="Build a configuration coordinate diagram (CCD) and "
@@ -58,41 +27,18 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-# ---------------------------------------------------------------- #
-# INPUTS -- edit these for your system
-# ---------------------------------------------------------------- #
-
 # Relaxed structures. Filenames/format switch automatically with --qe.
 if args.qe:
-    # QE input files (ATOMIC_POSITIONS + CELL_PARAMETERS cards),
-    # read with ASE's 'espresso-in' format.
     GROUND_STRUCT = "ground_state.in"
     EXCITED_STRUCT = "excited_state.in"
     READ_FORMAT = "espresso-in"
 else:
-    # VASP POSCAR files, read with ASE's 'vasp' format.
     GROUND_STRUCT = "POSCAR_ground"
     EXCITED_STRUCT = "POSCAR_excited"
     READ_FORMAT = "vasp"
 
-# Total energies:
-#   - VASP (default): as printed by OUTCAR/OSZICAR ("energy(sigma->0)"
-#     or "free  energy   TOTEN"), already in eV.
-#   - QE (--qe): as printed by QE ("!    total energy"), in Rydberg;
-#     converted to eV automatically below.
 RY_TO_EV = 13.605703976
 
-#E_g_Qg = -1934.980784   # ground state Hamiltonian at ground geometry
-#E_g_Qe = -1934.809417   # ground state Hamiltonian at excited geometry
-#E_e_Qg = -1933.070423   # excited state Hamiltonian at ground geometry
-#E_e_Qe = -1933.271245   # excited state Hamiltonian at excited geometry
-
-# Optional: interpolated single-point energies for a real parabola
-# fit near each minimum. lam = 0 at ground geometry, lam = 1 at
-# excited geometry. Leave both lists empty ([]) to use the two-point
-# method only. Fill these once, in the native units of whichever
-# code produced them (eV for VASP, Ry for QE) -- the --qe flag
-# controls whether the Ry->eV conversion below is applied.
 lam_ground_branch = [0.000, 0.125, 0.250, 0.375, 0.500, 0.625, 0.750, 0.875, 1.000]
 #E_ground_branch = [-1934.980784, -1934.977989, -1934.969964, -1934.956341, -1934.937106, -1934.912548, -1934.883567, -1934.849263, -1934.809417] # VASP
 E_ground_branch = [-3971.35123692, -3971.35102213, -3971.35043852, -3971.34948852, -3971.34817434, -3971.34649790, -3971.34446085, -3971.34206465, -3971.33931072] #QE
@@ -122,9 +68,10 @@ dQ2 = np.sum(masses[:, None] * disp**2)
 dQ = np.sqrt(dQ2)                                           # amu^1/2 . Angstrom
 
 print(f"ΔQ = {dQ:.4f} amu^(1/2)*Angstrom")
+
 # ---------------------------------------------------------------- #
 # 2. Relaxation energies (two-point method)
-#    == Stokes / anti-Stokes shifts, see note at top of file
+#    == Stokes / anti-Stokes shifts
 # ---------------------------------------------------------------- #
 
 dE_ground = E_g_Qe - E_g_Qg   # ground state relaxes going Qe -> Qg  == anti-Stokes shift
@@ -150,22 +97,18 @@ print(f"Stokes shift (excited) = {dE_excited:.4f} eV")
 #
 # eV . amu^-1/2 . Angstrom^-1 -> meV conversion factor below is the
 # standard prefactor used in the defect-CCD literature (e.g.
-# Alkauskas et al., New J. Phys. 16, 073026 (2014)); double check
-# against a published example before trusting the numeric value.
+# Alkauskas et al., New J. Phys. 16, 073026 (2014))
 # ---------------------------------------------------------------- #
 
 MEV_PER_UNIT = 64.654148  # meV per sqrt(eV) / (amu^1/2 . Angstrom)
-
 
 def effective_frequency_meV(dE, dQ):
     """hbar*omega in meV from a relaxation energy (eV) and dQ."""
     return MEV_PER_UNIT * np.sqrt(2.0 * dE) / dQ
 
-
 def huang_rhys(dE_eV, homega_meV):
     """Dimensionless Huang-Rhys factor. Same energy units, no conversion needed."""
     return (dE_eV * 1000.0) / homega_meV
-
 
 def debye_waller_factor(S):
     """
@@ -175,11 +118,9 @@ def debye_waller_factor(S):
     """
     return np.exp(-S)
 
-
-# --- two-point estimate, used unless a parabola fit overrides it ---
+# two-point estimate, used unless a parabola fit overrides it 
 homega_g = effective_frequency_meV(dE_ground, dQ)
 homega_e = effective_frequency_meV(dE_excited, dQ)
-
 
 def fit_parabola_frequency(lam_list, E_list, lam_min, dQ):
     """
@@ -199,7 +140,6 @@ def fit_parabola_frequency(lam_list, E_list, lam_min, dQ):
     k_eff = 2 * a
     # hbar*omega = hbar*sqrt(k_eff) in the same mass-weighted units
     return MEV_PER_UNIT * np.sqrt(k_eff)
-
 
 fit_g = fit_parabola_frequency(lam_ground_branch, E_ground_branch, 0.0, dQ)
 fit_e = fit_parabola_frequency(lam_excited_branch, E_excited_branch, 1.0, dQ)
@@ -268,17 +208,15 @@ fig, ax = plt.subplots(figsize=(6, 5))
 ax.plot(Q, E_ground_curve, color="xkcd:blue", label="Ground state")
 ax.plot(Q, E_excited_curve, color="xkcd:orange", label="Excited state")
 
-# Overlay the actual computed points, so you can see how well the
-# parabola tracks the real interpolated-geometry energies.
 if len(lam_ground_branch) > 0:
     Q_ground_pts = np.array(lam_ground_branch) * dQ
     ax.plot(Q_ground_pts, E_ground_branch, "o", color="xkcd:blue",
-            markerfacecolor="white", markersize=5)#, label="Ground state (data)")
+            markerfacecolor="white", markersize=5)#, label="Ground state")
 
 if len(lam_excited_branch) > 0:
     Q_excited_pts = np.array(lam_excited_branch) * dQ
     ax.plot(Q_excited_pts, E_excited_branch, "o", color="xkcd:orange",
-            markerfacecolor="white", markersize=5)#, label="Excited state (data)")
+            markerfacecolor="white", markersize=5)#, label="Excited state")
 
 ax.plot(Q_g_min, E_g_Qg, "o", color="xkcd:blue")
 ax.plot(Q_e_min, E_e_Qe, "o", color="xkcd:orange")
@@ -314,11 +252,6 @@ ax.set_ylabel("Total energy (eV)", fontsize=14)
 ax.legend(frameon=False)
 fig.tight_layout()
 fig.savefig("ccd.png", dpi=150)
-#print("Saved plot to ccd.png")
-
-# ---------------------------------------------------------------- #
-# 5. Save results to ccd.dat
-# ---------------------------------------------------------------- #
 
 with open("ccd.dat", "w") as f:
     f.write("Configuration Coordinate Diagram\n")
@@ -361,4 +294,3 @@ with open("ccd.dat", "w") as f:
     f.write("-----------------------------------------\n")   
     f.write(f"D (ground) = {DW_g:.6f}\n")
     f.write(f"D (excited) = {DW_e:.6f}\n")
-#print("Saved results to ccd.dat")
