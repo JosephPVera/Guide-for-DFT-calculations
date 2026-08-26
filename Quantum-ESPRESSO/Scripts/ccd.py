@@ -4,32 +4,20 @@
 
 """
 Generate a set of inputs along a linear configuration coordinate (CCD)
-between a relaxed ground-state structure and a relaxed excited-state
+between a relaxed ground state structure and a relaxed excited state
 structure, for both electronic configurations.
 
-Default mode: VASP.
-    Reads POSCAR_ground / POSCAR_excited, linearly interpolates positions
-    and cell between them, and writes one POSCAR per lambda value into
-    ground_state/<lambda>/POSCAR and excited_state/<lambda>/POSCAR. The
-    two trees get an identical POSCAR per lambda -- what differs between
-    a "ground" and "excited" VASP run is the INCAR (occupations/
-    NUPDOWN/etc), not the POSCAR.
-
---qe mode: Quantum ESPRESSO.
-    Reads two QE 'scf' input templates, ground_state.in and
-    excited_state.in, that already contain everything needed to run a
-    calculation (CONTROL, SYSTEM, ELECTRONS, ATOMIC_SPECIES, K_POINTS,
-    CELL_PARAMETERS, ATOMIC_POSITIONS, and -- for the excited template
-    only -- an OCCUPATIONS card). Builds the same lambda-interpolated
-    geometries and writes one QE input per lambda into
-    ground_configs/<lambda>/scf.in and excited_configs/<lambda>/scf.in,
-    each using its own template's settings (SYSTEM/ELECTRONS/OCCUPATIONS)
-    but the shared geometry.
+Default mode: VASP
+    Reads POSCAR_ground and POSCAR_excited, linearly interpolates positions
+    and cell between them, and writes one POSCAR per lambda value
 
 Usage:
-    python ccd.py                     # VASP mode: POSCAR_ground / POSCAR_excited
-    python ccd.py --qe                # QE mode: ground_state.in / excited_state.in
-    python ccd.py --n-images 5
+python3 ccd.py [--qe] [--n-images]
+
+--qe: Quantum ESPRESSO.
+    Reads two QE 'scf' input templates, ground_state.in and
+    excited_state.in, that already contain everything needed to run a
+    calculation 
 """
 
 import argparse
@@ -37,17 +25,9 @@ import os
 import re
 import numpy as np
 
-
-# ----------------------------------------------------------------------
-# Shared
-# ----------------------------------------------------------------------
 def get_lambdas(n_images):
     return np.linspace(0, 1, n_images)
 
-
-# ----------------------------------------------------------------------
-# VASP mode
-# ----------------------------------------------------------------------
 def run_vasp(n_images):
     from ase.io import read, write
 
@@ -87,16 +67,11 @@ def run_vasp(n_images):
     print(f'\nGenerated {n_images} POSCAR pairs in '
           f'"{ground_outdir}/" and "{excited_outdir}/"')
 
-
-# ----------------------------------------------------------------------
-# QE mode
-# ----------------------------------------------------------------------
 def get_nat(text):
     m = re.search(r'nat\s*=\s*(\d+)', text)
     if not m:
         raise ValueError("Could not find 'nat' in &SYSTEM")
     return int(m.group(1))
-
 
 def parse_cell(text):
     """Return the 3x3 cell matrix (angstrom) and the exact header line
@@ -111,10 +86,7 @@ def parse_cell(text):
             return np.array(vecs), header
     raise ValueError('CELL_PARAMETERS block not found')
 
-
 def parse_positions(text, nat):
-    """Return (species list, Nx3 array of fractional coords, header line,
-    index of the first coordinate line, index right after the last one)."""
     lines = text.splitlines()
     idx = next(i for i, l in enumerate(lines)
                if l.strip().upper().startswith('ATOMIC_POSITIONS'))
@@ -127,9 +99,7 @@ def parse_positions(text, nat):
         coords.append([float(x) for x in parts[1:4]])
     return species, np.array(coords), header, idx, idx + 1 + nat
 
-
 def set_param(text, key, value):
-    """Replace a scalar namelist parameter, e.g. prefix or outdir."""
     pattern = re.compile(
         r"(^\s*" + re.escape(key) + r"\s*=\s*).*?(,?\s*)$",
         re.MULTILINE
@@ -143,10 +113,7 @@ def set_param(text, key, value):
         raise ValueError(f"Parameter '{key}' not found to replace")
     return new_text
 
-
 def build_image(template_text, nat, species, new_coords, new_cell):
-    """Return a full QE input string with positions and cell swapped in,
-    keeping the template's own prefix/outdir."""
     lines = template_text.splitlines()
 
     # --- swap ATOMIC_POSITIONS block ---
@@ -178,7 +145,6 @@ def build_image(template_text, nat, species, new_coords, new_cell):
     text = set_param(text, 'outdir', base_outdir)
 
     return text
-
 
 def run_qe(n_images):
     ground_outdir = 'ground_configs'
@@ -229,24 +195,19 @@ def run_qe(n_images):
     print(f'\nDone: {n_images} ground inputs in "{ground_outdir}/", '
           f'{n_images} excited inputs in "{excited_outdir}/".')
 
-
-# ----------------------------------------------------------------------
-# CLI
-# ----------------------------------------------------------------------
 def parse_args():
     p = argparse.ArgumentParser(
-        description="Generate CCD-interpolated inputs between a ground- and "
-                     "excited-state structure. Defaults to VASP; pass --qe "
+        description="Generate CCD-interpolated inputs between a ground and "
+                     "excited state structure. Defaults to VASP; pass --qe "
                      "for Quantum ESPRESSO."
     )
     p.add_argument('--qe', action='store_true',
                     help="Quantum ESPRESSO mode (default: VASP). Reads "
-                         "'ground_state.in' / 'excited_state.in'. VASP mode "
-                         "reads 'POSCAR_ground' / 'POSCAR_excited'.")
+                         "'ground_state.in' and 'excited_state.in'. VASP mode "
+                         "reads 'POSCAR_ground' and 'POSCAR_excited'.")
     p.add_argument('--n-images', type=int, default=9,
                     help='Number of images along lambda = 0..1 (default: 9)')
     return p.parse_args()
-
 
 def main():
     args = parse_args()
@@ -254,7 +215,6 @@ def main():
         run_qe(args.n_images)
     else:
         run_vasp(args.n_images)
-
 
 if __name__ == '__main__':
     main()
