@@ -90,19 +90,19 @@ Electronic dielectric permittivity tensor (relative, adimensional)
 Since that:
 
 $$
-\epsilon _{o} = \epsilon _{\inf} + \epsilon _{ion}
+\varepsilon _{o} = \varepsilon _{\inf} + \varepsilon _{ion}
 $$
 
 Therefore:
 
 $$
-\epsilon _{ion} = 
+\varepsilon _{ion} = 
 \begin{pmatrix}
 5.895298 & -0.007681 & -0.007681 \\
 -0.007681 & 5.895298 & 0.007681 \\
 -0.007681 & 0.007681 & 5.895298
 \end{pmatrix}
--
+\-
 \begin{pmatrix}
 5.895298 & -0.007681 & -0.007681 \\
 -0.007681 & 5.895298 & 0.007681 \\
