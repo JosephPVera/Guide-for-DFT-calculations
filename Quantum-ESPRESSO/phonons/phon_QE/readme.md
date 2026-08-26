@@ -75,7 +75,7 @@ where **20** represents the number of CPU cores used for the calculation. Keep i
 ```bash
 cp -r ../ph/diamond.dyn1 .
 ```
-Once the calculation is done, the electronic and total dielectric tensor can also be extracted from the **.out** file:
+Once the calculation is done, the electronic and total dielectric tensor can also be extracted from the **.out** file. An example of this calculation for diamond can be found in the [dynmat folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dynmat), where the extracted information looks as follows:
 ```bash
 Electronic dielectric permittivity tensor (relative, adimensional)
          5.895298   -0.007681   -0.007681
