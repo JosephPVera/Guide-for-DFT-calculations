@@ -1,0 +1,22 @@
+#!/bin/bash
+# Specify jobname:
+#SBATCH --job-name=Joseph
+# Specify the number of nodes and the number of CPU's (tasks) per node:
+#SBATCH --nodes=1
+#SBATCH --ntasks=20
+#SBATCH -p medio
+# The maximum time allowed for the job, in hh:mm:ss
+#SBATCH --time=24:00:00
+# Maximum memory allowed per cpu
+!#SBATCH --mem-per-cpu=4G
+
+ulimit -s unlimited
+ulimit -a
+
+# Launch Modules
+module load spack siesta
+
+## Run command
+mpirun -np $SLURM_NTASKS siesta diamond_band.fdf > diamond_band.out
+
+exit 0

@@ -1,0 +1,67 @@
+SystemName   Diamond primitive cell
+SystemLabel  diamond
+
+NumberOfAtoms     2
+NumberOfSpecies   1
+
+%block ChemicalSpeciesLabel
+ 1  6  C
+%endblock ChemicalSpeciesLabel
+
+LatticeConstant 1.0 Ang
+%block LatticeVectors
+          0.000000361       1.796683929       1.796683929
+          1.796683927       0.000000361       1.796683929
+          1.796683927       1.796683929       0.000000361
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat  Fractional
+%block AtomicCoordinatesAndAtomicSpecies
+  0.000  0.000  0.000  1
+  0.250  0.250  0.250  1
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+# Funcional
+XC.functional  GGA
+XC.authors     PBE
+
+# Base
+PAO.BasisSize   DZP
+PAO.EnergyShift 10 meV
+PAO.SplitNorm   0.15
+
+# Malla
+MeshCutoff      600 Ry
+
+# SCF
+MaxSCFIterations      100
+SCF.Mixer.Weight       0.25
+SCF.Mixer.History        5
+DM.UseSaveDM          T
+ElectronicTemperature 300 K
+SolutionMethod        diagon
+SCF.DM.Tolerance          1.d-8
+SCF.DM.Converge      true
+SaveHS true
+
+# Misma k-grid densa para mantener consistencia con la DM
+%block kgrid_Monkhorst_Pack
+  12  0  0  0.0
+  0  12  0  0.0
+  0  0  12  0.0
+%endblock kgrid_Monkhorst_Pack
+
+# Camino de alta simetría para estructura FCC (diamante)
+BandLinesScale  ReciprocalLatticeVectors
+%block BandLines
+   1   0.000  0.000  0.000   \Gamma
+ 800   0.500  0.000  0.500   X
+ 800   0.500  0.250  0.750   W
+ 800   0.375  0.375  0.750   K
+ 800   0.000  0.000  0.000   \Gamma
+ 800   0.500  0.500  0.500   L
+ 800   0.625  0.250  0.625   U
+ 800   0.500  0.250  0.750   W
+ 800   0.500  0.500  0.500   L
+ 800   0.375  0.375  0.750   K
+%endblock BandLines
