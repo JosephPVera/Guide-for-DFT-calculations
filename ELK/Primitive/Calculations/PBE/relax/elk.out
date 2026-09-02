@@ -1,11 +1,11 @@
 
 ┌─────────────────────────────────┐
-│ Elk code version 11.0.2 started │
+│ Elk code version 11.2.3 started │
 └─────────────────────────────────┘
 
-Number of MPI processes : 6
+Number of MPI processes : 4
 Number of OpenMP threads per MPI process : 1
-Total number of threads (MPI x OpenMP) : 6
+Total number of threads (MPI x OpenMP) : 4
 Maximum OpenMP nesting level : 4
 Number of OpenMP threads at first nesting level : 1
 Number of MKL threads : 1
