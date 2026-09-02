@@ -136,8 +136,6 @@ def main():
     atom = args.pdos if isinstance(args.pdos, int) else None
 
     VBM_HA = get_vbm_minus_ef(args.scf_dir)
-    #print(f"VBM - E_F = {VBM_HA:.10f} Ha  "
-    #      f"({VBM_HA * HA_TO_EV:.6f} eV)  [from {args.scf_dir}]")
 
     plt.figure()#figsize=(7, 5))
 
