@@ -8,7 +8,6 @@ NumberOfSpecies   1
  1  6  C
 %endblock ChemicalSpeciesLabel
 
-# Celda primitiva FCC (a = 3.567 Ang)
 LatticeConstant 3.567 Ang
 %block LatticeVectors
   0.000  0.500  0.500
@@ -22,19 +21,15 @@ AtomicCoordinatesFormat  Fractional
   0.250  0.250  0.250  1
 %endblock AtomicCoordinatesAndAtomicSpecies
 
-# Funcional
 XC.functional  GGA
 XC.authors     PBE
 
-# Conjunto de base
 PAO.BasisSize   DZP
 PAO.EnergyShift 10 meV
 PAO.SplitNorm   0.15
 
-# Malla real
 MeshCutoff      600 Ry
 
-# SCF
 MaxSCFIterations      100
 SCF.Mixer.Weight       0.25
 SCF.Mixer.History        5
@@ -44,14 +39,12 @@ SCF.DM.Tolerance          1.d-8
 SCF.DM.Converge      true
 SaveHS true
 
-# k-grid moderada para relajación
 %block kgrid_Monkhorst_Pack
   8  0  0  0.0
   0  8  0  0.0
   0  0  8  0.0
 %endblock kgrid_Monkhorst_Pack
 
-# Optimización de geometría (posiciones + celda)
 MD.TypeOfRun       CG
 MD.NumCGSteps      200
 MD.MaxForceTol     0.01 eV/Ang
@@ -59,5 +52,4 @@ MD.VariableCell    T
 MD.TargetPressure  0.0 GPa
 MD.MaxStressTol    0.1 GPa
 
-# Escribir geometría final
 Write.StructOut    T

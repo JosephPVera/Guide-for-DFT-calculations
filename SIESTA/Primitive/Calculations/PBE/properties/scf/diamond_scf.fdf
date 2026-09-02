@@ -21,19 +21,15 @@ AtomicCoordinatesFormat  Fractional
   0.250  0.250  0.250  1
 %endblock AtomicCoordinatesAndAtomicSpecies
 
-# Funcional
 XC.functional  GGA
 XC.authors     PBE
 
-# Base
 PAO.BasisSize   DZP
 PAO.EnergyShift 10 meV
 PAO.SplitNorm   0.15
 
-# Malla
 MeshCutoff      600 Ry
 
-# SCF
 MaxSCFIterations      100
 SCF.Mixer.Weight       0.25
 SCF.Mixer.History        5
@@ -44,7 +40,6 @@ SCF.DM.Converge      true
 SaveHS true
 SaveRho true
 
-# k-grid DENSO para propiedades (DOS/PDOS se harán a partir de esta DM)
 %block kgrid_Monkhorst_Pack
   12  0  0  0.0
   0  12  0  0.0

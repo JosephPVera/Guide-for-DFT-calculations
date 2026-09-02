@@ -21,19 +21,15 @@ AtomicCoordinatesFormat  Fractional
   0.250  0.250  0.250  1
 %endblock AtomicCoordinatesAndAtomicSpecies
 
-# Funcional
 XC.functional  GGA
 XC.authors     PBE
 
-# Base
 PAO.BasisSize   DZP
 PAO.EnergyShift 10 meV
 PAO.SplitNorm   0.15
 
-# Malla
 MeshCutoff      600 Ry
 
-# SCF
 MaxSCFIterations      100
 SCF.Mixer.Weight       0.25
 SCF.Mixer.History        5
@@ -44,14 +40,12 @@ SCF.DM.Tolerance          1.d-8
 SCF.DM.Converge      true
 SaveHS true
 
-# Misma k-grid densa para mantener consistencia con la DM
 %block kgrid_Monkhorst_Pack
   12  0  0  0.0
   0  12  0  0.0
   0  0  12  0.0
 %endblock kgrid_Monkhorst_Pack
 
-# Camino de alta simetría para estructura FCC (diamante)
 BandLinesScale  ReciprocalLatticeVectors
 %block BandLines
    1   0.000  0.000  0.000   \Gamma
