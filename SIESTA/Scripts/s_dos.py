@@ -38,11 +38,12 @@ with the SIESTA convention (see the DOS/PDOS section of the manual):
                                                (the last two encode the Mx,
                                                My magnetization and are not
                                                part of the physical DOS;
-                                               total DOS = up + down)                                              
+                                               total DOS = up + down)   
 """
 
 import argparse
 import glob
+import re
 import sys
 import xml.etree.ElementTree as ET
 
@@ -54,13 +55,69 @@ L_LABELS = {0: "s", 1: "p", 2: "d", 3: "f", 4: "g"}
 
 SPIN_COLORS = ("tab:blue", "tab:red")
 POLARIZED_LABELS = ("spin up", "spin down")
-NONCOLLINEAR_LABELS = ("Sz up", "Sz down")
 
-def spin_kind(nspin):
-    return {1: "Spin none", 2: "Spin polarized",
-            4: "Spin non-colinear/spin-orbit"}.get(nspin, f"nspin={nspin}")
+GAP_TOL = 1e-4  # eV, same tolerance used in s_bandplot.py
 
-GAP_TOL = 1e-4 
+
+def normalize_label(label):
+    return re.sub(r"[-_.]", "", label).lower()
+
+def parse_fdf(path):
+    fdf_dict = {}
+    with open(path) as f:
+        for raw_line in f:
+            line = raw_line.split("#", 1)[0].strip()
+            if not line:
+                continue
+            tokens = line.split()
+            if len(tokens) < 2:
+                continue
+            label = normalize_label(tokens[0])
+            fdf_dict[label] = tokens[1:]
+    return fdf_dict
+
+SPIN_VALUES = {
+    "none": "non-polarized",
+    "nonpolarized": "non-polarized",
+    "polarized": "polarized",
+    "colinear": "polarized",
+    "collinear": "polarized",
+    "noncolinear": "non-colinear",
+    "noncollinear": "non-colinear",
+    "spinorbit": "spin-orbit",
+}
+
+SPIN_NCHANNELS = {
+    "non-polarized": 1,
+    "polarized": 2,
+    "non-colinear": 4,
+    "spin-orbit": 4,
+}
+
+def get_spin_type(fdf_dict):
+    key = normalize_label("Spin")
+    if key not in fdf_dict:
+        return "non-polarized"
+    raw_value = fdf_dict[key][0]
+    value = normalize_label(raw_value)
+    if value not in SPIN_VALUES:
+        sys.exit(f"Unrecognized Spin value '{raw_value}' in the .fdf "
+                  f"(expected non-polarized/none, polarized/colinear, "
+                  f"non-colinear, or spin-orbit).")
+    return SPIN_VALUES[value]
+
+def calc_name_for(spin_type, nspin):
+    if spin_type == "polarized":
+        return "Spin polarized"
+    if spin_type == "non-colinear":
+        return "Spin non-colinear"
+    if spin_type == "spin-orbit":
+        return "Spin spin-orbit"
+    if nspin == 2:
+        return "Spin polarized"
+    if nspin == 4:
+        return "Spin non-colinear/spin-orbit"
+    return "Spin none"
 
 def find_default_file(extension):
     candidates = sorted(glob.glob(f"*.{extension}"))
@@ -102,7 +159,7 @@ def parse_eig_eigenvalues(path):
         tokens = f.read().split()
 
     pos = 0
-    pos += 1  
+    pos += 1  # Ef (unused here)
     nbands = int(tokens[pos]); pos += 1
     nspin_header = int(tokens[pos]); pos += 1
     nk = int(tokens[pos]); pos += 1
@@ -110,7 +167,7 @@ def parse_eig_eigenvalues(path):
 
     eigs = []
     for _ik in range(nk):
-        pos += 1  
+        pos += 1  # k-index token
         for _isp in range(nspin):
             for _ib in range(nbands):
                 eigs.append(float(tokens[pos])); pos += 1
@@ -119,7 +176,11 @@ def parse_eig_eigenvalues(path):
 
 def classify_and_get_reference(eigenvalues, e_fermi, tol=GAP_TOL):
     """Decide whether the system is a metal or a semiconductor/insulator
-    and return the energy reference to use. Returns (reference, is_semiconductor, vbm, cbm)."""
+    and return the energy reference to use. Same idea as
+    s_bandplot.py's classify_and_get_reference, applied here to the .EIG
+    eigenvalues instead of the .bands array.
+
+    Returns (reference, is_semiconductor, vbm, cbm)."""
     occupied = eigenvalues[eigenvalues <= e_fermi]
     unoccupied = eigenvalues[eigenvalues > e_fermi]
 
@@ -137,7 +198,7 @@ def classify_and_get_reference(eigenvalues, e_fermi, tol=GAP_TOL):
 def get_energy_reference(fermi_energy):
     """Look for a .EIG file to classify the material (metal vs.
     semiconductor/insulator) and pick the corresponding energy reference
-    and axis label"""
+    and axis label. Falls back to E_F if no .EIG file is found."""
     eig_file = find_default_file("EIG")
     if eig_file is None:
         print("No .EIG file found -> cannot classify metal vs "
@@ -167,6 +228,10 @@ def process_dos(filepath):
         3 columns -> Spin polarized         : energy, DOS-up, DOS-down
         5 columns -> Spin non-col. / SOC    : energy, DOS-up, DOS-down,
                                                Re{DOS-updown}, Im{DOS-updown}
+
+    Returns (energy, channels, nspin) where channels is a dict that always
+    has a 'total' entry, plus 'up'/'down' (and 'Re'/'Im' for the 5-column
+    case) when more than one channel is present.
     """
     try:
         data = np.loadtxt(filepath)
@@ -197,7 +262,7 @@ def process_dos(filepath):
     return energy, channels, nspin
 
 def process_pdos(filepath, atom_index):
-    """Read a .PDOS(.xml) file and return (energy, pdos_by_orbital, nspin)
+    """Read a .PDOS file and return (energy, pdos_by_orbital, nspin)
     for the requested atom. pdos_by_orbital maps the orbital letter
     ('s', 'p', 'd', ...) to an array of shape (nspin, npoints), summed over
     all orbitals of that type (m, z) belonging to that atom."""
@@ -232,7 +297,7 @@ def process_pdos(filepath, atom_index):
 
         # Each orbital's <data> holds nspin values per energy point.
         raw = np.array([float(v) for v in data_tag.text.split()])
-        data = raw.reshape(npoints, nspin).T  
+        data = raw.reshape(npoints, nspin).T  # -> (nspin, npoints)
 
         if label not in pdos_by_orbital:
             pdos_by_orbital[label] = np.zeros((nspin, npoints))
@@ -241,61 +306,72 @@ def process_pdos(filepath, atom_index):
     return energy, pdos_by_orbital, nspin
 
 def plot_total_dos(ax, energy, channels, nspin, force_total):
-    """Plot the total DOS, spin-resolved when possible/desired. Labels
-    depend on whether this is a genuinely polarized (2-channel) or a
-    non-colinear/spin-orbit (4-channel, NOT polarized) calculation"""
-    if nspin == 1 or force_total:
+    """Plot the total DOS. Only the genuinely polarized case (nspin == 2)
+    is split into spin-resolved curves by default; non-polarized
+    (nspin == 1) and non-colinear/spin-orbit (nspin == 4) are NOT
+    polarized cases, so DOS-up == DOS-down for nspin == 4 (no exchange
+    splitting) and only one of the two (DOS-up) is plotted -- see the
+    module docstring."""
+    show_split = (nspin == 2) and not force_total
+    if show_split:
+        ax.plot(energy, channels["up"], color=SPIN_COLORS[0],
+                 linewidth=1.2, label=POLARIZED_LABELS[0])
+        ax.plot(energy, -channels["down"], color=SPIN_COLORS[1],
+                 linewidth=1.2, label=POLARIZED_LABELS[1])
+        ax.legend()
+    elif nspin == 1:
         ax.plot(energy, channels["total"], color="blue", linewidth=1.2)
     else:
-        up_label, down_label = (
-            POLARIZED_LABELS if nspin == 2 else NONCOLLINEAR_LABELS
-        )
-        ax.plot(energy, channels["up"], color=SPIN_COLORS[0],
-                 linewidth=1.2, label=up_label)
-        ax.plot(energy, -channels["down"], color=SPIN_COLORS[1],
-                 linewidth=1.2, label=down_label)
-        ax.legend()
+        # nspin == 4 (or --total on a polarized run): DOS-up == DOS-down
+        # for a non-polarized (non-colinear/spin-orbit) calculation, so
+        # plot only DOS-up rather than summing.
+        curve = channels["up"] if nspin == 4 else channels["total"]
+        ax.plot(energy, curve, color="blue", linewidth=1.2)
 
 def plot_pdos(ax, energy, pdos_by_orbital, nspin, force_total):
     """Plot the orbital-resolved PDOS in a fixed s, p, d, f, g, ... order
-    (any other label found goes at the end); spin-resolved when
-    possible/desired, one color per orbital and (when spin-resolved)
-    solid/dashed linestyle for up/down. As in plot_total_dos, the "up"/
-    "down" wording is only used for the genuinely polarized (2-channel)
-    case; the non-colinear/spin-orbit (4-channel) case is labeled "Sz"
-    instead, since it is not a polarized case"""
+    (any other label found goes at the end). Only the genuinely polarized
+    case (nspin == 2) is split into spin-resolved curves by default;
+    non-polarized (nspin == 1) and non-colinear/spin-orbit (nspin == 4)
+    are NOT polarized cases, so each orbital is always plotted as a
+    single curve"""
     ordered_labels = [l for l in L_LABELS.values() if l in pdos_by_orbital]
     ordered_labels += [l for l in pdos_by_orbital if l not in ordered_labels]
 
-    up_suffix, down_suffix = (
-        POLARIZED_LABELS if nspin == 2 else NONCOLLINEAR_LABELS
-    )
+    show_split = (nspin == 2) and not force_total
 
     for i, label in enumerate(ordered_labels):
         color = f"C{i}"
         data = pdos_by_orbital[label]  # (nspin, npoints)
 
-        if nspin == 1 or force_total:
-            total = data[0] if nspin == 1 else data[:2].sum(axis=0)
-            ax.plot(energy, total, color=color, linewidth=1.2,
-                     label=f"{label} orbital")
-        else:
+        if show_split:
             ax.plot(energy, data[0], color=color, linewidth=1.2, ls="-",
-                     label=f"{label} {up_suffix}")
+                     label=f"{label} {POLARIZED_LABELS[0]}")
             ax.plot(energy, -data[1], color=color, linewidth=1.2, ls="--",
-                     label=f"{label} {down_suffix}")
+                     label=f"{label} {POLARIZED_LABELS[1]}")
+        else:
+            # nspin == 1: data[0] is the only channel. nspin == 4 (non-
+            # colinear/spin-orbit, not polarized): Sz-up == Sz-down, so
+            # data[0] alone is plotted instead of summing. nspin == 2
+            # with --total: sum up+down for the genuine total.
+            if nspin == 2:
+                curve = data[0] + data[1]
+            else:
+                curve = data[0]
+            ax.plot(energy, curve, color=color, linewidth=1.2,
+                     label=f"{label} orbital")
 
     ax.legend()
 
 def main():
     parser = argparse.ArgumentParser(
         description="Plot the total DOS (default) or the orbital-resolved "
-                     "PDOS (s, p, d, ...) of a given atom. Spin channels "
-                     "(none / polarized / non-colinear / spin-orbit) are "
-                     "detected automatically, and the energy axis is "
-                     "referenced to E_F (metal) or E_VBM (semiconductor/"
-                     "insulator), detected automatically from a .EIG file "
-                     "if present."
+                     "PDOS (s, p, d, ...) of a given atom. The Spin "
+                     "keyword (non-polarized/polarized/non-colinear/"
+                     "spin-orbit) is read from the .fdf, and the energy "
+                     "axis is referenced to E_F (metal) or E_VBM "
+                     "(semiconductor/insulator), detected automatically "
+                     "from a .EIG file if present."
     )
     parser.add_argument(
         "--x",
@@ -324,10 +400,11 @@ def main():
     parser.add_argument(
         "--total",
         action="store_true",
-        help="Plot only the summed (total) curve, even for spin-polarized/"
-             "non-colinear/spin-orbit calculations. By default spin-"
-             "resolved curves (up / -down) are shown whenever more than "
-             "one spin channel is present.",
+        help="Force a single summed curve for the genuinely polarized "
+             "(2-channel) case too. Has no extra effect on non-polarized "
+             "or non-colinear/spin-orbit calculations, which are always "
+             "plotted as a single curve since they are not polarized "
+             "cases.",
     )
     parser.add_argument(
         "--nres",
@@ -345,6 +422,15 @@ def main():
 
     fermi_energy = get_fermi_energy(pdos_file)
 
+    fdf_file = find_default_file("fdf")
+    if fdf_file is not None:
+        spin_type = get_spin_type(parse_fdf(fdf_file))
+    else:
+        spin_type = None
+        print("No .fdf file found -> cannot read the Spin keyword; "
+              "non-colinear and spin-orbit cannot be told apart from the "
+              "DOS/PDOS files alone (will be reported generically).")
+
     if args.nres:
         print("--nres flag set -> no rescaling applied, plotting raw energies.")
         reference, xlabel = 0.0, "E (eV)"
@@ -357,19 +443,22 @@ def main():
         energy, pdos_by_orbital, nspin = process_pdos(pdos_file, args.pdos)
         energy = energy - reference
 
-        print(f"{spin_kind(nspin)} calculation detected ({nspin} channel"
+        calc_name = calc_name_for(spin_type, nspin)
+        expected_nspin = SPIN_NCHANNELS.get(spin_type)
+        if expected_nspin is not None and expected_nspin != nspin:
+            print(f"Warning: .fdf declares 'Spin {spin_type}' (expected "
+                  f"{expected_nspin} channel(s)) but '{pdos_file}' has "
+                  f"{nspin} channel(s); ignoring the .fdf value for "
+                  f"labeling and trusting the file's actual channel count "
+                  f"instead.")
+            calc_name = calc_name_for(None, nspin)
+        print(f"{calc_name} calculation detected ({nspin} channel"
               f"{'s' if nspin != 1 else ''}).")
-        if nspin == 4 and not args.total:
-            print("Note: non-colinear/spin-orbit is NOT a polarized case -- "
-                  "the 'Sz up'/'Sz down' curves are the diagonal spin-"
-                  "density components along a reference axis, not an "
-                  "exchange-split magnetic polarization; they can differ "
-                  "even for a non-magnetic, time-reversal-symmetric "
-                  "material. The Re/Im (Mx, My) components are not plotted.")
+        if nspin == 4: None
 
         plot_pdos(ax, energy, pdos_by_orbital, nspin, args.total)
 
-        label_title = f"Atom {args.pdos}" 
+        label_title = f"PDOS — atom {args.pdos}"
         ylabel = "PDOS (states/eV)"
     else:
         dos_file = find_default_file("DOS")
@@ -378,15 +467,18 @@ def main():
         energy, channels, nspin = process_dos(dos_file)
         energy = energy - reference
 
-        print(f"{spin_kind(nspin)} calculation detected ({nspin} channel"
+        calc_name = calc_name_for(spin_type, nspin)
+        expected_nspin = SPIN_NCHANNELS.get(spin_type)
+        if expected_nspin is not None and expected_nspin != nspin:
+            print(f"Warning: .fdf declares 'Spin {spin_type}' (expected "
+                  f"{expected_nspin} channel(s)) but '{dos_file}' has "
+                  f"{nspin} channel(s); ignoring the .fdf value for "
+                  f"labeling and trusting the file's actual channel count "
+                  f"instead.")
+            calc_name = calc_name_for(None, nspin)
+        print(f"{calc_name} calculation detected ({nspin} channel"
               f"{'s' if nspin != 1 else ''}).")
-        if nspin == 4 and not args.total:
-            print("Note: non-colinear/spin-orbit is NOT a polarized case -- "
-                  "the 'Sz up'/'Sz down' curves are the diagonal spin-"
-                  "density components along a reference axis, not an "
-                  "exchange-split magnetic polarization; they can differ "
-                  "even for a non-magnetic, time-reversal-symmetric "
-                  "material. The Re/Im (Mx, My) components are not plotted.")
+        if nspin == 4: None
 
         plot_total_dos(ax, energy, channels, nspin, args.total)
 
@@ -411,7 +503,6 @@ def main():
     else:
         output_name = dos_file.rsplit(".", 1)[0] + "_DOS.png"
     fig.savefig(output_name, dpi=300)
-    print(f"Plot saved to {output_name}")
-    
+
 if __name__ == "__main__":
     main()
