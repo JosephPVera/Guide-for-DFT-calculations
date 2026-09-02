@@ -1,0 +1,46 @@
+tasks
+  1
+  10
+
+scale
+  1.0
+  
+avec
+   0.000000000       3.379562820       3.379562820    
+   3.379562820       0.000000000       3.379562820    
+   3.379562820       3.379562820       0.000000000 
+   
+sppath
+  '/home/joseph/elk-11.0.2/species/'   
+  
+atoms
+  1
+  'C.in'
+  2
+  0.00  0.00  0.00   0.0  0.0  0.0
+  0.25  0.25  0.25   0.0  0.0  0.0
+  
+xctype
+  20
+  
+rgkmax
+  8.0
+  
+gmaxvr
+  16.0
+  
+lmaxapw
+  10
+
+! denser mesh recommended for smooth DOS (non-self-consistent, reads STATE.OUT)
+ngridk
+  12  12  12
+
+! angular momentum cut-off for the partial DOS
+lmaxdos
+  3
+
+! energy window (Hartree) and plotting resolution
+wplot
+  1000  200  3
+  -0.734987  0.734987

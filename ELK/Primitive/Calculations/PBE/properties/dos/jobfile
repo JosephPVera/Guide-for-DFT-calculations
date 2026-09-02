@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cp ../scf/STATE.OUT .
+
+export OMP_NUM_THREADS=1
+
+mpirun -quiet -np 4 elk > elk.out

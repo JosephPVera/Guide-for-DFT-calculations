@@ -1,0 +1,160 @@
+
+
+Atomic position optimisation step :      1
+
+Forces :
+ species :    1 (C)
+  atom :    1
+   Hellmann-Feynman          :    -0.00000000    0.00000000   -0.00000000
+   IBS                       :     0.00000000   -0.00000000    0.00000000
+   total force               :    -0.00000000    0.00000000    0.00000000
+   total magnitude           :     0.00000000
+  atom :    2
+   Hellmann-Feynman          :     0.00000000    0.00000000    0.00000000
+   IBS                       :     0.00000000   -0.00000000   -0.00000000
+   total force               :     0.00000000   -0.00000000   -0.00000000
+   total magnitude           :     0.00000000
+
+Maximum force magnitude over all atoms (target) :   0.2865640821E-34 (  0.5000000000E-02)
+
+Force convergence target achieved
+
+
+Atomic position optimisation step :      1
+
+Forces :
+ species :    1 (C)
+  atom :    1
+   Hellmann-Feynman          :     0.00000000   -0.00000000    0.00000000
+   IBS                       :    -0.00000000    0.00000000   -0.00000000
+   total force               :    -0.00000000    0.00000000    0.00000000
+   total magnitude           :     0.00000000
+  atom :    2
+   Hellmann-Feynman          :     0.00000000    0.00000000    0.00000000
+   IBS                       :    -0.00000000   -0.00000000   -0.00000000
+   total force               :     0.00000000   -0.00000000   -0.00000000
+   total magnitude           :     0.00000000
+
+Maximum force magnitude over all atoms (target) :   0.9054383237E-35 (  0.5000000000E-02)
+
+Force convergence target achieved
+
+
+Atomic position optimisation step :      1
+
+Forces :
+ species :    1 (C)
+  atom :    1
+   Hellmann-Feynman          :    -0.00000000    0.00000000   -0.00000000
+   IBS                       :     0.00000000   -0.00000000    0.00000000
+   total force               :     0.00000000    0.00000000   -0.00000000
+   total magnitude           :     0.00000000
+  atom :    2
+   Hellmann-Feynman          :    -0.00000000    0.00000000   -0.00000000
+   IBS                       :     0.00000000   -0.00000000    0.00000000
+   total force               :    -0.00000000   -0.00000000    0.00000000
+   total magnitude           :     0.00000000
+
+Maximum force magnitude over all atoms (target) :   0.9070362358E-35 (  0.5000000000E-02)
+
+Force convergence target achieved
+
+
+Atomic position optimisation step :      1
+
+Forces :
+ species :    1 (C)
+  atom :    1
+   Hellmann-Feynman          :    -0.00000000   -0.00000000   -0.00000000
+   IBS                       :     0.00000000    0.00000000    0.00000000
+   total force               :     0.00000000   -0.00000000    0.00000000
+   total magnitude           :     0.00000000
+  atom :    2
+   Hellmann-Feynman          :    -0.00000000   -0.00000000    0.00000000
+   IBS                       :     0.00000000    0.00000000   -0.00000000
+   total force               :    -0.00000000    0.00000000   -0.00000000
+   total magnitude           :     0.00000000
+
+Maximum force magnitude over all atoms (target) :   0.1079777144E-34 (  0.5000000000E-02)
+
+Force convergence target achieved
+
+
+Atomic position optimisation step :      1
+
+Forces :
+ species :    1 (C)
+  atom :    1
+   Hellmann-Feynman          :    -0.00000000    0.00000000    0.00000000
+   IBS                       :     0.00000000   -0.00000000   -0.00000000
+   total force               :     0.00000000   -0.00000000    0.00000000
+   total magnitude           :     0.00000000
+  atom :    2
+   Hellmann-Feynman          :    -0.00000000    0.00000000    0.00000000
+   IBS                       :     0.00000000    0.00000000   -0.00000000
+   total force               :    -0.00000000    0.00000000   -0.00000000
+   total magnitude           :     0.00000000
+
+Maximum force magnitude over all atoms (target) :   0.7811259958E-35 (  0.5000000000E-02)
+
+Force convergence target achieved
+
+
+Atomic position optimisation step :      1
+
+Forces :
+ species :    1 (C)
+  atom :    1
+   Hellmann-Feynman          :     0.00000000    0.00000000   -0.00000000
+   IBS                       :    -0.00000000   -0.00000000    0.00000000
+   total force               :     0.00000000   -0.00000000   -0.00000000
+   total magnitude           :     0.00000000
+  atom :    2
+   Hellmann-Feynman          :    -0.00000000   -0.00000000   -0.00000000
+   IBS                       :     0.00000000    0.00000000    0.00000000
+   total force               :    -0.00000000    0.00000000    0.00000000
+   total magnitude           :     0.00000000
+
+Maximum force magnitude over all atoms (target) :   0.6060182307E-35 (  0.5000000000E-02)
+
+Force convergence target achieved
+
+
+Atomic position optimisation step :      1
+
+Forces :
+ species :    1 (C)
+  atom :    1
+   Hellmann-Feynman          :     0.00000000    0.00000000    0.00000000
+   IBS                       :    -0.00000000   -0.00000000   -0.00000000
+   total force               :    -0.00000000    0.00000000    0.00000000
+   total magnitude           :     0.00000000
+  atom :    2
+   Hellmann-Feynman          :    -0.00000000   -0.00000000    0.00000000
+   IBS                       :     0.00000000    0.00000000   -0.00000000
+   total force               :     0.00000000   -0.00000000   -0.00000000
+   total magnitude           :     0.00000000
+
+Maximum force magnitude over all atoms (target) :   0.7346596231E-35 (  0.5000000000E-02)
+
+Force convergence target achieved
+
+
+Atomic position optimisation step :      1
+
+Forces :
+ species :    1 (C)
+  atom :    1
+   Hellmann-Feynman          :     0.00000000    0.00000000   -0.00000000
+   IBS                       :    -0.00000000   -0.00000000    0.00000000
+   total force               :     0.00000000   -0.00000000    0.00000000
+   total magnitude           :     0.00000000
+  atom :    2
+   Hellmann-Feynman          :    -0.00000000    0.00000000    0.00000000
+   IBS                       :     0.00000000   -0.00000000   -0.00000000
+   total force               :    -0.00000000    0.00000000   -0.00000000
+   total magnitude           :     0.00000000
+
+Maximum force magnitude over all atoms (target) :   0.5017009644E-35 (  0.5000000000E-02)
+
+Force convergence target achieved

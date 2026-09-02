@@ -1,0 +1,72 @@
+
+┌─────────────────────────────────┐
+│ Elk code version 11.0.2 started │
+└─────────────────────────────────┘
+
+Number of MPI processes : 4
+Number of OpenMP threads per MPI process : 1
+Total number of threads (MPI x OpenMP) : 4
+Maximum OpenMP nesting level : 4
+Number of OpenMP threads at first nesting level : 1
+Number of MKL threads : 1
+
+RAM disk enabled
+
+┌──────────────────┐
+│ Current task : 1 │
+└──────────────────┘
+Info(checkmt): changed muffin-tin radius of species 1 (C) from   1.8000 to   1.4384
+
+Info(findsymcrys): atomic basis shift (lattice) :
+  0.3750000000      0.3750000000      0.3750000000    
+See GEOMETRY.OUT for new atomic positions
+
+Warning(linengy): could not find 1 linearisation energies in s.c. loop 1
+
+Warning(linengy): could not find 1 linearisation energies in s.c. loop 2
+
+Warning(linengy): could not find 1 linearisation energies in s.c. loop 3
+
+Warning(linengy): could not find 1 linearisation energies in s.c. loop 4
+
+Warning(linengy): could not find 1 linearisation energies in s.c. loop 5
+
+Warning(linengy): could not find 1 linearisation energies in s.c. loop 6
+
+Warning(linengy): could not find 1 linearisation energies in s.c. loop 7
+
+Warning(linengy): could not find 1 linearisation energies in s.c. loop 8
+
+Warning(linengy): could not find 1 linearisation energies in s.c. loop 9
+Info(elk): MPI process 1 idle for task 10
+Info(elk): MPI process 2 idle for task 10
+Info(elk): MPI process 3 idle for task 10
+
+┌───────────────────┐
+│ Current task : 10 │
+└───────────────────┘
+
+Warning(linengy): could not find 1 linearisation energies in s.c. loop 1
+
+Info(writedos):
+ Total density of states written to TDOS.OUT
+
+ Partial density of states written to PDOS_Sss_Aaaaa.OUT
+ for all species and atoms
+
+ Spin-quantisation axis :    0.000000000       0.000000000       1.000000000    
+
+ Eigenvalues of a random matrix symmetrised with the site
+ symmetries in the Yₗₘ basis written to ELMIREP.OUT for all
+ species and atoms. Degenerate eigenvalues correspond to
+ irreducible representations of each site symmetry group
+
+ Interstitial density of states written to IDOS.OUT
+
+ Fermi energy is at zero in plots
+
+ DOS units are states/Hartree/unit cell
+
+┌──────────────────┐
+│ Elk code stopped │
+└──────────────────┘
