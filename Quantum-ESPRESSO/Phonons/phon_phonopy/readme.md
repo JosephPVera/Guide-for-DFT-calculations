@@ -5,7 +5,7 @@ Steps for Quantum ESPRESSO calculations using **PBE** and **HSE06** functionals 
 A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO repository](https://github.com/JosephPVera/Quantum_espresso_software).
 
 ## 0. Workflow
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/Figures/phon_phonopy_workflow.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/Figures/phon_phonopy_workflow.png)
 
 ---
 # 1. PBE functional
@@ -88,7 +88,7 @@ Once the calculations are done, the **FORCE_SETS** file can be created using the
 ```bash
 phonopy -f dis-001/supercell-001.out dis-002/supercell-002.out
 ```
-Examples of these calculations for diamond can be found in the [dis-001](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/dis-001) and [dis-002](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/dis-002) folders.
+Examples of these calculations for diamond can be found in the [dis-001](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/dis-001) and [dis-002](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/dis-002) folders.
 
 ## 1.3. Non-analytical term correction (NAC)
 The NAC is a correction applied to the phonon dynamical matrix to account for the long-range electrostatic interaction between atoms in polar or ionic materials. In such materials, vibrations of the ions can create a macroscopic electric polarization, which produces a long-range electric field that is not properly captured by the short-range force constants obtained from a conventional supercell calculation. This effect is especially important near the $\Gamma$-point (**q** $\longrightarrow$ 0), where it can cause the longitudinal optical (LO) and transverse optical (TO) phonon modes to split, known as **LO–TO splitting**. Phonopy incorporates this effect using the **Born effective charge tensors** and the **high-frequency dielectric constant**, which are obtained from a Density-Functional Perturbation Theory (DFPT) calculation in Quantum ESPRESSO using **ph.x**. These quantities are then stored in a **BORN** file and used by Phonopy to add the non-analytical contribution to the dynamical matrix.
@@ -107,9 +107,9 @@ Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **dos folder**. F
 phonopy -p -s mesh.conf
 ```
 
-An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos). The DOS can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
+An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos). The DOS can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos/tdos.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-no-nac/dos/tdos.png)
 
 #### 1.3.1.2. Thermal Properties calculation
 Thermal properties calculation refers to computing free energy, heat capacity, and entropy of a crystal as functions of temperature, using standard statistical thermodynamics formulas applied to the phonon spectrum. The idea is that once phonon frequencies are known across a sampling mesh in reciprocal space, each phonon mode is treated as a quantum harmonic oscillator, and the thermodynamic quantities are obtained by summing contributions from all these modes at each temperature. Since it relies on a mesh, this calculation must be run together with the mesh-sampling tags (MESH, MP, etc.), and its accuracy depends on how dense that mesh is, though it converges quickly and isn't computationally expensive.
@@ -118,9 +118,9 @@ Use the same **mesh.conf** file as in the previous calculation. Also, copy the *
 ```bash
 phonopy -p -s -t  mesh.conf > thermal.dat
 ```
-An example for diamond can be found in [thermal folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/thermal). The thermal properties can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
+An example for diamond can be found in [thermal folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-no-nac/thermal). The thermal properties can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/thermal/thermal_properties.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-no-nac/thermal/thermal_properties.png)
 
 #### 1.3.1.3. Projected Density Of States (PDOS) calculation
 A phonon PDOS calculation breaks down the vibrations to show the specific contributions of individual atoms (projects the total vibrational modes onto individual atoms). This type of calculation can be performed by setting up a **pdos.conf** file as follows:
@@ -134,9 +134,9 @@ Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **pdos folder**. 
 ```bash
 phonopy -p -s pdos.conf
 ```
-An example for diamond can be found in [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/pdos). The PDOS can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
+An example for diamond can be found in [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-no-nac/pdos). The PDOS can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/pdos/pdos.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-no-nac/pdos/pdos.png)
 
 #### 1.3.1.4. Phonon Dispersion Relation (Band Structure) calculation
 The resulting phonon dispersion tells you how the allowed vibrational frequencies change with the wavelength and direction of the vibration. This type of calculation can be performed by setting up a **band.conf** file as follows:
@@ -152,13 +152,13 @@ Also, copy the **FORCE_SETS** and **phonopy_disp.yaml** to the **band folder**. 
 phonopy -p -s band.conf
 phonopy-bandplot --gnuplot band.yaml > band.dat
 ```
-An example for diamond can be found in [band folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band). The band structure can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
+An example for diamond can be found in [band folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band). The band structure can be plotted using the [phonplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/phonplot.py) script.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band/band.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band/band.png)
 
 Since diamond contains two atoms in the primitive cell, and each atom has three degrees of freedom, there should be six branches in the phonon band structure. These can be plotted separately using the **--split** tag.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band/band-1.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band/band-1.png)
 
 ### 1.3.2. With NAC
 If the material being studied is polar, the NAC must be applied. For this, the following steps must be performed:
@@ -166,7 +166,7 @@ If the material being studied is polar, the NAC must be applied. For this, the f
 #### 1.3.2.1. Self-Consistent Field (SCF) calculation
 The aim of this calculation is to get the converged charge density and wavefunctions of the unperturbed system. The calculation is performed in the same way as described in section **1.4. Self-Consistent Field (SCF) calculation** in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive). 
 
-An example for diamond is also included in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/nac/scf).
+An example for diamond is also included in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/nac/scf).
 
 #### 1.3.2.2. Dynamic Matrix (DM) calculation
 Quantum ESPRESSO uses **Density-Functional Perturbation Theory (DFPT)** via the **ph.x** code to compute the dynamical matrix and phonon properties without needing supercells. By evaluating the second derivatives of the total energy with respect to atomic displacements, DFPT efficiently yields the interatomic force constants and vibrational frequencies for specific **q**-vectors. Therefore, the aim of this calculation is to compute the first-order change in the potential and wavefunctions for a chosen wavevector **q**, generating the dynamical matrix elements.
@@ -198,7 +198,7 @@ mpirun -np 20 ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
 ```
 where **20** represents the number of CPU cores used for the calculation. Once the calculation is done, several **.dyn** files will be created. In addition, the dielectric tensor can also be extracted from the **.out** file.
 
-An example of this calculation for diamond can be found in the [ph folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/nac/ph). The dielectric tensor can be extract using the [qe_dielectric.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_dielectric.py) script. The extracted information looks as follows:
+An example of this calculation for diamond can be found in the [ph folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/nac/ph). The dielectric tensor can be extract using the [qe_dielectric.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_dielectric.py) script. The extracted information looks as follows:
 ```bash
           Dielectric constant in cartesian axis 
 
@@ -221,21 +221,21 @@ For this calculation, the **mesh.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, 
 ```bash
 phonopy -p -s --nac mesh.conf
 ```
-An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-nac/dos). Since diamond is a non-polar material, no changes are observed in the plot.
+An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-nac/dos). Since diamond is a non-polar material, no changes are observed in the plot.
 
 #### 1.3.2.4. Thermal Properties calculation
 For this calculation, the **mesh.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **thermal file**. Finally, use the following command to plot the thermal properties:
 ```bash
 phonopy -p -s -t --nac mesh.conf > thermal.dat
 ```
-An example for diamond can be found in [thermal folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-nac/thermal). Since diamond is a non-polar material, no changes are observed in the plot.
+An example for diamond can be found in [thermal folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-nac/thermal). Since diamond is a non-polar material, no changes are observed in the plot.
 
 #### 1.3.2.4. Projected Density Of States (PDOS) calculation
 For this calculation, the **pdos.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **pdos file**. Finally, use the following command to plot the PDOS:
 ```bash
 phonopy -p -s --nac pdos.conf
 ```
-An example for diamond can be found in [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-nac/pdos). Since diamond is a non-polar material, no changes are observed in the plot.
+An example for diamond can be found in [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-nac/pdos). Since diamond is a non-polar material, no changes are observed in the plot.
 
 #### 1.3.2.5. Phonon Dispersion Relation (Band Structure) calculation
 For this calculation, the **band.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **band file**. Finally, use the following command to plot the band structure:
@@ -243,21 +243,21 @@ For this calculation, the **band.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, 
 phonopy -p -s --nac band.conf
 phonopy-bandplot --gnuplot band.yaml > band.dat
 ```
-An example for diamond can be found in [band folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-nac/band). Since diamond is a non-polar material, no changes are observed in the plot.
+An example for diamond can be found in [band folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-nac/band). Since diamond is a non-polar material, no changes are observed in the plot.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Calculations/PBE/plot-nac/band/band.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-nac/band/band.png)
 
 
 ## 1.4. Extra example 
 Cubic boron nitride (c-BN) is a polar material; therefore, the effects of applying the NAC can be clearly observed in its phonon band structure. Band structure without NAC:
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Figures/cBN-band-no-NAC-PBE.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Figures/cBN-band-no-NAC-PBE.png)
 
 Band structure with NAC:
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Figures/cBN-band-NAC-PBE.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Figures/cBN-band-NAC-PBE.png)
 
 Since c-BN contains two atoms in the primitive cell, although they are different chemical species, each atom has three degrees of freedom. Therefore, there should be six branches in the phonon band structure.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_phonopy/Figures/cBN-band-NAC-PBE-split.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Figures/cBN-band-NAC-PBE-split.png)
 
