@@ -223,4 +223,7 @@ The DOS calculation is a Non-Self-Consistent Field (NSCF) calculation that uses 
 
 An example of this calculation can be found in the [dos](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/properties/dos) folder. In addition, the total DOS and PDOS is stored in the **DOSCAR** file and can be plotted using the [dospo.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/dospo.py) script. The band gap value can be extracted using the [bandgap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/bandgap.py) script.
 
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/PBE/properties/dos/total_dos.png)
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/PBE/properties/dos/atom_1-LDOS.png)
 
