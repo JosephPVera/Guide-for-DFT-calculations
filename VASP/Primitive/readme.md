@@ -6,7 +6,7 @@ Steps for VASP calculations using PBE and HSE06 functionals.
 
 Check the [VASP](https://vasp-at.translate.goog/wiki/The_VASP_Manual?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc&_x_tr_hist=true) manual.
 
-**Necessary input files:** INCAR, POSCAR, KPOINTS, jobfile, and POTCAR. Each input file is explained in the [VASP-Inputs](https://vasp.at/wiki/Input_and_Output_-_a_short_Intro).
+**Necessary input files:** INCAR, POSCAR, KPOINTS, jobfile, and POTCAR. Each input file is explained in the [VASP-Inputs](https://vasp.at/wiki/Input_and_Output_-_a_short_Intro) documentation.
 
 ⚠️**Warning:** VASP is proprietary software. If you want to perform calculations using VASP, you must obtain and use the software legally. Therefore, **POTCAR files are not included in this repository**.
 
@@ -25,4 +25,16 @@ Create several folders named according to the energy cutoff values to be used. F
 ```bash
 mkdir {200..950..50}
 ```
-Then, create the **POSCAR** file for the system under study. Several systems can be found in [The Material Project](https://next-gen.materialsproject.org/)
+Then, create the **POSCAR** file for the system under study. Several systems can be found in [The Material Project](https://next-gen.materialsproject.org/). An example of what a POSCAR file looks like is shown below:
+```bash
+C8
+1.0
+        2.5173001289         0.0000000000         0.0000000000
+        1.2586500645         2.1800458606         0.0000000000
+        1.2586500645         0.7266819535         2.0553669484
+    C
+    2
+Direct
+     0.250000000         0.250000000         0.250000000
+     0.000000000         0.000000000         0.000000000
+```
