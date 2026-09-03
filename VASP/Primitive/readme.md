@@ -619,7 +619,7 @@ The construction of the **KPOINTS** file is more tedious, but it will be outline
    - In the **KPOINTS** file, change the number of points on the second line. Usually, this number corresponds to the number of lines in the file minus 3 (**Ln − 3**).
    - Include the **high-symmetry points of the first Brillouin zone (1BZ)**. Look for these points in the pasted section and add their corresponding labels after the weights.
 
-The [kpoints.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/kpoints.py) script automates the creation of the KPOINTS file using the steps described above.
+The [kpoints.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/kpoints.py) script automates the creation of the **KPOINTS** file using the steps described above.
 
 Before running the calculation, the **WAVECAR** file must be copied into this folder:
 ```bash
