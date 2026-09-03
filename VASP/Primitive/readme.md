@@ -15,3 +15,6 @@ Check the [VASP](https://vasp-at.translate.goog/wiki/The_VASP_Manual?_x_tr_sl=en
 
 ## 1.1. Workflow
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Figures/vasp_workflow_pbe.png)
+
+## 1.2. Convergence tests
+The first step in obtaining accurate results is to perform convergence tests for parameters such as the **energy cutoff for wavefunctions**, and **k-point mesh**. These parameters can be modified through **ENCUT** in the **INCAR** file and the **k-point mesh** in the **KPOINTS** file.  
