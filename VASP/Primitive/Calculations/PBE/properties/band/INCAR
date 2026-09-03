@@ -1,0 +1,21 @@
+ALGO   = Normal   
+NELMIN = 4        
+NELM   = 1500      
+EDIFF  = 1E-6      
+ENCUT  = 500      
+PREC   = Normal   
+LREAL  = .FALSE.   
+ISMEAR = 0         
+SIGMA  = 0.005     
+ICHARG = 11        
+ISPIN  = 1         
+
+NSW    = 0          
+IBRION   = -1      
+ISIF     = 2   
+ 
+LWAVE  = .FALSE.    
+LORBIT = 11       
+ 
+NPAR    = 4
+NCORE = 7
