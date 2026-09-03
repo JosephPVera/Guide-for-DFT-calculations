@@ -2,6 +2,10 @@
 # Written by Joseph P.Vera
 # 2024-11
 
+"""
+Usage:
+      python3 kmesh.py [--d]
+"""
 import numpy as np
 import argparse
 
