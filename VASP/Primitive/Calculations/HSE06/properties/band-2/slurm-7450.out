@@ -1,0 +1,62 @@
+real-time non-blocking time  (microseconds, -R) unlimited
+core file size              (blocks, -c) unlimited
+data seg size               (kbytes, -d) unlimited
+scheduling priority                 (-e) 0
+file size                   (blocks, -f) unlimited
+pending signals                     (-i) 509966
+max locked memory           (kbytes, -l) unlimited
+max memory size             (kbytes, -m) 117440512
+open files                          (-n) 1024
+pipe size                (512 bytes, -p) 8
+POSIX message queues         (bytes, -q) 819200
+real-time priority                  (-r) 0
+stack size                  (kbytes, -s) unlimited
+cpu time                   (seconds, -t) unlimited
+max user processes                  (-u) 125621
+virtual memory              (kbytes, -v) unlimited
+file locks                          (-x) unlimited
+ running   28 mpi-ranks, with    1 threads/rank, on    1 nodes
+ distrk:  each k-point on   28 cores,    1 groups
+ distr:  one band on    7 cores,    4 groups
+ vasp.6.5.1 10Mar25 (build Feb 13 2026 23:13:13) complex                        
+  
+ POSCAR found type information on POSCAR C 
+ POSCAR found :  1 types and       2 ions
+ scaLAPACK will be used
+ LDA part: xc-table for (Slater+PW92), standard interpolation
+ found WAVECAR, reading the header
+  number of k-points has changed, file:    47 present:   972
+  trying to continue reading WAVECAR, but it might fail
+ POSCAR, INCAR and KPOINTS ok, starting setup
+ FFT: planning ... GRIDC
+ FFT: planning ... GRID_SOFT
+ FFT: planning ... GRID
+ reading WAVECAR
+ the WAVECAR file was read successfully
+ initial charge from wavefunction
+ entering main loop
+       N       E                     dE             d eps       ncg     rms           ort
+SDA:   1     0.636977037841E+02    0.63698E+02   -0.27685E+02  7776   0.692E+02   0.000E+00
+DMP:   2     0.393582063695E+02   -0.24339E+02   -0.28972E+02  7776   0.517E+02   0.543E+02
+DMP:   3     0.949378032884E+01   -0.29864E+02   -0.20754E+02  7776   0.318E+02   0.525E+02
+DMP:   4    -0.654076183810E+01   -0.16035E+02   -0.71535E+01  7776   0.106E+02   0.192E+02
+DMP:   5    -0.131312293401E+02   -0.65905E+01   -0.31377E+01  7776   0.476E+01   0.807E+01
+DMP:   6    -0.178064355506E+02   -0.46752E+01   -0.17174E+01  7776   0.243E+01   0.488E+01
+DMP:   7    -0.201754489301E+02   -0.23690E+01   -0.75820E+00  7776   0.976E+00   0.241E+01
+DMP:   8    -0.207658044643E+02   -0.59036E+00   -0.28320E+00  7776   0.340E+00   0.962E+00
+DMP:   9    -0.209820209708E+02   -0.21622E+00   -0.98718E-01  7776   0.118E+00   0.336E+00
+DMP:  10    -0.210559323538E+02   -0.73911E-01   -0.34021E-01  7776   0.436E-01   0.109E+00
+DMP:  11    -0.210806811652E+02   -0.24749E-01   -0.11504E-01  7776   0.158E-01   0.338E-01
+DMP:  12    -0.210886290004E+02   -0.79478E-02   -0.35724E-02  7776   0.535E-02   0.939E-02
+DMP:  13    -0.210909399375E+02   -0.23109E-02   -0.10746E-02  7776   0.189E-02   0.210E-02
+DMP:  14    -0.210916254712E+02   -0.68553E-03   -0.42357E-03  7776   0.841E-03   0.569E-03
+DMP:  15    -0.210919214664E+02   -0.29600E-03   -0.22961E-03  7776   0.426E-03   0.388E-03
+DMP:  16    -0.210920898550E+02   -0.16839E-03   -0.12574E-03  7776   0.204E-03   0.290E-03
+DMP:  17    -0.210921786638E+02   -0.88809E-04   -0.61107E-04  7776   0.883E-04   0.169E-03
+DMP:  18    -0.210922176978E+02   -0.39034E-04   -0.26255E-04  7776   0.350E-04   0.802E-04
+DMP:  19    -0.210922315083E+02   -0.13810E-04   -0.10248E-04  7776   0.130E-04   0.330E-04
+DMP:  20    -0.210922349582E+02   -0.34499E-05   -0.35905E-05  7776   0.438E-05   0.120E-04
+DMP:  21    -0.210922349502E+02    0.79655E-08   -0.11130E-05  7776   0.133E-05   0.379E-05
+DMP:  22    -0.210922342315E+02    0.71874E-06   -0.31688E-06  7776   0.405E-06   0.101E-05
+ final diagonalization occupied
+   1 F= -.21092234E+02 E0= -.21092234E+02  d E =-.579415-119
