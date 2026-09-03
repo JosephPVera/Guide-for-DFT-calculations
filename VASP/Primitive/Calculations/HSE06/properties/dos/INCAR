@@ -1,0 +1,29 @@
+ALGO   = Damped    
+TIME   = 0.4       
+NELMIN = 4        
+NELM   = 300       
+EDIFF  = 1E-6      
+ENCUT  = 500       
+PREC   = Normal    
+LREAL  = .FALSE.  
+ISMEAR = 0        
+SIGMA  = 0.15      
+ISPIN  = 1        
+ISTART = 1
+
+! HSE06 functional
+LHFCALC = .TRUE.   
+AEXX = 0.25       
+HFSCREEN = 0.2     
+SYMPREC = 1E-4     
+
+NSW    = 0      
+
+LWAVE  = .FALSE.    
+NEDOS  = 3001     
+!EMIN   = -20     
+!EMAX   =  20      
+LORBIT = 11         
+ 
+NPAR    = 4
+NCORE = 7
