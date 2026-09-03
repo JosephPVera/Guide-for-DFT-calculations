@@ -289,7 +289,7 @@ Before running the calculation, the **CHGCAR** file must be copied into this fol
 ```bash
 cp -r ../scf/CHGCAR . 
 ```
-The band structure calculation is a Non-Self-Consistent Field (NSCF) calculation that uses the already converged electron charge density from the SCF calculation. An example of this calculation can be found in the [band](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/properties/band) folder. The band structure can be plotted using the [band.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/band.py) script.
+The band structure calculation is a NSCF calculation that uses the already converged electron charge density from the SCF calculation. An example of this calculation can be found in the [band](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/properties/band) folder. The band structure can be plotted using the [band.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/band.py) script.
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/PBE/properties/band/band_structure_plot.png)
 
@@ -450,7 +450,7 @@ Before running the calculation, the **WAVECAR** file must be copied into this fo
 ```bash
 cp -r ../scf/WAVECAR . 
 ```
-The DOS calculation is a Non-Self-Consistent Field (NSCF) calculation that uses the already converged electron charge density from the SCF calculation. For this calculation, a denser **k-point mesh** must be used to ensure a good sampling of the Brillouin zone. The **Projected Density of States (PDOS)** can also be obtained from this same calculation. It reveals which atoms and angular momentum components (s, p, d, f, and so on) dominate bonding, hybridization, and the states near the Fermi level. Focuses on the chemical character of the states. It tells you how much a specific atom or orbital contributes to the energy levels.
+The DOS calculation is a NSCF calculation that uses the already converged electron charge density from the SCF calculation. For this calculation, a denser **k-point mesh** must be used to ensure a good sampling of the Brillouin zone. The **Projected Density of States (PDOS)** can also be obtained from this same calculation. It reveals which atoms and angular momentum components (s, p, d, f, and so on) dominate bonding, hybridization, and the states near the Fermi level. Focuses on the chemical character of the states. It tells you how much a specific atom or orbital contributes to the energy levels.
 
 An example of this calculation can be found in the [dos](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/HSE06/properties/dos) folder. In addition, the total DOS and PDOS is stored in the **DOSCAR** file and can be plotted using the [dospo.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/dospo.py) script. The band gap value can be extracted using the [bandgap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/bandgap.py) script.
 
@@ -459,5 +459,81 @@ An example of this calculation can be found in the [dos](https://github.com/Jose
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/HSE06/properties/dos/atom_1-LDOS.png)
 
 
+## 2.5. Band structure calculation
+This type of calculation can be performed in two ways using the **HSE06** functional:
 
+### 2.5.1. High symmetry path: KPOINTS_OPT
+In this approach, the **KPOINTS** file is used to define the **k-point mesh**, while the **KPOINTS_OPT** file is used to define the high-symmetry path. The **INCAR** file can be configured as follows:
+```bash
+ALGO   = Damped  
+TIME   = 0.4      
+NELMIN = 4        
+NELM   = 300       
+EDIFF  = 1E-6      
+ENCUT  = 500       
+PREC   = Normal   
+LREAL  = .FALSE.   
+ISMEAR = 0         
+SIGMA  = 0.005   
+ISPIN  = 1        
+
+! HSE06 functional
+LHFCALC = .TRUE.  
+AEXX = 0.25        
+HFSCREEN = 0.2  
+SYMPREC = 1E-4  
+
+NSW    = 0         
+IBRION   = -1      
+ISIF     = 2      
+ISTART = 1
+
+LWAVE  = .FALSE.    
+LORBIT = 11       
+ 
+NPAR    = 28
+NCORE = 1 
+```
+and the **KPOINTS_OPT** file is configured as follows:
+```bash
+k-points along fcc high symmetry lines
+ 100   0  
+Line-mode
+reciprocal
+  0.000  0.000  0.000  \Gamma
+  0.500  0.000  0.500  X
+
+  0.500  0.000  0.500  X
+  0.500  0.250  0.750  W
+
+  0.500  0.250  0.750  W
+  0.375  0.375  0.750  K
+
+  0.375  0.375  0.750  K
+  0.000  0.000  0.000  \Gamma
+
+  0.000  0.000  0.000  \Gamma
+  0.500  0.500  0.500  L
+ 
+  0.500  0.500  0.500  L
+  0.625  0.250  0.625  U
+
+  0.625  0.250  0.625  U
+  0.500  0.250  0.750  W
+
+  0.500  0.250  0.750  W
+  0.500  0.500  0.500  L
+
+  0.500  0.500  0.500  L
+  0.375  0.375  0.750  K
+```
+Before running the calculation, the **WAVECAR** file must be copied into this folder:
+```bash
+cp -r ../scf/WAVECAR . 
+```
+The band structure calculation is a NSCF calculation that uses the already converged electron charge density from the SCF calculation. An example of this calculation can be found in the [band-1](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/HSE06/properties/band-1) folder. The band structure can be plotted using the [band.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/band.py) script.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/HSE06/properties/band-1/band_structure_plot.png)
+
+### 2.5.2. High symmetry path: KPOINTS
 
