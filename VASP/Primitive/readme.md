@@ -125,3 +125,12 @@ Create the KPOINTS file for each folder using the [kmesh.py](https://github.com/
 ```bash
 for d in {1..9}; do (cd "$d" && kmesh.py --d "$d"); done
 ```
+Run all the calculations at once using:
+```bash
+for dir in */;do cd $dir; sub jobfile; cd ../;done
+```
+Once the calculations are finished, extract the total energies using the [tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/tot.py) script. An example of these calculations can be found in the [kdensity](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/convergence/kdensity) folder. As a result of the convergence analysis, it is possible to plot a convergence curve, as shown below:
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/PBE/convergence/kdensity/delta_e_kpoint.png)
+
+
