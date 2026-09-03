@@ -164,7 +164,7 @@ The aim of the SCF calculation is to solve the Kohn-Sham equations iteratively t
 ```bash
 mv CONTCAR POSCAR
 ```
-This type of calculation, the **INCAR** file can be performed by setting up the input file as follows:
+For this type of calculation, the **INCAR** file can be performed by setting up the input file as follows:
 ```bash
 ALGO   = Normal        
 EDIFF  = 1E-06          
@@ -189,5 +189,38 @@ NCORE = 7
 ```
 An example of this calculation can be found in the [scf](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/properties/scf) folder. The total energy  can be extracted using the [tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/tot.py) script. The electron charge density is stored in the **CHGCAR** file and can be visualized using [VESTA](https://jp-minerals.org/vesta/en/download.html), while the electronic wavefunctions are stored in the **WAVECAR** binary file.
 
+## 1.5. Density Of States (DOS) calculation
+The aim of the DOS calculation is to find the number of available electronic energy states per unit energy interval in a material. This type of calculation can be performed by setting up the **INCAR** file as follows:
+```bash
+ALGO   = Normal    
+NELMIN = 4         
+NELM   = 300       
+EDIFF  = 1E-6      
+ENCUT  = 500      
+PREC   = Normal    
+LREAL  = .FALSE.   
+ISMEAR = -5        
+SIGMA  = 0.005   
+ISPIN  = 1         
+
+NSW    = 0         
+ 
+LWAVE  = .FALSE.  
+NEDOS  = 3001     
+!EMIN   = -25      
+!EMAX   =  25      
+LORBIT = 11 
+ICHARG = 11       
+ 
+NPAR    = 4
+NCORE = 7
+```
+Before running the calculation, the **CHGCAR** file must be copied into this folder:
+```bash
+cp -r ../scf/CHGCAR . 
+```
+The DOS calculation is a Non-Self-Consistent Field (NSCF) calculation that uses the already converged electron charge density from the SCF calculation. Therefore, a denser **k-point mesh** must be used to ensure accurate electronic eigenvalues. The **Projected Density of States (PDOS)** can also be obtained from this same calculation. It reveals which atoms and angular momentum components (s, p, d, f, and so on) dominate bonding, hybridization, and the states near the Fermi level. Focuses on the chemical character of the states. It tells you how much a specific atom or orbital contributes to the energy levels.
+
+An example of this calculation can be found in the [dos](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/properties/dos) folder. In addition, the total DOS and PDOS is stored in the **DOSCAR** file and can be plotted using the [dospo.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/dospo.py) script.
 
 
