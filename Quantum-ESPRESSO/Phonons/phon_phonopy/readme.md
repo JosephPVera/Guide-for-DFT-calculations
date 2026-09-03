@@ -216,28 +216,90 @@ This file contains the **dielectric constant tensor** in the second line, follow
    5.89528482   -0.00768084   -0.00768084   -0.00768084    5.89528482    0.00768084   -0.00768084    0.00768084    5.89528482 
    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000
 ```
-#### 1.3.2.3. Density Of States (DOS) calculation
+
+#### 1.3.2.3. Diagonalization of the DM calculation
+This step is a post-processing calculation in which the DM is diagonalized to obtain the phonon frequencies and eigenvectors, which are then used, together with the Born effective charges and the electronic dielectric tensor, to calculate the total contribution to the dielectric tensor and, consequently, the **ionic dielectric tensor**. This type of calculation can be performed by setting up the input file as follows:
+```bash
+&INPUT
+  fildyn = 'diamond.dyn1'
+  asr = 'crystal'
+  lperm = .true.
+/
+```
+The meaning of each tag is described in the [DYNMAT Input Description](https://www.quantum-espresso.org/Doc/INPUT_DYNMAT.html). The input file can be executed using the following command:
+```bash
+dynmat.x -inp dyn-matrix_dynmat.in > dyn-matrix_dynmat.out
+```
+Alternatively, the input file can be executed using parallelization:
+```bash
+mpirun -np 20 dynmat.x -inp dyn-matrix_dynmat.in > dyn-matrix_dynmat.out
+```
+where **20** represents the number of CPU cores used for the calculation. Keep in mind that **.dyn1** file, which contents information at $$\Gamma$$-point, must be copied from the **ph folder**:
+```bash
+cp -r ../ph/diamond.dyn1 .
+```
+Once the calculation is done, the electronic and total dielectric tensor can also be extracted from the **.out** file. An example of this calculation for diamond can be found in the [dynmat folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/nac/dynmat), where the extracted information looks as follows:
+```bash
+Electronic dielectric permittivity tensor (relative, adimensional)
+         5.895285   -0.007681   -0.007681
+        -0.007681    5.895285    0.007681
+        -0.007681    0.007681    5.895285
+
+ ... with zone-center polar mode contributions
+         5.895285   -0.007681   -0.007681
+        -0.007681    5.895285    0.007681
+        -0.007681    0.007681    5.895285
+```
+Given that:
+
+$$
+\varepsilon _{o} = \varepsilon _{∞} + \varepsilon _{ion}
+$$
+
+Therefore:
+
+$$
+\varepsilon _{ion} = 
+\begin{pmatrix}
+5.895285 & -0.007681 & -0.007681 \\
+-0.007681 & 5.895285 & 0.007681 \\
+-0.007681 & 0.007681 & 5.895285
+\end{pmatrix}
+\-
+\begin{pmatrix}
+5.895285 & -0.007681 & -0.007681 \\
+-0.007681 & 5.895285 & 0.007681 \\
+-0.007681 & 0.007681 & 5.895285
+\end{pmatrix} =
+\begin{pmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & 0
+\end{pmatrix}
+$$
+
+#### 1.3.2.4. Density Of States (DOS) calculation
 For this calculation, the **mesh.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **dos file**. Finally, use the following command to plot the DOS:
 ```bash
 phonopy -p -s --nac mesh.conf
 ```
 An example for diamond can be found in [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-nac/dos). Since diamond is a non-polar material, no changes are observed in the plot.
 
-#### 1.3.2.4. Thermal Properties calculation
+#### 1.3.2.5. Thermal Properties calculation
 For this calculation, the **mesh.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **thermal file**. Finally, use the following command to plot the thermal properties:
 ```bash
 phonopy -p -s -t --nac mesh.conf > thermal.dat
 ```
 An example for diamond can be found in [thermal folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-nac/thermal). Since diamond is a non-polar material, no changes are observed in the plot.
 
-#### 1.3.2.4. Projected Density Of States (PDOS) calculation
+#### 1.3.2.6. Projected Density Of States (PDOS) calculation
 For this calculation, the **pdos.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **pdos file**. Finally, use the following command to plot the PDOS:
 ```bash
 phonopy -p -s --nac pdos.conf
 ```
 An example for diamond can be found in [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-nac/pdos). Since diamond is a non-polar material, no changes are observed in the plot.
 
-#### 1.3.2.5. Phonon Dispersion Relation (Band Structure) calculation
+#### 1.3.2.7. Phonon Dispersion Relation (Band Structure) calculation
 For this calculation, the **band.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **band file**. Finally, use the following command to plot the band structure:
 ```bash
 phonopy -p -s --nac band.conf
