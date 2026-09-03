@@ -227,3 +227,82 @@ An example of this calculation can be found in the [dos](https://github.com/Jose
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/PBE/properties/dos/atom_1-LDOS.png)
 
+## 1.6. Band structure calculation
+The aim of the band structure calculation is to determine allowed electron energy levels along high-symmetry paths in reciprocal space, identifying whether a material is a metal, semiconductor, or insulator, and observing its fundamental band gap. This type of calculation can be performed by setting up the **INCAR** file as follows:
+```bash
+ALGO   = Normal   
+NELMIN = 4        
+NELM   = 1500      
+EDIFF  = 1E-6      
+ENCUT  = 500      
+PREC   = Normal   
+LREAL  = .FALSE.   
+ISMEAR = 0         
+SIGMA  = 0.005     
+ICHARG = 11        
+ISPIN  = 1         
+
+NSW    = 0          
+IBRION   = -1      
+ISIF     = 2   
+ 
+LWAVE  = .FALSE.    
+LORBIT = 11       
+ 
+NPAR    = 4
+NCORE = 7 
+```
+In addition, it is important to specify the high-symmetry path in the **KPOINTS** file as follows:
+```bash
+k-points along fcc high symmetry lines
+ 100   0  
+Line-mode
+reciprocal
+  0.000  0.000  0.000  \Gamma
+  0.500  0.000  0.500  X
+
+  0.500  0.000  0.500  X
+  0.500  0.250  0.750  W
+
+  0.500  0.250  0.750  W
+  0.375  0.375  0.750  K
+
+  0.375  0.375  0.750  K
+  0.000  0.000  0.000  \Gamma
+
+  0.000  0.000  0.000  \Gamma
+  0.500  0.500  0.500  L
+ 
+  0.500  0.500  0.500  L
+  0.625  0.250  0.625  U
+
+  0.625  0.250  0.625  U
+  0.500  0.250  0.750  W
+
+  0.500  0.250  0.750  W
+  0.500  0.500  0.500  L
+
+  0.500  0.500  0.500  L
+  0.375  0.375  0.750  K
+```
+Before running the calculation, the **CHGCAR** file must be copied into this folder:
+```bash
+cp -r ../scf/CHGCAR . 
+```
+The band structure calculation is a Non-Self-Consistent Field (NSCF) calculation that uses the already converged electron charge density from the SCF calculation. An example of this calculation can be found in the [band](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/properties/band) folder. The band structure can be plotted using the [band.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/band.py) script.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/PBE/properties/band/band_structure_plot.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
