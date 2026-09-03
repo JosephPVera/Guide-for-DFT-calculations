@@ -38,3 +38,22 @@ Direct
      0.250000000         0.250000000         0.250000000
      0.000000000         0.000000000         0.000000000
 ```
+Create the INCAR file. For convergence tests, the calculations do not need to be highly accurate, so the INCAR file can be configured as follows:
+```bash
+ALGO   = Fast      
+NELMIN = 4         
+EDIFF  = 1E-6      
+ENCUT  = 200
+PREC   = Normal    
+LREAL  = .FALSE.      
+ISMEAR = 0        
+SIGMA  = 0.2       
+ISPIN  = 1         
+
+NSW    = 0         
+
+LWAVE  = .FALSE.  
+
+NPAR    = 4
+NCORE = 7
+```
