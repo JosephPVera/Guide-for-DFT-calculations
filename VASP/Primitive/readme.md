@@ -355,7 +355,7 @@ $$
 ## 2.2. Convergence tests
 The initial parameters for the subsequent calculations will be taken from the previous calculations, i.e., those performed using the PBE functional. Furthermore, the relaxed structure obtained using the PBE functional will be used as the initial structure for the relaxation calculation. For the diamond example, the converged values **ENCUT = 500** and **KPOINTS = 10 10 10** will be used.
 
-## 2.3. Relaxation
+## 2.3. Relaxation calculation
 The **INCAR** files for hybrid-functional calculations using **HSE06** are very similar to those used for calculations with the **PBE** functional. The main differences are the following tags:
 ```bash
 LHFCALC = .TRUE.  
@@ -390,5 +390,66 @@ LWAVE  = .FALSE.
 NPAR    = 4
 NCORE = 7
 ```
-Once the calculation is finished, the lattice parameters of the relaxed system can be found in the **CONTCAR** file. The converged forces can be extracted using the [forces.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/forces.py) script. For our example, the diamond calculation, this information can be found in the [relax](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/HSE06/relax) folder. In addition, the crystal structure can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software.
+Remember to use the relaxed structure (**POSCAR**) obtained with the **PBE** functional as the starting point for the **HSE06** calculation. Once the calculation is finished, the lattice parameters of the relaxed system can be found in the **CONTCAR** file. The converged forces can be extracted using the [forces.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/forces.py) script. For our example, the diamond calculation, this information can be found in the [relax](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/HSE06/relax) folder. In addition, the crystal structure can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software.
+
+## 2.4. Density Of States (DOS) calculation
+This type of calculation can be performed by setting up the **INCAR** file as follows:
+```bash
+ALGO   = Damped    
+TIME   = 0.4       
+NELMIN = 4        
+NELM   = 300       
+EDIFF  = 1E-6      
+ENCUT  = 500       
+PREC   = Normal    
+LREAL  = .FALSE.  
+ISMEAR = 0        
+SIGMA  = 0.15      
+ISPIN  = 1        
+ISTART = 1
+
+! HSE06 functional
+LHFCALC = .TRUE.   
+AEXX = 0.25       
+HFSCREEN = 0.2     
+SYMPREC = 1E-4     
+
+NSW    = 0      
+
+LWAVE  = .FALSE.    
+NEDOS  = 3001     
+!EMIN   = -20     
+!EMAX   =  20      
+LORBIT = 11         
+ 
+NPAR    = 4
+NCORE = 7
+```
+In this case, when using the **HSE06** functional, the **CHGCAR** file cannot be used to perform the calculation. If you attempt to use it, the following error will be displayed:
+```bash
+ -----------------------------------------------------------------------------
+|                                                                             |
+|     EEEEEEE  RRRRRR   RRRRRR   OOOOOOO  RRRRRR      ###     ###     ###     |
+|     E        R     R  R     R  O     O  R     R     ###     ###     ###     |
+|     E        R     R  R     R  O     O  R     R     ###     ###     ###     |
+|     EEEEE    RRRRRR   RRRRRR   O     O  RRRRRR       #       #       #      |
+|     E        R   R    R   R    O     O  R   R                               |
+|     E        R    R   R    R   O     O  R    R      ###     ###     ###     |
+|     EEEEEEE  R     R  R     R  OOOOOOO  R     R     ###     ###     ###     |
+|                                                                             |
+|     Calculations where the Fock exchange is evaluated cannot be run         |
+|     with ICHARG>10. This includes hybrid-functional calculations,           |
+|     Hartree-Fock calculations, etc. Mind: To restart such a                 |
+|     calculation, you need to provide the WAVECAR file.                      |
+|                                                                             |
+|       ---->  I REFUSE TO CONTINUE WITH THIS SICK JOB ... BYE!!! <----       |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+```
+Before running the calculation, the **WAVECAR** file must be copied into this folder:
+```bash
+cp -r ../scf/WAVECAR . 
+```
+The DOS calculation is a Non-Self-Consistent Field (NSCF) calculation that uses the already converged electron charge density from the SCF calculation. For this calculation, a denser **k-point mesh** must be used to ensure a good sampling of the Brillouin zone. The **Projected Density of States (PDOS)** can also be obtained from this same calculation. It reveals which atoms and angular momentum components (s, p, d, f, and so on) dominate bonding, hybridization, and the states near the Fermi level. Focuses on the chemical character of the states. It tells you how much a specific atom or orbital contributes to the energy levels.
+
 
