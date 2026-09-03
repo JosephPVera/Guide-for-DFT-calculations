@@ -5,7 +5,7 @@ Steps for Quantum ESPRESSO calculations using **PBE** functional. Native phonon 
 A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO repository](https://github.com/JosephPVera/Quantum_espresso_software).
 
 ## 0. Workflow
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/Figures/phon_qe_workflow.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/Figures/phon_qe_workflow.png)
 
 ## 1. Relaxation
 The aim of the relaxation calculation is to find the most stable arrangement of atoms by minimizing total energy, reducing internal forces to zero, and optimizing cell geometry. The calculation is performed in the same way as described in section **1.3. Relaxation** in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive).
@@ -13,7 +13,7 @@ The aim of the relaxation calculation is to find the most stable arrangement of 
 ## 2. Self-Consistent Field (SCF) calculation
 The aim of this calculation is to get the converged charge density and wavefunctions of the unperturbed system. The calculation is performed in the same way as described in section **1.4. Self-Consistent Field (SCF) calculation** in the [primitive folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive). 
 
-An example for diamond is also included in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/scf).
+An example for diamond is also included in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/scf).
 
 ## 3. Dynamic Matrix (DM) calculation
 Quantum ESPRESSO uses **Density-Functional Perturbation Theory (DFPT)** via the **ph.x** code to compute the dynamical matrix and phonon properties without needing supercells. By evaluating the second derivatives of the total energy with respect to atomic displacements, DFPT efficiently yields the interatomic force constants and vibrational frequencies for specific **q**-vectors. Therefore, the aim of this calculation is to compute the first-order change in the potential and wavefunctions for a chosen wavevector **q**, generating the dynamical matrix elements.
@@ -45,7 +45,7 @@ mpirun -np 20 ph.x -inp dyn-matrix_ph.in > dyn-matrix_ph.out
 ```
 where **20** represents the number of CPU cores used for the calculation. Once the calculation is done, several **.dyn** files will be created. In addition, the electronic dielectric tensor can also be extracted from the **.out** file.
 
-An example of this calculation for diamond can be found in the [ph folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/ph). The **electronic dielectric tensor** can be extract using the [qe_dielectric.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_dielectric.py) script. The extracted information looks as follows:
+An example of this calculation for diamond can be found in the [ph folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/ph). The **electronic dielectric tensor** can be extract using the [qe_dielectric.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_dielectric.py) script. The extracted information looks as follows:
 ```bash
           Dielectric constant in cartesian axis 
 
@@ -75,7 +75,7 @@ where **20** represents the number of CPU cores used for the calculation. Keep i
 ```bash
 cp -r ../ph/diamond.dyn1 .
 ```
-Once the calculation is done, the electronic and total dielectric tensor can also be extracted from the **.out** file. An example of this calculation for diamond can be found in the [dynmat folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dynmat), where the extracted information looks as follows:
+Once the calculation is done, the electronic and total dielectric tensor can also be extracted from the **.out** file. An example of this calculation for diamond can be found in the [dynmat folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/dynmat), where the extracted information looks as follows:
 ```bash
 Electronic dielectric permittivity tensor (relative, adimensional)
          5.895298   -0.007681   -0.007681
@@ -140,7 +140,7 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 q2r.x -inp dyn-matrix_q2r.in > dyn-matrix_q2r.out
 ```
-where **20** represents the number of CPU cores used for the calculation. An example of this calculation for diamond can be found in the [q2r folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/q2r). This calculation will generate a **dimond.fc** file.
+where **20** represents the number of CPU cores used for the calculation. An example of this calculation for diamond can be found in the [q2r folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/q2r). This calculation will generate a **dimond.fc** file.
 
 ## 6. Fourier Transformation of the real space calculation 
 Perform an inverse Fourier transform back to any arbitrary **q**-point to plot phonon dispersions or calculate density of states (DOS). Now we have the real-space force constants, so **matdyn.x** can calculate phonons at whatever q-points we want. At each point along the high-symmetry path, **matdyn.x** constructs the dynamical matrix and solves an eigenvalue problem.
@@ -187,16 +187,16 @@ where **20** represents the number of CPU cores used for the calculation.
 
 🔔**Reminder:** This calculation already includes the LO–TO splitting, which is useful for polar materials, via **loto_disable = .false.**. This phenomenon typically occurs at the $\Gamma$-point.
 
-An example of this calculation for diamond can be found in the [matdyn folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn).
+An example of this calculation for diamond can be found in the [matdyn folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/matdyn).
 
 ## 7. Phonon Dispersion Relation (Band Structure) calculation
-The resulting phonon dispersion tells you how the allowed vibrational frequencies change with the wavelength and direction of the vibration. This diagram can be plotted using the output from the previous calculation, which is available in the [matdyn folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn). The [qe_phonband.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_phonband.py) script allows you to plot the phonon band structure:
+The resulting phonon dispersion tells you how the allowed vibrational frequencies change with the wavelength and direction of the vibration. This diagram can be plotted using the output from the previous calculation, which is available in the [matdyn folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/matdyn). The [qe_phonband.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_phonband.py) script allows you to plot the phonon band structure:
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn/phonon_band-1.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/matdyn/phonon_band-1.png)
 
 Since diamond contains two atoms in the primitive cell, and each atom has three degrees of freedom, there should be six branches in the phonon band structure. These can be plotted separately using the **--split** tag.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/matdyn/phonon_band.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/matdyn/phonon_band.png)
 
 ## 8. Density Of States (DOS) calculation
 A phonon DOS calculation counts the number of available vibrational modes at each frequency. This type of calculation can be performed by setting up the input file as follows:
@@ -225,11 +225,11 @@ Alternatively, the input file can be executed using parallelization:
 ```bash
 mpirun -np 20 matdyn.x -inp phon_dos.in > phon_dos.out
 ```
-where **20** represents the number of CPU cores used for the calculation. An example of this calculation for diamond can be found in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dos). The [qe_phondos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_phondos.py) script allows you to plot the phonon DOS:
+where **20** represents the number of CPU cores used for the calculation. An example of this calculation for diamond can be found in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/dos). The [qe_phondos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_phondos.py) script allows you to plot the phonon DOS:
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dos/diamond_dos.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/dos/diamond_dos.png)
 
 ## 9. Projected Density Of States (PDOS) calculation
-A phonon PDOS calculation breaks down the vibrations to show the specific contributions of individual atoms (projects the total vibrational modes onto individual atoms). This plot can be obtained using the output from the previous calculation, which is available in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dos). The [qe_phondos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_phondos.py) script, together with the **--pdos** tag, allows you to plot the phonon PDOS:
+A phonon PDOS calculation breaks down the vibrations to show the specific contributions of individual atoms (projects the total vibrational modes onto individual atoms). This plot can be obtained using the output from the previous calculation, which is available in the [dos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/dos). The [qe_phondos.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_phondos.py) script, together with the **--pdos** tag, allows you to plot the phonon PDOS:
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/phonons/phon_QE/Calculations/dos/diamond_pdos.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_QE/Calculations/dos/diamond_pdos.png)
