@@ -89,11 +89,15 @@ mpirun -np $SLURM_NTASKS vasp_std
 
 exit 0
 ```
-Finally, use the **POTCAR** files provided for **VASP**. If your system consists of only one species, such as diamond, you only need to use the **POTCAR** file for carbon. On the other hand, if your system consists of two or more species, such as cubic boron nitride or BC$$_{2}$$N, you must concatenate the **POTCAR** files for each species, following the order of the elements in the **POSCAR** file:
+Finally, use the **POTCAR** files provided for **VASP**. If your system consists of only one species, such as diamond, you only need to use the **POTCAR** file for carbon. On the other hand, if your system consists of two or more species, such as cubic boron nitride or BC2N, you must concatenate the **POTCAR** files for each species, following the order of the elements in the **POSCAR** file:
 ```bash
 cat POTCAR_B POTCAR_N > POTCAR
 ```
 ```bash
 cat POTCAR_B POTCAR_C POTCAR_N > POTCAR
+```
+Now that the input files are ready, copy them into all the folders:
+```bash
+for d in */; do cp INCAR POSCAR KPOINTS jobfile POTCAR "$d"; done
 ```
 
