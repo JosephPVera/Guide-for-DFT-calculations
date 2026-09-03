@@ -24,9 +24,9 @@ $$
 
 where $$E_{ZPL}$$ is the ZPL energy, $$E_{e}(Q_{e})$$ is the energy of the excited state at its equilibrium configuration $$Q_{e}$$, and $$E_{g}(Q_{g})$$ is the energy of the ground state at its equilibrium configuration $$Q_{g}$$.
 
-For our example, NV center in diamond, $$E_{e}(Q_{e})$$ is obtained from our previous ground state calculation in the [NV-1 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-1). However, for the excited state calculation, the input file must be created. To create the excited state input, first, the electronic transition must be determined using the ground state Kohn–Sham level diagram.
+For our example, NV center in diamond, $$E_{e}(Q_{e})$$ is obtained from our previous ground state calculation in the [NV-1 folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-1). However, for the excited state calculation, the input file must be created. To create the excited state input, first, the electronic transition must be determined using the ground state Kohn–Sham level diagram.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/Figures/transition-KSLD-ground_state.png) 
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Excited_state/Figures/transition-KSLD-ground_state.png) 
 
 In this case, the most promising electronic transition occurs in the spin down channel, from the occupied energy level with band index 430 to the doubly degenerate unoccupied energy levels with band indices 431 and 432, given that these states are highly localized and isolated from the VBM and CBM. Now that the electronic transition has been determined, the input file for the excited-state calculation can be created using the ground-state input file, but with the **occupations = 'from_input'** tag added. This setting allows the electron to be promoted from energy level 430 to the degenerate levels 431–432 by specifying their occupations in the OCCUPATIONS section.
 ```bash
@@ -71,7 +71,7 @@ OCCUPATIONS
 ```
 **Reminder:** Keep in mind that the occupations must be specified for both the spin up and spin down channels and must be consistent with the number of bands (**nbnd**). 
 
-An example can be found in the [NV-1_excited](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Excited_state-PD/ZPL/PBE/NV-1_excited) folder, where the occupations are set up as follows:
+An example can be found in the [NV-1_excited](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Excited_state/ZPL/PBE/NV-1_excited) folder, where the occupations are set up as follows:
 
 $$
 \begin{aligned}
@@ -91,7 +91,7 @@ $$
 
 >Note: For cases where electrons are promoted to doubly degenerate unoccupied levels, the calculations can become unstable and difficult to converge. To overcome this problem, the occupation is split equally (50–50) between the two energy levels. This problem comes from the Jahn-Teller theorem: any non-linear system occupying a degenerate electronic state is inherently unstable and will spontaneously distort to lift that degeneracy, lowering both the symmetry and the total energy. In a self-consistent DFT calculation, if you try to place a full electron in one of the two degenerate orbitals, the SCF cycle has no symmetry-protected reason to prefer one orbital over the other - small numerical noise breaks the degeneracy, the density mixes chaotically between the two nearly-degenerate solutions each iteration (charge sloshing), and convergence oscillates or fails outright.By imposing a 50–50 fractional occupation across the two degenerate levels, you constrain the electron density to retain the full symmetry of the underlying orbital manifold (rather than letting the solver arbitrarily collapse into one symmetry-broken component). This stabilizes the SCF cycle and gives a well-defined, reproducible total energy for the symmetric configuration.
 
-**Reminder:** The excited state calculations must start with a **magnetization calculation** if the total magnetization is unknown. Then, the calculation proceeds with the **relaxation**, **SCF**, **NSCF**, and **PDOS** calculations. Check the steps in the [Supercell-PD](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD) folder, specifically Section 1.3.2.
+**Reminder:** The excited state calculations must start with a **magnetization calculation** if the total magnetization is unknown. Then, the calculation proceeds with the **relaxation**, **SCF**, **NSCF**, and **PDOS** calculations. Check the steps in the [PD-Supercells](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells) folder, specifically Section 1.3.2.
 
 Finally, the ZPL energy is:
 
@@ -107,7 +107,7 @@ $$
 A Configuration Coordinate Diagram (CCD) is a way to describe how the total energy of a system changes when the atomic configuration is displaced along a particular collective structural coordinate. It is widely used to analyze optical transitions, lattice relaxation, phonons, and electron–phonon coupling, especially for point defects. CCDs are based on the Franck–Condon approximation, which assumes that electronic transitions occur on a timescale much faster than nuclear motion. Therefore, the atomic configuration is effectively frozen during an optical transition, resulting in vertical transitions between the ground and excited state PES, while the subsequent lattice relaxation occurs on the corresponding PES. The difference between the equilibrium configurations of the two electronic states determines the relaxation energies and contributes to the Stokes shift. The CCD is depicted in the figure below:
 
 <p align="center">
-  <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/Figures/ccd.png" alt="Descripción de la imagen">
+  <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Excited_state/Figures/ccd.png" alt="Descripción de la imagen">
 </p>
 
 Here, the blue curve represents the ground state PES, while the orange curve represents the excited state PES. In addition, the following quantities are also defined:
@@ -209,12 +209,12 @@ $$
 
 To compute all the quantities outlined above, several configurations must be generated between the ground state configuration ($$Q_{g}$$) and the excited state configuration ($$Q_{e}$$). This can be done by interpolating configurations between $$Q_{g}$$ and $$Q_{e}$$ (remember to use the relaxed configurations in both cases). Now, run an SCF calculation for each case, first using the ground state input and then using the excited state input. Finally, after the calculations are completed, extract the total energies.
 
-For our example, NV center in diamond, the ground configurations can be found in the [ground_configs](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/ground_configs) folder. In addition, the excited configurations can be found in the [excited_configs](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/excited_configs) folder. These configurations, between $$Q_{g}$$ and $$Q_{e}$$, can be created using the [ccd.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/ccd.py) script. Here, the ground state configuration and input are specified in the [ground_state.in](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/ground_state.in) file, while the excited state configuration and input are specified in the [excited_state.in](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/excited_state.in) file. Once the total energies have been extracted, they can be used to compute the relevant quantities and plot the CCD using the [ccd-plot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/ccd-plot.py) script.
+For our example, NV center in diamond, the ground configurations can be found in the [ground_configs](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Excited_state/CCD/PBE/ground_configs) folder. In addition, the excited configurations can be found in the [excited_configs](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Excited_state/CCD/PBE/excited_configs) folder. These configurations, between $$Q_{g}$$ and $$Q_{e}$$, can be created using the [ccd.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/ccd.py) script. Here, the ground state configuration and input are specified in the [ground_state.in](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Excited_state/CCD/PBE/ground_state.in) file, while the excited state configuration and input are specified in the [excited_state.in](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Excited_state/CCD/PBE/excited_state.in) file. Once the total energies have been extracted, they can be used to compute the relevant quantities and plot the CCD using the [ccd-plot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/ccd-plot.py) script.
 <p align="center">
-  <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/ccd.png" alt="Descripción de la imagen">
+  <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Excited_state/CCD/PBE/ccd.png" alt="Descripción de la imagen">
 </p>
 
-The details are saved in a **ccd.dat** file, such as [ccd.dat](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Excited_state-PD/CCD/PBE/ccd.dat).
+The details are saved in a **ccd.dat** file, such as [ccd.dat](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Excited_state/CCD/PBE/ccd.dat).
 ```bash
 Configuration Coordinate Diagram
 
