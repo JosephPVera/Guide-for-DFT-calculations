@@ -157,5 +157,37 @@ NCORE = 7
 ```
 Keep in mind that, for this and all subsequent calculations, the converged values of **ENCUT** and **k-point mesh** should be kept fixed. For the diamond calculation, use the converged values **ENCUT = 500** and **k-point mesh = 10 10 10** (**k-density = 4.0**) for all subsequent calculations.
 
-Once the calculation is finished, the lattice parameters of the relaxed system can be found in the **CONTCAR** file. The converged forces can be extracted using the [forces.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/forces.py) script. For our example, the diamond calculation, this information can be found in the [relax](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/relax) folder.
+Once the calculation is finished, the lattice parameters of the relaxed system can be found in the **CONTCAR** file. The converged forces can be extracted using the [forces.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/forces.py) script. For our example, the diamond calculation, this information can be found in the [relax](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/relax) folder. In addition, the crystal structure can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software.
+
+## 1.4. Self-Consistent Field (SCF) calculation
+The aim of the SCF calculation is to solve the Kohn-Sham equations iteratively to find the ground-state electron charge density, total energy, and converged electronic wavefunctions for a system at fixed atomic positions. At this point, the lattice parameters obtained from the **relaxation calculation** must be used. For this, the **CONTCAR** file must be renamed to **POSCAR**:
+```bash
+mv CONTCAR POSCAR
+```
+This type of calculation, the **INCAR** file can be performed by setting up the input file as follows:
+```bash
+ALGO   = Normal        
+EDIFF  = 1E-06          
+NELM   = 100          
+NELMIN = 4              
+PREC   = Normal       
+ENCUT  = 500            
+LREAL  = .FALSE.         
+ISMEAR = 0               
+SIGMA  = 0.005
+
+IBRION = -1            
+NSW    = 0
+ISPIN  = 1              
+
+LWAVE  = .TRUE.         
+LCHARG = .TRUE.   
+LORBIT = 11           
+
+NPAR    = 4
+NCORE = 7 
+```
+An example of this calculation can be found in the [scf](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/properties/scf) folder. The total energy  can be extracted using the [tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/tot.py) script. The electron charge density is stored in the **CHGCAR** file and can be visualized using [VESTA](https://jp-minerals.org/vesta/en/download.html), while the electronic wavefunctions are stored in the **WAVECAR** binary file.
+
+
 
