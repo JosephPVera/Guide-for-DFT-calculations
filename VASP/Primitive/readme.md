@@ -133,4 +133,28 @@ Once the calculations are finished, extract the total energies using the [tot.py
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/PBE/convergence/kdensity/delta_e_kpoint.png)
 
+## 1.3. Relaxation
+The aim of the relaxation calculation is to find the most stable arrangement of atoms by minimizing total energy, reducing internal forces to zero, and optimizing cell geometry. This type of calculation can be performed by setting up the **INCAR** file as follows:
+```bash
+ALGO   = Normal 
+NELMIN = 4         
+EDIFF  = 1E-6    
+ENCUT  = 500      
+PREC   = Normal    
+LREAL  = .FALSE. 
+ISMEAR = 0        
+SIGMA  = 0.005       
+ISPIN  = 1         
+
+NSW    = 30         
+IBRION = 2          
+ISIF = 3           
+
+LWAVE  = .FALSE.
+
+NPAR    = 4
+NCORE = 7 
+```
+Keep in mind that, for this and all subsequent calculations, the converged values of **ENCUT** and **k-point mesh** should be kept fixed. For the diamond calculation, use the converged values **ENCUT = 500** and **k-point mesh = 10 10 10** (**k-density = 4.0**) for all subsequent calculations.
+
 
