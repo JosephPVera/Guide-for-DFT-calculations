@@ -1,0 +1,47 @@
+real-time non-blocking time  (microseconds, -R) unlimited
+core file size              (blocks, -c) unlimited
+data seg size               (kbytes, -d) unlimited
+scheduling priority                 (-e) 0
+file size                   (blocks, -f) unlimited
+pending signals                     (-i) 509951
+max locked memory           (kbytes, -l) unlimited
+max memory size             (kbytes, -m) 117440512
+open files                          (-n) 1024
+pipe size                (512 bytes, -p) 8
+POSIX message queues         (bytes, -q) 819200
+real-time priority                  (-r) 0
+stack size                  (kbytes, -s) unlimited
+cpu time                   (seconds, -t) unlimited
+max user processes                  (-u) 125621
+virtual memory              (kbytes, -v) unlimited
+file locks                          (-x) unlimited
+ running   28 mpi-ranks, with    1 threads/rank, on    1 nodes
+ distrk:  each k-point on   28 cores,    1 groups
+ distr:  one band on    7 cores,    4 groups
+ vasp.6.5.1 10Mar25 (build Feb 13 2026 23:13:13) complex                        
+  
+ POSCAR found type information on POSCAR C 
+ POSCAR found :  1 types and       2 ions
+ scaLAPACK will be used
+ LDA part: xc-table for (Slater+PW92), standard interpolation
+ POSCAR, INCAR and KPOINTS ok, starting setup
+ FFT: planning ... GRIDC
+ FFT: planning ... GRID_SOFT
+ FFT: planning ... GRID
+ WAVECAR not read
+ entering main loop
+       N       E                     dE             d eps       ncg     rms          rms(c)
+DAV:   1     0.574909950385E+01    0.57491E+01   -0.42489E+03    64   0.898E+02
+DAV:   2    -0.181500155453E+02   -0.23899E+02   -0.23558E+02    88   0.121E+02
+DAV:   3    -0.183380948545E+02   -0.18808E+00   -0.18808E+00    80   0.141E+01
+DAV:   4    -0.183382195529E+02   -0.12470E-03   -0.12470E-03    80   0.378E-01
+DAV:   5    -0.183382195930E+02   -0.40151E-07   -0.40151E-07    72   0.535E-03    0.584E+00
+RMM:   6    -0.177848425893E+02    0.55338E+00   -0.33120E-01    65   0.506E+00    0.347E+00
+RMM:   7    -0.175963766074E+02    0.18847E+00   -0.50994E-01    69   0.671E+00    0.770E-01
+RMM:   8    -0.176006123523E+02   -0.42357E-02   -0.24137E-02    67   0.185E+00    0.121E-01
+RMM:   9    -0.176007455925E+02   -0.13324E-03   -0.30334E-03    67   0.633E-01    0.580E-02
+RMM:  10    -0.176007737544E+02   -0.28162E-04   -0.35399E-04    67   0.204E-01    0.207E-02
+RMM:  11    -0.176007786361E+02   -0.48817E-05   -0.41672E-05    69   0.694E-02    0.909E-03
+RMM:  12    -0.176007800267E+02   -0.13906E-05   -0.63471E-06    54   0.281E-02    0.414E-03
+RMM:  13    -0.176007797059E+02    0.32080E-06   -0.76207E-07    44   0.809E-03
+   1 F= -.17600780E+02 E0= -.17600780E+02  d E =-.196259E-11
