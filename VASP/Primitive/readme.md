@@ -463,7 +463,7 @@ An example of this calculation can be found in the [dos](https://github.com/Jose
 This type of calculation can be performed in two ways using the **HSE06** functional:
 
 ### 2.5.1. High symmetry path: KPOINTS_OPT
-In this approach, the **KPOINTS** file is used to define the **k-point mesh**, while the **KPOINTS_OPT** file is used to define the high-symmetry path. The **INCAR** file can be configured as follows:
+In this approach, the **KPOINTS** file is used to define the **k-point mesh**, while the **KPOINTS_OPT** file is used to define the high symmetry path. The **INCAR** file can be configured as follows:
 ```bash
 ALGO   = Damped  
 TIME   = 0.4      
@@ -536,4 +536,89 @@ The band structure calculation is a NSCF calculation that uses the already conve
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/HSE06/properties/band-1/band_structure_plot.png)
 
 ### 2.5.2. High symmetry path: KPOINTS
+In this approach, the **KPOINTS** file is used to define the high symmetry path. The **INCAR** file can be configured as follows:
+```bash
+ALGO   = Damped  
+TIME   = 0.4      
+NELMIN = 4        
+NELM   = 300       
+EDIFF  = 1E-6      
+ENCUT  = 500       
+PREC   = Normal   
+LREAL  = .FALSE.   
+ISMEAR = 0         
+SIGMA  = 0.005   
+ISPIN  = 1        
+
+! HSE06 functional
+LHFCALC = .TRUE.  
+AEXX = 0.25        
+HFSCREEN = 0.2  
+SYMPREC = 1E-4    
+!LDIAG = .TRUE.
+!HFRCUT= -1
+
+NSW    = 0         
+IBRION   = -1      
+ISIF     = 2      
+ISTART = 1
+
+LWAVE  = .FALSE.    
+LORBIT = 11       
+ 
+NPAR    = 4
+NCORE = 7
+```
+The construction of the **KPOINTS** file is more tedious, but it will be outlined below:
+   - Copy the **IBZKPT** file  from the DOS calculation using the HSE06 functional:
+     ```bash
+     cp ../dos/IBZKPT .
+     ```
+   - Copy **OUTCAR** file from band structure calculation using the PBE functional. In the **OUTCAR** file, look for
+     the **"k-points in reciprocal lattice and weights: k-points"** section. This section contains four columns of
+     information. Copy the contents, including **only the numbers**:
+     ```bash
+     cp ../../PBE/band/OUTCAR OUTCAR_PBE
+     ```
+     Here is a brief example from **OUTCAR_PBE**:
+     ```bash
+      k-points in reciprocal lattice and weights: k-points along fcc high symmetry lines  
+        0.00000000  0.00000000  0.00000000       0.001
+        0.00505051  0.00000000  0.00505051       0.001
+        0.01010101  0.00000000  0.01010101       0.001
+        0.01515152  0.00000000  0.01515152       0.001
+        0.02020202  0.00000000  0.02020202       0.001
+        0.02525253  0.00000000  0.02525253       0.001
+     ```
+   - **Here, two methods can be used:**
+     1. Create a **kdensity.dat** file and paste the **"k-points in reciprocal lattice and weights: k-points"** information into it:
+        ```bash
+        vim kdensity.dat
+        ```
+        Then, concatenate it with the **IBZKPT** file to create the **KPOINTS** file:
+        ```bash
+        cat IBZKPT kpoints.dat > KPOINTS       
+     2. Manually add the **"k-points in reciprocal lattice and weights: k-points"** information to the end of the **IBZKPT** file without
+        leaving any blank spaces. Then, rename the **IBZKPT** file to **KPOINTS**:
+        ```bash
+        mv IBZKPT KPOINTS
+        ```
+   - Enter to **KPOINTS** file
+     ```bash
+     vim KPOINTS
+     ```
+     and change the **weights to zero** only in the pasted section. The weights are given in the **fourth column**. Here is a brief example:
+     ```bash
+      k-points in reciprocal lattice and weights: k-points along fcc high symmetry lines  
+        0.00000000  0.00000000  0.00000000       0
+        0.00505051  0.00000000  0.00505051       0
+        0.01010101  0.00000000  0.01010101       0
+        0.01515152  0.00000000  0.01515152       0
+        0.02020202  0.00000000  0.02020202       0
+        0.02525253  0.00000000  0.02525253       0
+     ```     
+   - In the **KPOINTS** file, change the number of points on the second line. Usually, this number corresponds to the number of lines in the file minus 3 (**Ln − 3**).
+   - Include the **high-symmetry points of the first Brillouin zone (1BZ)**. Look for these points in the pasted section and add their corresponding labels after the weights.
+
+
 
