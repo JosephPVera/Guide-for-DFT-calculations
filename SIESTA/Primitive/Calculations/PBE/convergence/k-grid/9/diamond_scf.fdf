@@ -1,0 +1,48 @@
+SystemName   Diamond primitive cell
+SystemLabel  diamond
+
+NumberOfAtoms     2
+NumberOfSpecies   1
+
+%block ChemicalSpeciesLabel
+ 1  6  C
+%endblock ChemicalSpeciesLabel
+
+LatticeConstant 3.567 Ang
+%block LatticeVectors
+  0.000  0.500  0.500
+  0.500  0.000  0.500
+  0.500  0.500  0.000
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat  Fractional
+%block AtomicCoordinatesAndAtomicSpecies
+  0.000  0.000  0.000  1
+  0.250  0.250  0.250  1
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+XC.functional         GGA
+XC.authors            PBE
+
+PAO.BasisSize         DZP
+PAO.EnergyShift       10 meV
+PAO.SplitNorm         0.15
+
+MeshCutoff            600 Ry
+
+MaxSCFIterations      1
+SCF.Mixer.Weight      0.25
+SCF.Mixer.History     5
+ElectronicTemperature 300 K
+SolutionMethod        diagon
+SCF.DM.Tolerance      1.d-8
+SCF.DM.Converge      false
+SaveHS                False
+SaveRho               False
+
+%block kgrid_Monkhorst_Pack
+  9  0  0  0.0
+  0  9  0  0.0
+  0  0  9  0.0
+%endblock kgrid_Monkhorst_Pack
+SCF.MustConverge      False
