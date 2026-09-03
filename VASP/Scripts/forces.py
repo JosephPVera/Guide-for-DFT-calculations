@@ -5,7 +5,7 @@
 import xml.etree.ElementTree as ET
 import numpy as np
 
-"Code for get the maximun force, pressure and drift. The maximum force and pressedure are extract from vasprun.xml file, while \
+"Code for get the maximun force, pressure,drift, and total energy. The maximum force and pressedure are extract form vasprun.xml file, while \
  drift is extract from OUTCAR file. OPTION: All information can also be found on OUTCAR with keywords: TOTAL-FORCE and total drift."
 
 file_path = 'vasprun.xml'   
@@ -34,6 +34,21 @@ def extract_forces_and_stress(file_path):
             stress_matrix.append(row)
         stress_data.append(stress_matrix)    
     return forces_data, stress_data
+
+def extract_total_energy(file_path):
+    tree = ET.parse(file_path)
+    root = tree.getroot()
+
+    energies = []
+    # Each ionic step is wrapped in its own <calculation> block, matching
+    # the per-step structure already used for forces and stress.
+    for calculation in root.findall(".//calculation"):
+        energy_tag = calculation.find("./energy/i[@name='e_wo_entrp']")
+        if energy_tag is not None:
+            energies.append(float(energy_tag.text))
+        else:
+            energies.append(None)
+    return energies
 
 def find_maximum_force(forces):
     max_force = float('-inf')  
@@ -78,9 +93,11 @@ def find_drift(outcar_file):
 forces, stress = extract_forces_and_stress(file_path)
 max_forces = [find_maximum_force(force_set) for force_set in forces]
 pressures = find_pressure(stress)
+total_energies = extract_total_energy(file_path)
 
 drift_values, max_drift_values = find_drift(outcar_file)
 
-print(f"{'MaxForce(eV/Å)':<20} {'Pressure(kB)':<20} {'MaxDrift(eV/Å)':<20}")# {'Tot Drift(eV/Å)':<14}")
-for max_force, pressure, drift, max_drift in zip(max_forces, pressures, drift_values, max_drift_values):
-    print(f"{max_force:<20.4f} {pressure:<20.4f} {max_drift:<20.4f}")# {drift:<14.4f}")
+print(f"{'MaxForce(eV/Å)':<20} {'MaxDrift(eV/Å)':<18} {'Pressure(kB)':<18} {'TotalEnergy(eV)':<18}")# {'Tot Drift(eV/Å)':<14}")
+for max_force, pressure, drift, max_drift, total_energy in zip(max_forces, pressures, drift_values, max_drift_values, total_energies):
+    energy_str = f"{total_energy:<20.6f}" if total_energy is not None else f"{'Value not found':<20}"
+    print(f"{max_force:<20.4f} {max_drift:<18.4f} {pressure:<18.4f} {energy_str}")
