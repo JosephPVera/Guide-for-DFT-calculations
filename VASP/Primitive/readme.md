@@ -133,7 +133,7 @@ Once the calculations are finished, extract the total energies using the [tot.py
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/PBE/convergence/kdensity/delta_e_kpoint.png)
 
-## 1.3. Relaxation
+## 1.3. Relaxation calculation
 The aim of the relaxation calculation is to find the most stable arrangement of atoms by minimizing total energy, reducing internal forces to zero, and optimizing cell geometry. This type of calculation can be performed by setting up the **INCAR** file as follows:
 ```bash
 ALGO   = Normal 
@@ -348,11 +348,47 @@ $$
 \varepsilon _{o} = \varepsilon _{∞} + \varepsilon _{ion}
 $$
 
+# 2. HSE06 functional
+## 2.1. Workflow
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Figures/vasp_workflow_hse06.png)
 
+## 2.2. Convergence tests
+The initial parameters for the subsequent calculations will be taken from the previous calculations, i.e., those performed using the PBE functional. Furthermore, the relaxed structure obtained using the PBE functional will be used as the initial structure for the relaxation calculation. For the diamond example, the converged values **ENCUT = 500** and **KPOINTS = 10 10 10** will be used.
 
+## 2.3. Relaxation
+The **INCAR** files for hybrid-functional calculations using **HSE06** are very similar to those used for calculations with the **PBE** functional. The main differences are the following tags:
+```bash
+LHFCALC = .TRUE.  
+AEXX = 0.25        
+HFSCREEN = 0.2  
+```
+Therefore, the **INCAR** file for a relaxation calculation using the **HSE06** functional is configured as follows:
+```bash
+ALGO   = Damped   
+TIME   = 0.4       
+NELMIN = 4        
+EDIFF  = 1E-6      
+ENCUT  = 500       
+PREC   = Normal    
+LREAL  = .FALSE.   
+ISMEAR = 0         
+SIGMA  = 0.005    
+ISPIN  = 1         
 
+! HSE06 functional
+LHFCALC = .TRUE.  
+AEXX = 0.25        
+HFSCREEN = 0.2     
+SYMPREC = 1E-4     
 
+NSW    = 30        
+IBRION = 2         
+ISIF = 3          
 
-
-
+LWAVE  = .FALSE.
+ 
+NPAR    = 4
+NCORE = 7
+```
+Once the calculation is finished, the lattice parameters of the relaxed system can be found in the **CONTCAR** file. The converged forces can be extracted using the [forces.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/forces.py) script. For our example, the diamond calculation, this information can be found in the [relax](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/HSE06/relax) folder. In addition, the crystal structure can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software.
 
