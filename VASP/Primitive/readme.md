@@ -100,4 +100,8 @@ Now that the input files are ready, copy them into all the folders:
 ```bash
 for d in */; do cp INCAR POSCAR KPOINTS jobfile POTCAR "$d"; done
 ```
+and change the **ENCUT** in each folder accordingly:
+```bash
+for d in */; do sed -i "s/^ENCUT[[:space:]]*=.*/ENCUT  = ${d%\/}/" "$d/INCAR"; done
+```
 
