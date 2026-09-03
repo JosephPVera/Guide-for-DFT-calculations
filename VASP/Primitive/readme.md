@@ -452,4 +452,12 @@ cp -r ../scf/WAVECAR .
 ```
 The DOS calculation is a Non-Self-Consistent Field (NSCF) calculation that uses the already converged electron charge density from the SCF calculation. For this calculation, a denser **k-point mesh** must be used to ensure a good sampling of the Brillouin zone. The **Projected Density of States (PDOS)** can also be obtained from this same calculation. It reveals which atoms and angular momentum components (s, p, d, f, and so on) dominate bonding, hybridization, and the states near the Fermi level. Focuses on the chemical character of the states. It tells you how much a specific atom or orbital contributes to the energy levels.
 
+An example of this calculation can be found in the [dos](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/HSE06/properties/dos) folder. In addition, the total DOS and PDOS is stored in the **DOSCAR** file and can be plotted using the [dospo.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/dospo.py) script. The band gap value can be extracted using the [bandgap.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/bandgap.py) script.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/HSE06/properties/dos/total_dos.png)
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/HSE06/properties/dos/atom_1-LDOS.png)
+
+
+
 
