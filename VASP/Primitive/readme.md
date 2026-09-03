@@ -609,7 +609,6 @@ The construction of the **KPOINTS** file is more tedious, but it will be outline
      ```
      and change the **weights to zero** only in the pasted section. The weights are given in the **fourth column**. Here is a brief example:
      ```bash
-      k-points in reciprocal lattice and weights: k-points along fcc high symmetry lines  
         0.00000000  0.00000000  0.00000000       0
         0.00505051  0.00000000  0.00505051       0
         0.01010101  0.00000000  0.01010101       0
@@ -620,5 +619,12 @@ The construction of the **KPOINTS** file is more tedious, but it will be outline
    - In the **KPOINTS** file, change the number of points on the second line. Usually, this number corresponds to the number of lines in the file minus 3 (**Ln − 3**).
    - Include the **high-symmetry points of the first Brillouin zone (1BZ)**. Look for these points in the pasted section and add their corresponding labels after the weights.
 
+The [kpoints.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/kpoints.py) script automates the creation of the KPOINTS file using the steps described above.
 
+Before running the calculation, the **WAVECAR** file must be copied into this folder:
+```bash
+cp -r ../scf/WAVECAR . 
+```
+An example of this calculation can be found in the [band-2](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/HSE06/properties/band-2) folder. The band structure can be plotted using the [band.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/band.py) script.
 
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/HSE06/properties/band-2/band_structure_plot.png)
