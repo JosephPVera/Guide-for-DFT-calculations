@@ -157,4 +157,5 @@ NCORE = 7
 ```
 Keep in mind that, for this and all subsequent calculations, the converged values of **ENCUT** and **k-point mesh** should be kept fixed. For the diamond calculation, use the converged values **ENCUT = 500** and **k-point mesh = 10 10 10** (**k-density = 4.0**) for all subsequent calculations.
 
+Once the calculation is finished, the lattice parameters of the relaxed system can be found in the **CONTCAR** file. The converged forces can be extracted using the [forces.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/forces.py) script. For our example, the diamond calculation, this information can be found in the [relax](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/relax) folder.
 
