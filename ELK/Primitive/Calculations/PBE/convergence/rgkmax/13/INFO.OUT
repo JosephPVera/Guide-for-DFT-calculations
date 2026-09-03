@@ -1,0 +1,169 @@
+
+┌─────────────────────────┐
+│ Elk code version 11.2.3 │
+└─────────────────────────┘
+
+Date (YYYY-MM-DD) : 2026-09-02
+Time (hh:mm:ss)   : 18:35:20
+
+Using MPI, number of processes : 4
+
+All units are atomic (Hartree, Bohr, etc.)
+
+┌─────────────────────────────────────────────────┐
+│ Ground-state run starting from atomic densities │
+└─────────────────────────────────────────────────┘
+
+Lattice vectors :
+   0.000000000       3.370000000       3.370000000    
+   3.370000000       0.000000000       3.370000000    
+   3.370000000       3.370000000       0.000000000    
+
+Reciprocal lattice vectors :
+ -0.9322233393      0.9322233393      0.9322233393    
+  0.9322233393     -0.9322233393      0.9322233393    
+  0.9322233393      0.9322233393     -0.9322233393    
+
+Unit cell volume      :    76.54550600    
+Brillouin zone volume :    3.240558805    
+
+Muffin-tin inner radius fraction :   0.1000000000E-01
+
+Nuclei treated as point charges
+
+Species : 1 (C)
+ parameters loaded from : C.in
+ name : carbon
+ nuclear charge    :   -6.000000000    
+ electronic charge :    6.000000000    
+ atomic mass :    21894.16674    
+ muffin-tin radius :    1.434252805    
+ number of radial points in muffin-tin :    297
+ number on inner part of muffin-tin    :    201
+ approximate nuclear radius :   0.4747601631E-04
+ number of mesh points to nuclear radius :     85
+ atomic positions (lattice), magnetic fields (Cartesian) :
+  1 :   0.37500000  0.37500000  0.37500000    0.00000000  0.00000000  0.00000000
+  2 :  -0.37500000 -0.37500000 -0.37500000    0.00000000  0.00000000  0.00000000
+
+Total number of atoms per unit cell :    2
+Total muffin-tin volume :    24.71699838    
+ ratio of muffin-tin to unit cell volume :   0.3229059375    
+
+Spin treatment :
+ spin-unpolarised
+
+Number of Bravais lattice symmetries :   48
+Number of crystal symmetries         :   48
+Crystal has inversion symmetry
+Real symmetric eigensolver will be used
+
+k-point grid :      8     8     8
+k-point offset :    0.000000000       0.000000000       0.000000000    
+k-point set is reduced with full crystal symmetry group
+Total number of k-points :       29
+
+Muffin-tin radius times maximum |G+k| :    13.00000000    
+ using average radius
+Maximum |G+k| for APW functions       :    9.063952987    
+Maximum (1/2)|G+k|²                   :    41.07762188    
+Maximum |G| for potential and density :    18.12790697    
+Constant for pseudocharge density :    7
+Radial integration step length :    4
+
+G-vector grid sizes :     28    28    28
+Number of G-vectors :     7727
+
+Maximum angular momentum used for
+ APW functions            :    8
+ outer part of muffin-tin :    6
+ inner part of muffin-tin :    1
+
+Total nuclear charge    :   -12.00000000    
+Total core charge       :    4.000000000    
+Total valence charge    :    8.000000000    
+Total excess charge     :    0.000000000    
+Total electronic charge :    12.00000000    
+
+Effective Wigner radius, rₛ :    1.150491147    
+
+Number of empty states         :      8
+Total number of valence states :     13
+Total number of core states    :      4
+
+Total number of local-orbitals :     10
+
+Exchange-correlation functional :     20     0     0
+ Perdew-Burke-Ernzerhof, Phys. Rev. Lett. 77, 3865 (1996)
+ gradient requirement :    1
+ generalised gradient approximation (GGA)
+
+Smearing type :    3
+ Fermi-Dirac
+Smearing width :   0.1000000000E-02
+Effective electronic temperature (K) :    315.7750248    
+
+Mixing type :    3
+ Broyden mixing, J. Phys. A: Math. Gen. 17, L317 (1984)
+
+Kohn-Sham potential initialised from atomic data
+
+┌──────────────────────────────┐
+│ Self-consistent loop started │
+└──────────────────────────────┘
+
+┌─────────────────┐
+│ Loop number : 1 │
+└─────────────────┘
+
+Reached self-consistent loops maximum
+
+Energies :
+ Fermi                       :     0.31636955586871    
+ sum of occupied eigenvalues :     -38.205375545017    
+ electron kinetic            :      75.945262667453    
+ core electron kinetic       :      63.851454078792    
+ Coulomb                     :     -141.58512733353    
+ Coulomb potential           :     -98.460179955490    
+ nuclear-nuclear             :     -24.327541490281    
+ electron-nuclear            :     -136.05499173102    
+ Hartree                     :      18.797405887763    
+ Madelung                    :     -92.355037355789    
+ xc potential                :     -15.690458256980    
+ exchange                    :     -10.463332729741    
+ correlation                 :    -0.44072956279392    
+ electron entropic           :    -0.19576466808832E-11
+ total energy                :     -76.543926958618    
+
+Density of states at Fermi energy :   0.1000005999E-06
+ (states/Hartree/unit cell)
+
+Estimated indirect band gap :   0.1790429488    
+ from k-point 1 to k-point 18
+Estimated direct band gap   :   0.2195249884    
+ at k-point 1
+
+Charges :
+ core                        :    4.000000000    
+ valence                     :    8.000000000    
+ interstitial                :    3.106527556    
+ muffin-tins (core leakage)
+  species : 1 (C)
+   atom 1                    :    4.446736222     (  0.8721166601E-04)
+   atom 2                    :    4.446736222     (  0.8721166601E-04)
+ total in muffin-tins        :    8.893472444    
+ total calculated charge     :    11.99449110    
+ total charge                :    12.00000000    
+ error                       :   0.5508897115E-02
+
+┌──────────────────────────────┐
+│ Self-consistent loop stopped │
+└──────────────────────────────┘
+
+Timings (CPU seconds) :
+ initialisation                        :         0.34
+ Hamiltonian and overlap matrix set up :         0.55
+ first-variational eigenvalue equation :         1.29
+ charge density calculation            :         0.02
+ potential calculation                 :         0.05
+ total                                 :         2.25

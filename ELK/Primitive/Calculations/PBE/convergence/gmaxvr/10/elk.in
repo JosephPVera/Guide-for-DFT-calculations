@@ -1,0 +1,47 @@
+tasks
+  0
+
+scale
+  6.74
+
+avec
+  0.0  0.5  0.5
+  0.5  0.0  0.5
+  0.5  0.5  0.0 
+
+sppath
+  '/home/joseph/elk-11.2.3/species/'        
+
+atoms
+  1                                
+  'C.in'                           
+  2                                 
+  0.00  0.00  0.00   0.0  0.0  0.0
+  0.25  0.25  0.25   0.0  0.0  0.0
+
+xctype
+  20
+
+rgkmax
+  16.0
+  
+gmaxvr
+  10.0
+  
+lmaxapw
+  8
+
+ngridk
+  8  8  8
+    
+epsforce
+  5.0d-3
+  
+epsstress
+  2.0d-3
+  
+epsengy
+  1.0d-4
+
+maxscl
+  1

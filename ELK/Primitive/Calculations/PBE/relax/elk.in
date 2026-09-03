@@ -1,7 +1,6 @@
 tasks
   2
 
-! --- starting geometry: your a = 6.74 bohr as an initial guess ---
 scale
   6.74
 
@@ -35,19 +34,15 @@ lmaxapw
 ngridk
   8  8  8
 
-! --- lattice vector optimisation ---
 latvopt
   1
 
-! step size for lattice-vector updates
 tau0latv
   0.25
 
-! step size for atomic-position updates (kept for completeness, though symmetry pins the positions here)
 tau0atp
   0.25
 
-! convergence tolerances
 epsforce
   5.0d-3
   

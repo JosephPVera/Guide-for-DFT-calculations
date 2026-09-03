@@ -1,0 +1,56 @@
+
+┌─────────────────────────────────┐
+│ Elk code version 11.2.3 started │
+└─────────────────────────────────┘
+
+Number of MPI processes : 4
+Number of OpenMP threads per MPI process : 1
+Total number of threads (MPI x OpenMP) : 4
+Maximum OpenMP nesting level : 4
+Number of OpenMP threads at first nesting level : 1
+Number of MKL threads : 1
+
+RAM disk enabled
+
+┌──────────────────┐
+│ Current task : 0 │
+└──────────────────┘
+Info(checkmt): changed muffin-tin radius of species 1 (C) from   1.8000 to   1.4343
+
+Info(findsymcrys): atomic basis shift (lattice) :
+  0.3750000000      0.3750000000      0.3750000000    
+See GEOMETRY.OUT for new atomic positions
+
+Warning(linengy): could not find 1 linearisation energies in s.c. loop 1
+
+Warning(occupy): minimum eigenvalue less than minimum linearisation energy :   -335159.8104      -2.501200000    
+ for s.c. loop 1
+
+Warning(occupy): minimum eigenvalue less than minimum linearisation energy :   -335159.8104      -2.501200000    
+ for s.c. loop 1
+
+Warning(occupy): minimum eigenvalue less than minimum linearisation energy :   -335159.8104      -2.501200000    
+ for s.c. loop 1
+
+Warning(occupy): minimum eigenvalue less than minimum linearisation energy :   -335159.8104      -2.501200000    
+ for s.c. loop 1
+
+Warning(rhonorm): total charge density incorrect for s.c. loop 1
+ Calculated :    3.999826336    
+ Required   :    12.00000000    
+
+Warning(rhonorm): total charge density incorrect for s.c. loop 1
+ Calculated :    3.999826336    
+ Required   :    12.00000000    
+
+Warning(rhonorm): total charge density incorrect for s.c. loop 1
+ Calculated :    3.999826336    
+ Required   :    12.00000000    
+
+Warning(rhonorm): total charge density incorrect for s.c. loop 1
+ Calculated :    3.999826336    
+ Required   :    12.00000000    
+
+┌──────────────────┐
+│ Elk code stopped │
+└──────────────────┘

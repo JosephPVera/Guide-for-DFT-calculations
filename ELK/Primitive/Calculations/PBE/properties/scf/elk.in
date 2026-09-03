@@ -1,11 +1,9 @@
 tasks
   0
 
-! Lattice vector scaling factor (already in Bohr)
 scale
   1.0
 
-! Primitive (fcc) lattice vectors of the diamond structure, in units of 'scale'
 avec
    0.000000000       3.379539863       3.379539863    
    3.379539863       0.000000000       3.379539863    
@@ -21,11 +19,9 @@ atoms
    0.37500000    0.37500000    0.37500000   0.0  0.0  0.0
   -0.37500000   -0.37500000   -0.37500000   0.0  0.0  0.0
 
-! Exchange-correlation: PBE-GGA
 xctype
   20
 
-! LAPW basis / potential expansion cutoffs
 rgkmax
   8.0
   
@@ -37,8 +33,7 @@ lmaxapw
 
 ngridk
   8  8  8
-    
-! convergence tolerances
+
 epsforce
   5.0d-3
   

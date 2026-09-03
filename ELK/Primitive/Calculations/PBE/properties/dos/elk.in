@@ -32,15 +32,12 @@ gmaxvr
 lmaxapw
   10
 
-! denser mesh recommended for smooth DOS (non-self-consistent, reads STATE.OUT)
 ngridk
   12  12  12
 
-! angular momentum cut-off for the partial DOS
 lmaxdos
   3
 
-! energy window (Hartree) and plotting resolution
 wplot
   1000  200  3
   -0.734987  0.734987
