@@ -294,7 +294,7 @@ The band structure calculation is a Non-Self-Consistent Field (NSCF) calculation
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/PBE/properties/band/band_structure_plot.png)
 
 
-## 1.7. Full dielectric tensor calculation
+## 1.7. Dielectric tensor calculation
 This calculation allows you to compute the electronic and ionic dielectric tensors, as well as the Born effective charges. This type of calculation can be performed by setting up the **INCAR** file as follows:
 ```bash
 ALGO  =  Normal
@@ -342,7 +342,11 @@ Electronic dielectric tensor:
        0.00000000       5.85679453      -0.00000000 
        0.00000000      -0.00000000       5.85679453
 ```
+The full dielectric tensor can be constructed using the following relation:
 
+$$
+\varepsilon _{o} = \varepsilon _{∞} + \varepsilon _{ion}
+$$
 
 
 
