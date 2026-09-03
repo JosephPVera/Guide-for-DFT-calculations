@@ -25,7 +25,7 @@ Create several folders named according to the energy cutoff values to be used. F
 ```bash
 mkdir {200..950..50}
 ```
-Then, create the **POSCAR** file for the system under study. Several systems can be found in [The Material Project](https://next-gen.materialsproject.org/). An example of what a POSCAR file looks like is shown below:
+Then, create the **POSCAR** file for the system under study. Several systems can be found in [The Material Project](https://next-gen.materialsproject.org/). An example of what a **POSCAR** file looks like is shown below:
 ```bash
 C8
 1.0
@@ -38,7 +38,7 @@ Direct
      0.250000000         0.250000000         0.250000000
      0.000000000         0.000000000         0.000000000
 ```
-Create the INCAR file. For convergence tests, the calculations do not need to be highly accurate, so the INCAR file can be configured as follows:
+Create the **INCAR** file. For convergence tests, the calculations do not need to be highly accurate, so the **INCAR** file can be configured as follows:
 ```bash
 ALGO   = Fast      
 NELMIN = 4         
@@ -57,3 +57,43 @@ LWAVE  = .FALSE.
 NPAR    = 4
 NCORE = 7
 ```
+Create the **KPOINTS** file. An example of what a **KPOINTS** file looks like is shown below:
+```bash
+k-density: 4.0
+0
+Gamma
+ 10 10 10
+ 0  0  0
+```
+Create the **jobfile** file. An example of what a **jobfile** file looks like is shown below:
+```bash
+#!/bin/bash
+# Specify jobname:
+#SBATCH --job-name=Joseph
+# Specify the number of nodes and the number of CPU's (tasks) per node:
+#SBATCH --nodes=1
+#SBATCH --ntasks=28
+#SBATCH -p alto
+# The maximum time allowed for the job, in hh:mm:ss
+#SBATCH --time=24:00:00
+# Maximum memory allowed per cpu
+#SBATCH --mem-per-cpu=4G
+
+ulimit -s unlimited
+ulimit -a
+
+PROG=vasp
+
+## Run command 
+mpirun -np $SLURM_NTASKS vasp_std
+
+exit 0
+```
+Finally, use the **POTCAR** files provided for **VASP**. If your system consists of only one species, such as diamond, you only need to use the **POTCAR** file for carbon. On the other hand, if your system consists of two or more species, such as cubic boron nitride or BC$_{2}$N, you must concatenate the **POTCAR** files for each species, following the order of the elements in the **POSCAR** file:
+```bash
+cat POTCAR_B POTCAR_N > POTCAR
+```
+```bash
+cat POTCAR_B POTCAR_C POTCAR_N > POTCAR
+```
+
