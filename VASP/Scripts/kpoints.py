@@ -6,7 +6,7 @@
 and the IBZKPT file from DOS with the PBE calculation"
 
 # Read the OUTCAR file and extract the information 
-with open('../../PBE/bs/OUTCAR') as infile, open('kpoints.dat', 'w') as outfile:
+with open('../../PBE/band/OUTCAR') as infile, open('kpoints.dat', 'w') as outfile:
     copy = False
     for line in infile:
         if line.strip() == "k-points in reciprocal lattice and weights: k-points along fcc high symmetry lines":
@@ -37,7 +37,7 @@ with open("kpoints.dat", 'w') as fopen:
 
 # Read the KPOINTS file, get the labels
 kpoints_dict = {}
-with open('../../PBE/bs/KPOINTS', 'r') as kpoints_file:
+with open('../../PBE/band/KPOINTS', 'r') as kpoints_file:
     for line in kpoints_file:
         # Ignore lines that do not contain k-point data
         if line.strip() and not line.startswith("k-points") and not line.startswith("#") and not line.startswith("Line-mode") and not line.startswith("reciprocal"):
