@@ -1,5 +1,5 @@
 k-points along fcc high symmetry lines
- 100   0  ! # of points per line
+ 100   0  
 Line-mode
 reciprocal
   0.000  0.000  0.000  \Gamma
