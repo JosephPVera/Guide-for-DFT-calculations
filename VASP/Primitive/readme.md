@@ -294,8 +294,54 @@ The band structure calculation is a Non-Self-Consistent Field (NSCF) calculation
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/PBE/properties/band/band_structure_plot.png)
 
 
+## 1.7. Full dielectric tensor calculation
+This calculation allows you to compute the electronic and ionic dielectric tensors, as well as the Born effective charges. This type of calculation can be performed by setting up the **INCAR** file as follows:
+```bash
+ALGO  =  Normal
 
+PREC   =  Normal
+LREAL  =  False
+EDIFF  =  1e-06
+ENCUT  =  500.0
+LASPH  =  True
+NELM   =  100
 
+ISIF    =  0
+IBRION  =  8
+NSW     =  1
+
+ISMEAR  =  0
+SIGMA   =  0.1
+
+LWAVE   =  False
+LCHARG  =  False
+
+LORBIT  =  10
+
+LEPSILON  =  True
+
+NPAR = 28
+```
+In addition, a denser **k-point mesh** must be specified in the **KPOINTS** file:
+```bash
+Dense K-mesh
+0
+Gamma
+ 32 32 32
+ 0  0  0
+```
+An example of this calculation can be found in the [dielectric](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive/Calculations/PBE/properties/dielectric) folder. Finally, the electronic and ionic contributions can be extracted using the [dielectric.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/dielectric.py) script.
+```bash
+Ionic dielectric tensor:
+       0.00000000      -0.00000000      -0.00000000 
+      -0.00000000       0.00000000      -0.00000000 
+      -0.00000000      -0.00000000       0.00000000 
+
+Electronic dielectric tensor:
+       5.85679453       0.00000000       0.00000000 
+       0.00000000       5.85679453      -0.00000000 
+       0.00000000      -0.00000000       5.85679453
+```
 
 
 
