@@ -112,4 +112,16 @@ Once the calculations are finished, extract the total energies using the [tot.py
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Primitive/Calculations/PBE/convergence/cutoff/delta_e_encut.png)
 
-
+### 1.2.2. K-point mesh
+Now, **ENCUT** value has been selected (for the diamond example, **ENCUT = 500**), the final step is to perform the convergence test for the **k-point mesh** using the **KPOINTS** file. Copy the input files corresponding to the converged **ENCUT** value, and then create several folders according to the **k-density** to be tested:
+```bash
+mkdir {1..9..1}
+```
+Now copy the input files into all the folders:
+```bash
+for d in */; do cp INCAR POSCAR jobfile POTCAR "$d"; done
+```
+Create the KPOINTS file for each folder using the [kmesh.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/kmesh.py) script:
+```bash
+for d in {1..9}; do (cd "$d" && kmesh.py --d "$d"); done
+```
