@@ -5,7 +5,7 @@ Steps for Quantum ESPRESSO calculations using **PBE** and **HSE06** functionals.
 A guide to installing quantum ESPRESSO can be found in the [Quantum ESPRESSO repository](https://github.com/JosephPVera/Quantum_espresso_software).
 
 ## 0. Workflow
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Figures/supercell_PD_workflow.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Figures/supercell_PD_workflow.png)
 
 ---
 # 1. PBE functional
@@ -146,7 +146,7 @@ $$
 \end{equation}
 $$
 
-**Diamond:** For our example, since the host material is composed of only one atomic species (carbon), the elemental chemical potentials will be used. The total energy of diamond can be extracted from the [C folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/scf), while the total energy of nitrogen is obtained using a nitrogen dimer (N2), whose total energy can be extracted from the [N folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/cpd/N/scf). Therefore:
+**Diamond:** For our example, since the host material is composed of only one atomic species (carbon), the elemental chemical potentials will be used. The total energy of diamond can be extracted from the [C folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Primitive/Calculations/PBE/properties/scf), while the total energy of nitrogen is obtained using a nitrogen dimer (N2), whose total energy can be extracted from the [N folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/cpd/N/scf). Therefore:
 
 $$
 \mu^{elemental}_{C} = \frac{E_{C}}{N_{C}} = \frac{-36.86713357}{2} = −18.433566785\ \mathrm{eV/atom}
@@ -173,9 +173,9 @@ Taking into account that, for this simple calculation, the defects will be consi
 **Diamond:** For our example, we will use a supercell containing 216 atoms (i.e., a 3x3x3 supercell).
 
 ### 1.3.2. Point Defects
-Now the optimal supercell has been chosen, the defect to be studied can be introduced into the system. Once this is done, we will have two systems: the perfect supercell and the defective supercell. A folder will be created for the perfect supercell, such as [perfect folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/perfect). On the other hand, separate folders will be created for the defective supercell, each corresponding to a different charge state (e.g., -q, ..., -1, 0, +1, ..., +q).
+Now the optimal supercell has been chosen, the defect to be studied can be introduced into the system. Once this is done, we will have two systems: the perfect supercell and the defective supercell. A folder will be created for the perfect supercell, such as [perfect folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/perfect). On the other hand, separate folders will be created for the defective supercell, each corresponding to a different charge state (e.g., -q, ..., -1, 0, +1, ..., +q).
 
-**NV center in Diamond**: For our example, separate folders have been created for the different charge states, as shown in the [defect folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect).
+**NV center in Diamond**: For our example, separate folders have been created for the different charge states, as shown in the [defect folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect).
 ```bash
 mkdir NV{-3..2..1}
 ```
@@ -297,7 +297,7 @@ This shows a list of data for each step, such as:
      total magnetization       =    -0.00 Bohr mag/cell
      total magnetization       =    -0.00 Bohr mag/cell
 ```
-The last value corresponds to the correct total magnetization and will be used in the subsequent calculations. An example for NV-3 can be found in the [mag_scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/relax/mag_scf).
+The last value corresponds to the correct total magnetization and will be used in the subsequent calculations. An example for NV-3 can be found in the [mag_scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-3/relax/mag_scf).
 
 The **spin state** (**S**) can be determined from the total **magnetization** (**M**) using the following relation:
 
@@ -382,9 +382,9 @@ C                0.7500026446        0.9166624631        0.9166624627
 N                0.4247437727        0.4087117851        0.4087117899
 End final coordinates
 ```
-An example for NV-3 can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/relax/relax).
+An example for NV-3 can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-3/relax/relax).
 
-⚠️ **WARNING**: If the system has convergence problems and does not reach self-consistency, continue using **occupations = 'smearing'** for the calculations. It is recommended to use a small **degauss** value. An example for NV-2 can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-2/relax/relax).
+⚠️ **WARNING**: If the system has convergence problems and does not reach self-consistency, continue using **occupations = 'smearing'** for the calculations. It is recommended to use a small **degauss** value. An example for NV-2 can be found in the [relax folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-2/relax/relax).
 
 #### 1.3.2.3. Self-Consistent Field (SCF) calculation
 For this calculation, the relaxed supercell must be used. Copy the **ATOMIC_POSITIONS** from the previous calculation and paste them into the input file. The input file must be set up as follows:
@@ -447,7 +447,7 @@ C                0.0002602508        0.0003236124        0.3334611078
 C                0.7500026446        0.9166624631        0.9166624627
 N                0.4247437727        0.4087117851        0.4087117899
 ```
-Once the calculation is done, the total energy can be extract using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) script. An example for NV-3 can be found in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/scf).
+Once the calculation is done, the total energy can be extract using the [qe_tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_tot.py) script. An example for NV-3 can be found in the [scf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-3/scf).
 
 #### 1.3.2.4. Non-Self-Consistent Field (NSCF) calculation
 If the calculations are performed using only the Gamma point, the NSCF calculation is not necessary. However, this step is included here for testing purposes. The input file is similar to the one used for the SCF calculation, with only the **calculation** tag changed as follows:
@@ -458,9 +458,9 @@ Once the calculation is done, the Kohn-Sham level diagram can be plotted using t
 
 🔔**Reminder:** As mentioned previously, this calculation is not necessary when using only the Gamma point. Therefore, the Kohn–Sham level diagram should already be obtained from the SCF calculation.
 
-An example for NV-3 can be found in the [nscf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/nscf).
+An example for NV-3 can be found in the [nscf folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-3/nscf).
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/nscf/eigenplot_qe.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-3/nscf/eigenplot_qe.png)
 
 #### 1.3.2.5. Projected Density of States (PDOS) calculation
 The PDOS calculation is used to determine how localized a state is. The input file must be set up as follows:
@@ -479,9 +479,9 @@ The PDOS calculation is used to determine how localized a state is. The input fi
 ```
 Once the calculation is done, information about the orbitals with the largest contributions to each state can be obtained for each band and spin channel using the [qe_loc.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_loc.py) script. Furthermore, the Localization factor diagram can be plotted using the [qe_locplot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_locplot.py) script. In this last script, the VBM and CBM values must always be entered manually.
 
-An example for NV-3 can be found in the [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/pdos).
+An example for NV-3 can be found in the [pdos folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-3/pdos).
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/pdos/eigenplot_localization.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-3/pdos/eigenplot_localization.png)
 
 
 #### 1.3.2.6. Electronic charge density
@@ -498,7 +498,7 @@ This calculation can be performed by setting up the input file as follows:
     fileout='diamond_pd_chg_3d.xsf'
 /
 ```
-An example for NV-3 can be found in the [chg_3d folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/chg_3d). The 3D charge density can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software along with the [diamond_pd_chg_3d.xsf](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/chg_3d/diamond_pd_chg_3d.xsf) file.
+An example for NV-3 can be found in the [chg_3d folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-3/chg_3d). The 3D charge density can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software along with the [diamond_pd_chg_3d.xsf](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-3/chg_3d/diamond_pd_chg_3d.xsf) file.
 
 #### 1.3.2.7. Electrostatic Potential
 This calculation can be performed by setting up the input file as follows:
@@ -514,18 +514,18 @@ This calculation can be performed by setting up the input file as follows:
     fileout='diamond_v_elec_defect.cube'
 /
 ```
-This calculation will be important because it will help us compute the energy corrections. An example for NV-3 can be found in the [potential folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/NV-3/potential).
+This calculation will be important because it will help us compute the energy corrections. An example for NV-3 can be found in the [potential folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/NV-3/potential).
 
 ### 1.3.3. Finite-Size Correction
 The main artifact of the supercell approach for point-defect calculations consists in the introduction of periodic images of the defect located in the simulation cell. Such periodically-repeated array of defects corresponds to very high defect concentrations for commonly used supercell types. In such case, defect-defect interactions are large and can considerably affect the predicted formation energy of the point defect. Among the kinds of defect-defect interactions, electrostatic ones are never negligible for any practical supercell size. The study of point defects in the dilute limit then requires some scheme to correct for such spurious electrostatic interactions.
 
 <p align="center">
-  <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Figures/finite-size-correction.png" alt="Descripción de la imagen">
+  <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Figures/finite-size-correction.png" alt="Descripción de la imagen">
 </p>
 
-As mentioned previously, the output information from the **potential calculation** is relevant for computing the energy corrections. In addition, the **dielectric constant** is also required for this calculation. It can be computed by following the steps described in the [phonons folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/phonons). To compute these energy corrections, the [sxdefectalign](https://sxrepo.mpie.de/projects/sphinx-add-ons/files) software will be used.
+As mentioned previously, the output information from the **potential calculation** is relevant for computing the energy corrections. In addition, the **dielectric constant** is also required for this calculation. It can be computed by following the steps described in the [phonons folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons). To compute these energy corrections, the [sxdefectalign](https://sxrepo.mpie.de/projects/sphinx-add-ons/files) software will be used.
 
-**NV center in diamond:** For our example, the information has been processing in the [Finite_Size_correction folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Supercell-PD/Calculations/PBE/defect/Finite_Size_correction). The following energy corrections were obtained:
+**NV center in diamond:** For our example, the information has been processing in the [Finite_Size_correction folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/Finite_Size_correction). The following energy corrections were obtained:
 
 <div align="center">
   
@@ -545,11 +545,11 @@ Then, to gather important information such as the chemical potentials, total ene
 
 **NV center in diamond:** For our example, information such as the chemical potentials, total energies, charge states, and energy of the valence band maximum has been computed. However, energy corrections have not yet been included.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Figures/formation_energy.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Figures/formation_energy.png)
 
 Including the energy corrections:
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Supercell-PD/Figures/formation_energy-corrections.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Figures/formation_energy-corrections.png)
 
 ---
 # 2. HSE06 functional
