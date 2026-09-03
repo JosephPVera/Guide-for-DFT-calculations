@@ -8,6 +8,7 @@ Check the [VASP](https://vasp-at.translate.goog/wiki/The_VASP_Manual?_x_tr_sl=en
 
 **Warning:** VASP is proprietary software. If you want to perform calculations using VASP, you must obtain and use the software legally.
 
+**Necessary input files:** INCAR, POSCAR, KPOINTS, jobfile, and POTCAR
 
 ---
 # 1. PBE functional
