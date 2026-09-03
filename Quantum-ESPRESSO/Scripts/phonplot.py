@@ -19,6 +19,7 @@ Usage:
     phonplot.py --band                     # Band structure
     phonplot.py --tband                    # Band structure with and without NAC
     phonplot.py --tdos --x 0 12 --y -1 23  # set axis ranges
+    phonplot.py --split                    # each branch with different color
 """
 import re
 import argparse
