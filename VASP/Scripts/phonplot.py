@@ -2,288 +2,255 @@
 # Written by Joseph P.Vera
 # 2024-10
 
-import matplotlib.pyplot as plt
+"""
+Usage:
+      python3 phonpllot.py [--x] [--y] [--tdos] [--pdos] [--ter] [--band] [--tband] [--split]
+
+Plot DOS, PDOS, thermal properties and band structure from phonopy outputs.
+
+Expected input files:
+    Total DOS   -> total_dos.dat
+    PDOS        -> projected_dos.dat  (+ pdos.conf for ATOM_NAME labels)
+    Thermal     -> thermal.dat
+    Band        -> band.dat            (+ band.conf for BAND_LABELS)
+    Mixed bands -> band_nac.dat and band_nonac.dat  (+ band.conf)
+
+Usage:
+    phonplot.py --tdos                     # Total DOS
+    phonplot.py --pdos                     # Partial DOS
+    phonplot.py --ter                      # Thermal properties
+    phonplot.py --band                     # Band structure
+    phonplot.py --tband                    # Band structure with and without NAC
+    phonplot.py --tdos --x 0 12 --y -1 23  # set axis ranges
+    phonplot.py --split                    # each branch with different color
+"""
 import re
 import argparse
-import pandas as pd
 import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 
-"Code for plot DOS, PDOS, thermal properties and band structure using the outputs from phonopy calculations."
-"The output are saved with the following names: DOS  ----> total_dos.dat \
-                                                PDOS ----> projected_dos.dat \
-                                                Thermal ----> thermal.dat \
-                                                Single Band ----> band.dat \
-                                                Merge Band with and without NAC ----> band_nac.dat and band_nonac.dat"
-                                                
-"Usage: ----> phonplot.py --tdos                    # Total DOS \
-        ----> phonplot.py --pdos                    # Partial DOS \
-        ----> phonplot.py --ter                     # Thermal properties \
-        ----> phonplot.py --band                    # Band structure \
-        ----> phonplot.py --tband                   # band structure with and without NAC \
-        ----> phonplot.py --tdos --x 0 12 --y -1 23 # Total DOS, set y and x-axis range"
+def _apply_ranges(x_range, y_range):
+    if x_range:
+        plt.xlim(x_range)
+    if y_range:
+        plt.ylim(y_range)
 
+def _finish(outfile):
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(outfile, dpi=150)
+    #plt.show()
+    plt.close()
 
-def get_atomic_symbols(conf_file='band.conf'): 
-    symbols = []
-    with open(conf_file, 'r') as file:
-        for line in file:
-            if 'ATOM_NAME' in line:
-                # Split the line and extract symbols
-                parts = line.split('=')
-                if len(parts) > 1:
-                    # Get the part after the '=' and strip any whitespace
-                    symbols = parts[1].strip().split()
-                break
-    return symbols
-        
+def _read_conf_value(conf_file, key):
+    """Grab the right-hand side of `KEY = ...` from a phonopy .conf file."""
+    with open(conf_file) as f:
+        for line in f:
+            if key in line and '=' in line:
+                return line.split('=', 1)[1].strip()
+    return ''
+
+def get_atomic_symbols(conf_file='pdos.conf'):
+    value = _read_conf_value(conf_file, 'ATOM_NAME')
+    return value.split() if value else []
+
+def get_pdos_labels(conf_file='pdos.conf', data_file='projected_dos.dat'):
+    """
+    Build one label per PDOS column.
+    - If len(symbols) == n_data_cols: use the symbols as-is (e.g. ATOM_NAME = B N).
+    - Otherwise (equivalent atoms sharing a symbol, e.g. diamond): expand each
+      symbol into Sym1, Sym2, ... across its equivalent columns.
+    - If nothing lines up cleanly, fall back to col1, col2, ...
+    """
+    symbols = get_atomic_symbols(conf_file) or ['X']
+    n_data_cols = pd.read_csv(data_file, sep=r'\s+', comment='#', header=None,
+                               skiprows=1, nrows=1).shape[1] - 1
+
+    if len(symbols) == n_data_cols:
+        return symbols
+
+    if len(symbols) < n_data_cols and n_data_cols % len(symbols) == 0:
+        per_symbol = n_data_cols // len(symbols)
+        if per_symbol == 1:
+            return symbols
+        return [f"{s}{i+1}" for s in symbols for i in range(per_symbol)]
+
+    return [f"col{i+1}" for i in range(n_data_cols)]
+
+def get_band_labels(config_file='band.conf'):
+    label_string = _read_conf_value(config_file, 'BAND_LABELS').replace(r'\Gamma', r'$\Gamma$')
+    parts = re.findall(r'\$\\Gamma\$|[A-Za-z]+(?::[A-Za-z]+)?', label_string)
+    return [p.replace(':', '|') for p in parts]
+
+def _load_band_file(path):
+    """Return (k_path breakpoints, data array) for a phonopy band.dat-style file."""
+    with open(path) as f:
+        f.readline()
+        k_path = list(map(float, f.readline().strip()[1:].split()))
+    data = np.loadtxt(path, comments='#', skiprows=2)
+    return k_path, data
+
+BRANCH_COLORS = ['xkcd:red', 'xkcd:blue', 'xkcd:green', 'xkcd:orange', 'xkcd:purple',
+                  'xkcd:magenta', 'xkcd:brown', 'xkcd:yellow', 'xkcd:crimson', 'xkcd:gold',
+                  'xkcd:darkblue', 'xkcd:navy', 'xkcd:olive', 'xkcd:black', 'xkcd:indigo', 'xkcd:cyan']
+
+def _band_blocks(data):
+    """Split concatenated band.dat data into (start, end) index pairs, one per branch."""
+    starts = np.where(np.concatenate(([True], np.diff(data[:, 0]) < 0)))[0]
+    ends = list(starts[1:]) + [len(data)]
+    return list(zip(starts, ends))
+
+def _plot_band_blocks(data, ax, color, label):
+    """Plot every branch in a single color, with one legend entry."""
+    for i, (start, end) in enumerate(_band_blocks(data)):
+        block = data[start:end]
+        ax.plot(block[:, 0], block[:, 1], linestyle='-', markersize=1,
+                 c=color, label=label if i == 0 else "")
+
+def _plot_band_blocks_split(data, ax, colors=BRANCH_COLORS):
+    """Plot each branch in its own color with its own 'Branch N' legend entry."""
+    for i, (start, end) in enumerate(_band_blocks(data)):
+        block = data[start:end]
+        color = colors[i % len(colors)]
+        ax.plot(block[:, 0], block[:, 1], linestyle='-', markersize=1,
+                 c=color, label=f'Branch {i + 1}')
+                 
+# --------------------------------------------------------------------------- #
+# Plot functions
+# --------------------------------------------------------------------------- #
 def plot_total_dos(file_path='total_dos.dat', x_range=None, y_range=None):
-    data = []
-    with open(file_path, 'r') as file:
-        next(file)  # Skip the first line
-        for line in file:
-            columns = line.split()
-            if len(columns) >= 2: 
-                data.append((float(columns[0]), float(columns[1])))
-    
-    # Separate the columns into x and y lists
-    x, y = zip(*data)
-    
-    plt.figure(figsize=(12, 8))
+    x, y = np.loadtxt(file_path, comments='#', skiprows=1, unpack=True, usecols=(0, 1))
+
     plt.plot(x, y, label="Total DOS", color='r')
     plt.fill_between(x, y, alpha=0.1, color='r')
     plt.xlabel('Frequency (THz)', fontsize=14)
-    plt.ylabel('DOS (States/eV)', fontsize=14)
+    plt.ylabel('DOS (States/THz)', fontsize=14)
+    _apply_ranges(x_range, y_range)
+    _finish('tdos.png')
 
-    if x_range:
-        plt.xlim(x_range)
-    if y_range:
-        plt.ylim(y_range)
+def plot_pdos(file_path='projected_dos.dat', conf_file='pdos.conf', x_range=None, y_range=None):
+    data = np.loadtxt(file_path, comments='#', skiprows=1)
+    x, y_columns = data[:, 0], data[:, 1:].T
 
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig('tdos.png', dpi=150)
-    plt.show()
-    plt.close()
+    labels = get_pdos_labels(conf_file, file_path)
+    labels += [f"col{i+1}" for i in range(len(labels), len(y_columns))]
 
-def plot_pdos(file_path='projected_dos.dat', x_range=None, y_range=None):
-    data = []
-    with open(file_path, 'r') as file:
-        next(file)  # Skip the first line
-        for line in file:
-            columns = line.split()
-            if len(columns) >= 3: 
-                data.append((float(columns[0]), float(columns[1]), float(columns[2])))
-    
-    # Separate the columns into x, y1, and y2 lists
-    x, y1, y2 = zip(*data)
+    colors = cm.tab10.colors
+    for i, y in enumerate(y_columns):
+        color = colors[i % len(colors)]
+        plt.plot(x, y, label=labels[i], color=color)
+        plt.fill_between(x, y, alpha=0.1, color=color)
 
-    symbols = get_atomic_symbols()
-
-    plt.figure(figsize=(12, 8))
-    plt.plot(x, y1, label=symbols[0], color="green")
-    plt.plot(x, y2, label=symbols[1], color="orange")
-    plt.fill_between(x, y1, alpha=0.1, color="green")
-    plt.fill_between(x, y2, alpha=0.1, color="orange")
-    
     plt.xlabel('Frequency (THz)', fontsize=14)
-    plt.ylabel('PDOS (States/eV)', fontsize=14)
-
-    if x_range:
-        plt.xlim(x_range)
-    if y_range:
-        plt.ylim(y_range)
-
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig('pdos.png', dpi=150)
-    plt.show()
-    plt.close()
+    plt.ylabel('PDOS (States/THz)', fontsize=14)
+    _apply_ranges(x_range, y_range)
+    _finish('pdos.png')
 
 def plot_thermal(file_path='thermal.dat', x_range=None, y_range=None):
-    custom_labels = ['Helmholtz Free energy (kJ/mol)', 'Entropy (J/K.mol)', 'Heat Capacity $C_{v}$ (J/K.mol)', 'Energy (kJ/mol)']
-    with open(file_path, 'r') as file:
-        lines = file.readlines()[0:]  # Skip 
+    labels = ['Helmholtz Free energy (kJ/mol)', 'Entropy (J/K.mol)',
+              'Heat Capacity $C_{v}$ (J/K.mol)', 'Energy (kJ/mol)']
+    colors = ['g', 'orange', 'b', 'r']
 
-    # Filter lines containing numbers and convert to DataFrame
-    valid_lines = [line for line in lines if all(part.replace('.', '', 1).isdigit() for part in line.split())]
-    
-    data = pd.DataFrame(
-        [line.split() for line in valid_lines],  # Split each line into columns
-        dtype=float  # Convert all values to floats
-    )
-    
-    x_column = data[0]  
-    y_columns = [1, 2, 3, 4]  
+    with open(file_path) as f:
+        rows = [ln.split() for ln in f
+                if ln.split() and all(p.replace('.', '', 1).lstrip('-').isdigit() for p in ln.split())]
+    data = pd.DataFrame(rows, dtype=float)
 
-    colors = ['g', 'orange', 'b', 'r'] 
-    
-    plt.figure(figsize=(12, 8))
-    
-    for i, (y_col, label) in enumerate(zip(y_columns, custom_labels)):
-        plt.plot(x_column, data[y_col], label=label, color=colors[i % len(colors)]) 
+    x = data[0]
+    for i, (col, label, color) in enumerate(zip([1, 2, 3, 4], labels, colors)):
+        plt.plot(x, data[col], label=label, color=color)
 
-    plt.xlim(x_column.min(), x_column.max())
-    plt.xlabel('Temperatura (K)', fontsize = 14)
-    
-    if x_range:
-        plt.xlim(x_range)
-    if y_range:
-        plt.ylim(y_range)
+    plt.xlim(x.min(), x.max())
+    plt.xlabel('Temperatura (K)', fontsize=14)
+    _apply_ranges(x_range, y_range)
+    _finish('thermal_properties.png')
 
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig('thermal_properties.png',dpi=150)
-    plt.show()
-    plt.close()
-
-def get_band_labels(config_file='band.conf'):
-    band_labels = []
-    with open(config_file, 'r') as file:
-        for line in file:
-            if "BAND_LABELS" in line:
-                label_string = line.split('=')[1]
-                
-                label_string = label_string.replace('\\Gamma', '$\\Gamma$')
-
-                #  A:B format or singles
-                parts = re.findall(r'\$\\Gamma\$|[A-Za-z]+(?::[A-Za-z]+)?', label_string)
-
-                for part in parts:
-                    if ':' in part:
-                        left, right = part.split(':')
-                        band_labels.append(f'{left}|{right}')
-                    else:
-                        band_labels.append(part)
-                break
-    return band_labels
-
-def plot_blocks(data, ax, color, label):
-    is_block_start = np.concatenate(([True], np.diff(data[:, 0]) < 0))
-    block_indices = np.where(is_block_start)[0]
-
-    for i in range(len(block_indices)):
-        if i < len(block_indices) - 1:
-            block_data = data[block_indices[i]:block_indices[i + 1]]
-        else:
-            block_data = data[block_indices[i]:]  # Last block
-
-        ax.plot(block_data[:, 0], block_data[:, 1], linestyle='-', markersize=1, c=color, label=label if i == 0 else "")
-        
-def plot_single_band(nac_file="band.dat", color_nac='r', x_range=None, y_range=None):
-    # Load k_path data from the second line in the band.dat file
-    with open(nac_file, 'r') as file:
-        file.readline()  # Skip the first line
-        k_path_line = file.readline().strip()
-    k_path = list(map(float, k_path_line[1:].split()))  # Convert to float
-
-    # Load the data (skip header lines)
-    data = np.loadtxt(nac_file, comments='#', skiprows=2)
-
+def _plot_band(bands, config_file='band.conf', x_range=None, y_range=None,
+               figsize=None, label_fontsize=None, linewidth=0.9, outfile='band.png',
+               split=False):
+    """
+    bands: list of (file_path, color, legend_label) to overlay on one axis.
+    split: if True, plot every branch of each file in its own color
+           (only sensible with a single entry in `bands`).
+    """
+    k_path, _ = _load_band_file(bands[0][0])
     fig, ax = plt.subplots()
-    
-    band_labels = get_band_labels()
 
-    # Plot data
-    plot_blocks(data, ax, color_nac, 'Without NAC')
+    for path, color, label in bands:
+        _, data = _load_band_file(path)
+        if split:
+            _plot_band_blocks_split(data, ax)
+        else:
+            _plot_band_blocks(data, ax, color, label)
 
-    # Add vertical lines at specified k-path positions
     for x in k_path[1:-1]:
-        ax.axvline(x=x, color='k', linestyle='-', linewidth=0.9)
+        ax.axvline(x=x, color='k', linestyle='-', linewidth=linewidth)
 
-    ax.set_ylabel('Frequency (THz)', fontsize=14)
-    fig.set_size_inches(12, 8)
+    ax.set_ylabel('Frequency (THz)', fontsize=label_fontsize or 14)
+    if figsize:
+        fig.set_size_inches(*figsize)
     plt.xlim(0.0, k_path[-1])
     plt.axhline(y=0.00, color='k', linestyle='dashed')
 
-    # Set custom tick labels: BAND_LABELS and k_path
     ax.set_xticks(k_path)
-    ax.set_xticklabels(band_labels)
+    ax.set_xticklabels(get_band_labels(config_file), fontsize=label_fontsize)
 
-    if x_range:
-        plt.xlim(x_range)
-    if y_range:
-        plt.ylim(y_range)
-
-    plt.legend(loc='upper right')
-    plt.tight_layout()
-    plt.savefig('band.png', dpi=150)
-    plt.show()
-    plt.close()
-
-def plot_mix_band(nac_file="band_nac.dat", no_nac_file="band_nonac.dat", color_nac='xkcd:red', color_no_nac='xkcd:blue', x_range=None, y_range=None):
-    # Load k_path data from the second line in the band.dat file
-    with open(nac_file, 'r') as file:
-        file.readline()  # Skip the first line
-        k_path_line = file.readline().strip()
-    k_path = list(map(float, k_path_line[1:].split()))  # Convert to float
-
-    # Load data for NAC and without NAC (skip header lines)
-    data_nac = np.loadtxt(nac_file, comments='#', skiprows=2)
-    data_no_nac = np.loadtxt(no_nac_file, comments='#', skiprows=2)
-
-    fig, ax = plt.subplots()
+    _apply_ranges(x_range, y_range)
     
-    band_labels = get_band_labels()
-
-    # Plot data with NAC
-    plot_blocks(data_nac, ax, color_nac, 'With NAC')
-    # Plot data without NAC
-    plot_blocks(data_no_nac, ax, color_no_nac, 'Without NAC')
-
-    # Add vertical lines at specified k-path positions
-    for x in k_path[1:-1]:
-        ax.axvline(x=x, color='xkcd:black', linestyle='-', linewidth=0.2)
-
-    ax.set_ylabel('Frequency (THz)', fontsize=16)
-    fig.set_size_inches(12, 8)
-    plt.xlim(0.0, k_path[-1])
-    plt.axhline(y=0.00, color='xkcd:black', linestyle='dashed', linewidth=1)
-
-    # Set custom tick labels: BAND_LABELS and k_path
-    ax.set_xticks(k_path)
-    ax.set_xticklabels(band_labels, fontsize=14)
-
-    if x_range:
-        plt.xlim(x_range)
-    if y_range:
-        plt.ylim(y_range)
-
-    plt.legend(loc='upper right')
+    if split:
+        plt.legend(loc='lower right')
+        
     plt.tight_layout()
-    plt.savefig('band_combinate.png', dpi=150)
-    plt.show()
+    plt.savefig(outfile, dpi=150)
+    #plt.show()
     plt.close()
+
+def plot_single_band(nac_file='band.dat', color_nac='r', x_range=None, y_range=None, split=False):
+    _plot_band([(nac_file, color_nac, None)], # 'Without NAC'
+               x_range=x_range, y_range=y_range, outfile= 'band-split.png' if split else 'band.png', split=split)
+
+def plot_mix_band(nac_file='band_nac.dat', no_nac_file='band_nonac.dat',
+                   color_nac='xkcd:red', color_no_nac='xkcd:blue', x_range=None, y_range=None):
+    _plot_band([(nac_file, color_nac, 'With NAC'), (no_nac_file, color_no_nac, 'Without NAC')],
+               x_range=x_range, y_range=y_range, figsize=(12, 8),
+               label_fontsize=14, linewidth=0.2, outfile='band_combinate.png')
 
 def main():
     parser = argparse.ArgumentParser(description='Plotting functions for phonon data.')
-    
     parser.add_argument('--tdos', action='store_true', help='Plot total DOS.')
     parser.add_argument('--pdos', action='store_true', help='Plot projected DOS.')
-    parser.add_argument('--ter', action='store_true', help='Plot thermal non-adiabatic results.')
+    parser.add_argument('--ter', action='store_true', help='Plot thermal properties.')
     parser.add_argument('--band', action='store_true', help='Plot single band structure.')
-    parser.add_argument('--tband', action='store_true', help='Plot mixed band structure.')
-    
-    parser.add_argument('--x', nargs=2, type=float, help='Set x-axis range as two values: min max')
-    parser.add_argument('--y', nargs=2, type=float, help='Set y-axis range as two values: min max')
-    
+    parser.add_argument('--tband', action='store_true', help='Plot mixed band structure (NAC vs no NAC).')
+    parser.add_argument('--split', action='store_true',
+                         help='With --band, color each branch separately (Branch 1, 2, ...).')
+    parser.add_argument('--x', nargs=2, type=float, metavar=('MIN', 'MAX'), help='Set x-axis range.')
+    parser.add_argument('--y', nargs=2, type=float, metavar=('MIN', 'MAX'), help='Set y-axis range.')
     args = parser.parse_args()
-    
-    x_range = (args.x[0], args.x[1]) if args.x else None
-    y_range = (args.y[0], args.y[1]) if args.y else None
 
-    if args.tdos:
-        plot_total_dos(x_range=x_range, y_range=y_range)
-    elif args.pdos:
-        plot_pdos(x_range=x_range, y_range=y_range)
-    elif args.ter:
-        plot_thermal(x_range=x_range, y_range=y_range)
-    elif args.band:
-        plot_single_band(x_range=x_range, y_range=y_range)
-    elif args.tband:
-        plot_mix_band(x_range=x_range, y_range=y_range)
-    else:
-        print("No valid argument provided. Please specify one of the following options:")
-        print("--tdos, --pdos, --ter, --band, --tband")
+    x_range = tuple(args.x) if args.x else None
+    y_range = tuple(args.y) if args.y else None
+
+    dispatch = {
+        'tdos': plot_total_dos,
+        'pdos': plot_pdos,
+        'ter': plot_thermal,
+        'band': plot_single_band,
+        'tband': plot_mix_band,
+    }
+
+    for flag, func in dispatch.items():
+        if getattr(args, flag):
+            kwargs = dict(x_range=x_range, y_range=y_range)
+            if flag == 'band':
+                kwargs['split'] = args.split
+            func(**kwargs)
+            return
+
+    print("No valid argument provided. Please specify one of the following options:")
+    print("--tdos, --pdos, --ter, --band, --tband")
 
 if __name__ == '__main__':
     main()
