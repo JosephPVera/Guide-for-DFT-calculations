@@ -36,6 +36,7 @@ Each input must be copied in their corresponding folder. For example:
 cp -r POSCAR-001 dis-001
 ```
 The **INCAR** file must be set up as follows:
+```bash
 ALGO   = Normal    
 NELMIN = 4         
 NELM = 100
