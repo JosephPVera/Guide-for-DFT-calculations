@@ -236,14 +236,12 @@ An example for diamond can be found in [band](https://github.com/JosephPVera/Gui
 ## 1.4. Extra example 
 Cubic boron nitride (c-BN) is a polar material; therefore, the effects of applying the NAC can be clearly observed in its phonon band structure. Band structure without NAC:
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Figures/cBN-band-no-NAC-PBE.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Phonons/phon_phonopy/Figures/cBN-band-no-NAC-PBE.png)
 
 Band structure with NAC:
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Figures/cBN-band-NAC-PBE.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Phonons/phon_phonopy/Figures/cBN-band-NAC-PBE.png)
 
 Since c-BN contains two atoms in the primitive cell, although they are different chemical species, each atom has three degrees of freedom. Therefore, there should be six branches in the phonon band structure.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Figures/cBN-band-NAC-PBE-split.png)
-
-
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Phonons/phon_phonopy/Figures/cBN-band-NAC-PBE-split.png)
