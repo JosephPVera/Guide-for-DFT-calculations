@@ -132,5 +132,5 @@ An example for diamond can be found in [band](https://github.com/JosephPVera/Gui
 
 Since diamond contains two atoms in the primitive cell, and each atom has three degrees of freedom, there should be six branches in the phonon band structure. These can be plotted separately using the **--split** tag.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Calculations/PBE/plot-no-nac/band/band-1.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Phonons/phon_phonopy/Calculations/PBE/phon/plot-no-nac/band/band-split.png)
 
