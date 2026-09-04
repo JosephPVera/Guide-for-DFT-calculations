@@ -1,4 +1,6 @@
+--- 
 # Steps for Quantum ESPRESSO calculations: Phonons
+--- 
 
 Steps for Quantum ESPRESSO calculations using **PBE** and **HSE06** functionals and [Phonopy](https://phonopy-github-io.translate.goog/phonopy/qe.html?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc#).
 
