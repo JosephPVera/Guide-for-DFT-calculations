@@ -134,3 +134,116 @@ Since diamond contains two atoms in the primitive cell, and each atom has three 
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Phonons/phon_phonopy/Calculations/PBE/phon/plot-no-nac/band/band-split.png)
 
+### 1.3.2. With NAC
+If the material being studied is polar, the NAC must be applied. For this, the following steps must be performed:
+
+#### 1.3.2.1. Dielectric tensor calculation
+This calculation allows you to compute the electronic and ionic dielectric tensors, as well as the Born effective charges. This type of calculation can be performed by setting up the **INCAR** file as follows:
+```bash
+ALGO  =  Normal
+
+PREC   =  Normal
+LREAL  =  False
+EDIFF  =  1e-06
+ENCUT  =  500.0
+LASPH  =  True
+NELM   =  100
+
+ISIF    =  0
+IBRION  =  8
+NSW     =  1
+
+ISMEAR  =  0
+SIGMA   =  0.1
+
+LWAVE   =  False
+LCHARG  =  False
+
+LORBIT  =  10
+
+LEPSILON  =  True
+
+NPAR = 28
+```
+In addition, a denser **k-point mesh** must be specified in the **KPOINTS** file:
+```bash
+Dense K-mesh
+0
+Gamma
+ 32 32 32
+ 0  0  0
+```
+An example of this calculation can be found in the [nac-dielectric](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Phonons/phon_phonopy/Calculations/PBE/phon/nac-dielectric) folder. Finally, the electronic and ionic contributions can be extracted using the [dielectric.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/dielectric.py) script.
+```bash
+Ionic dielectric tensor:
+       0.00000000      -0.00000000      -0.00000000 
+      -0.00000000       0.00000000      -0.00000000 
+      -0.00000000      -0.00000000       0.00000000 
+
+Electronic dielectric tensor:
+       5.85679453       0.00000000       0.00000000 
+       0.00000000       5.85679453      -0.00000000 
+       0.00000000      -0.00000000       5.85679453
+```
+The full dielectric tensor can be constructed using the following relation:
+
+$$
+\varepsilon _{o} = \varepsilon _{∞} + \varepsilon _{ion}
+$$
+
+Here, the **BORN** file can be created using the following command:
+```bash
+phonopy-vasp-born > BORN 
+```
+This file contains the **electronic dielectric tensor** in the second line, followed by the **Born effective charge tensors** for each atom in the primitive cell. This information is essential for applying the **NAC**.
+```bash
+# epsilon and Z* of atoms 1
+   5.85679453   -0.00000000    0.00000000   -0.00000000    5.85679453   -0.00000000    0.00000000    0.00000000    5.85679453 
+   0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000    0.00000000 
+```
+
+#### 1.3.2.2. Density Of States (DOS) calculation
+For this calculation, the **mesh.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **dos file**. Finally, use the following command to plot the DOS:
+```bash
+phonopy -p -s --nac mesh.conf
+```
+An example for diamond can be found in [dos](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Phonons/phon_phonopy/Calculations/PBE/phon/plot-nac/dos) folder. Since diamond is a non-polar material, no changes are observed in the plot.
+
+#### 1.3.2.3. Thermal Properties calculation
+For this calculation, the **mesh.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **thermal file**. Finally, use the following command to plot the thermal properties:
+```bash
+phonopy -p -s -t --nac mesh.conf > thermal.dat
+```
+An example for diamond can be found in [thermal](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Phonons/phon_phonopy/Calculations/PBE/phon/plot-nac/thermal) folder. Since diamond is a non-polar material, no changes are observed in the plot.
+
+#### 1.3.2.4. Projected Density Of States (PDOS) calculation
+For this calculation, the **pdos.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **pdos file**. Finally, use the following command to plot the PDOS:
+```bash
+phonopy -p -s --nac pdos.conf
+```
+An example for diamond can be found in [pdos](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Phonons/phon_phonopy/Calculations/PBE/phon/plot-nac/pdos) folder. Since diamond is a non-polar material, no changes are observed in the plot.
+
+#### 1.3.2.5. Phonon Dispersion Relation (Band Structure) calculation
+For this calculation, the **band.conf**, **FORCE_SETS**, **phonopy_disp.yaml**, and **BORN** files must be copied to the **band file**. Finally, use the following command to plot the band structure:
+```bash
+phonopy -p -s --nac band.conf
+phonopy-bandplot --gnuplot band.yaml > band.dat
+```
+An example for diamond can be found in [band](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Phonons/phon_phonopy/Calculations/PBE/phon/plot-nac/band) folder. Since diamond is a non-polar material, no changes are observed in the plot.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Phonons/phon_phonopy/Calculations/PBE/phon/plot-nac/band/band.png)
+
+## 1.4. Extra example 
+Cubic boron nitride (c-BN) is a polar material; therefore, the effects of applying the NAC can be clearly observed in its phonon band structure. Band structure without NAC:
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Figures/cBN-band-no-NAC-PBE.png)
+
+Band structure with NAC:
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Figures/cBN-band-NAC-PBE.png)
+
+Since c-BN contains two atoms in the primitive cell, although they are different chemical species, each atom has three degrees of freedom. Therefore, there should be six branches in the phonon band structure.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Phonons/phon_phonopy/Figures/cBN-band-NAC-PBE-split.png)
+
+
