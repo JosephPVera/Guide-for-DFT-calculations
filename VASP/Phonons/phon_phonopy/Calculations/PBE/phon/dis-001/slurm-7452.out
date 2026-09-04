@@ -1,0 +1,62 @@
+real-time non-blocking time  (microseconds, -R) unlimited
+core file size              (blocks, -c) unlimited
+data seg size               (kbytes, -d) unlimited
+scheduling priority                 (-e) 0
+file size                   (blocks, -f) unlimited
+pending signals                     (-i) 509966
+max locked memory           (kbytes, -l) unlimited
+max memory size             (kbytes, -m) 117440512
+open files                          (-n) 1024
+pipe size                (512 bytes, -p) 8
+POSIX message queues         (bytes, -q) 819200
+real-time priority                  (-r) 0
+stack size                  (kbytes, -s) unlimited
+cpu time                   (seconds, -t) unlimited
+max user processes                  (-u) 125621
+virtual memory              (kbytes, -v) unlimited
+file locks                          (-x) unlimited
+ running   28 mpi-ranks, with    1 threads/rank, on    1 nodes
+ distrk:  each k-point on   28 cores,    1 groups
+ distr:  one band on    7 cores,    4 groups
+ vasp.6.5.1 10Mar25 (build Feb 13 2026 23:13:13) complex                        
+  
+ POSCAR found type information on POSCAR C 
+ POSCAR found :  1 types and      54 ions
+ scaLAPACK will be used
+ -----------------------------------------------------------------------------
+|                                                                             |
+|               ----> ADVICE to this user running VASP <----                  |
+|                                                                             |
+|     You have a (more or less) 'large supercell' and for larger cells it     |
+|     might be more efficient to use real-space projection operators.         |
+|     Therefore, try LREAL= Auto in the INCAR file.                           |
+|     Mind: For very accurate calculation, you might also keep the            |
+|     reciprocal projection scheme (i.e. LREAL=.FALSE.).                      |
+|                                                                             |
+ -----------------------------------------------------------------------------
+
+ LDA part: xc-table for (Slater+PW92), standard interpolation
+ POSCAR, INCAR and KPOINTS ok, starting setup
+ FFT: planning ... GRIDC
+ FFT: planning ... GRID_SOFT
+ FFT: planning ... GRID
+ WAVECAR not read
+ entering main loop
+       N       E                     dE             d eps       ncg     rms          rms(c)
+DAV:   1     0.714927488252E+03    0.71493E+03   -0.11394E+05137088   0.151E+03
+DAV:   2    -0.451587363580E+03   -0.11665E+04   -0.11253E+04169144   0.292E+02
+DAV:   3    -0.506857285159E+03   -0.55270E+02   -0.54904E+02166184   0.629E+01
+DAV:   4    -0.507938359095E+03   -0.10811E+01   -0.10772E+01169992   0.906E+00
+DAV:   5    -0.507965654704E+03   -0.27296E-01   -0.27262E-01167576   0.138E+00    0.287E+01
+DAV:   6    -0.495251694708E+03    0.12714E+02   -0.90610E+00155728   0.764E+00    0.172E+01
+DAV:   7    -0.490986210459E+03    0.42655E+01   -0.10908E+01152480   0.855E+00    0.373E+00
+DAV:   8    -0.491019391170E+03   -0.33181E-01   -0.24604E-01166120   0.128E+00    0.181E-01
+DAV:   9    -0.491020461212E+03   -0.10700E-02   -0.39393E-03171024   0.185E-01    0.780E-02
+DAV:  10    -0.491020952755E+03   -0.49154E-03   -0.39971E-04163664   0.670E-02    0.192E-02
+DAV:  11    -0.491020952702E+03    0.52551E-07   -0.33533E-05165080   0.177E-02    0.326E-03
+DAV:  12    -0.491020953492E+03   -0.78991E-06   -0.10910E-06174616   0.306E-03    0.105E-03
+DAV:  13    -0.491020953353E+03    0.13932E-06   -0.14939E-07165512   0.112E-03    0.856E-04
+DAV:  14    -0.491020953512E+03   -0.15940E-06   -0.29012E-08134104   0.690E-04    0.202E-04
+DAV:  15    -0.491020953501E+03    0.10918E-07   -0.47003E-09102384   0.214E-04    0.598E-05
+DAV:  16    -0.491020953495E+03    0.57225E-08   -0.46714E-10 97832   0.848E-05
+   1 F= -.49102095E+03 E0= -.49102112E+03  d E =0.505496E-03

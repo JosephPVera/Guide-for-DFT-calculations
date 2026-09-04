@@ -1,0 +1,24 @@
+ALGO  =  Normal
+
+PREC   =  Normal
+LREAL  =  False
+EDIFF  =  1e-06
+ENCUT  =  500.0
+LASPH  =  True
+NELM   =  100
+
+ISIF    =  0
+IBRION  =  8
+NSW     =  1
+
+ISMEAR  =  0
+SIGMA   =  0.1
+
+LWAVE   =  False
+LCHARG  =  False
+
+LORBIT  =  10
+
+LEPSILON  =  True
+
+NPAR = 28
