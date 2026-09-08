@@ -27,11 +27,8 @@ args = parser.parse_args()
 RY_TO_EV = 13.605693122994
 
 # Band edges
-#E_VBM = 9.646  # VASP
-#E_CBM = 13.8025 # VASP
-
-E_VBM = 13.31233577 # QE
-E_CBM = 17.40873360 # QE
+E_VBM = 9.646  # VASP
+E_CBM = 13.8025 # VASP
 
 Gap = E_CBM - E_VBM
 
@@ -39,25 +36,17 @@ Gap = E_CBM - E_VBM
 E_F = np.linspace(0, Gap, 500)
 
 # Total energy for perfect supercell (VASP ---> eV, and QE ---> Ry)
-#E_bulk = -1961.920072 # VASP
-E_bulk = -3981.52562746 # QE
+E_bulk = -1961.920072 # VASP
 
 # Total energies for defect supercell (VASP ---> eV, and QE ---> Ry), energy corrections, and charge states
-#E_def = np.array([-1909.157681, -1922.190560, -1934.987194, -1946.164795, -1957.028853, -1966.921169]) # VASP
-#E_corr = np.array([2.785574281694399, 1.3239220120693769, 0.3797874083283934, 0.0, 0.15225000859821225, 0.7558700990885153]) # VASP
-
-E_def = np.array([-3968.92296976, -3970.14938219, -3971.35123692, -3972.45070936, -3973.50361960, -3974.49624801]) # QE
-E_corr = [1.7053168204425928, 0.8008182003120938, 0.19908833746464727, 0.0, 0.43031660809495864, 1.1096951999054159] # QE pydefect
-#E_corr = [1.4007, 0.535632, 0.0542815, 0.0, 0.297506, 1.05318] # QE sxdefectalign
+E_def = np.array([-1909.157681, -1922.190560, -1934.987194, -1946.164795, -1957.028853, -1966.921169]) # VASP
+E_corr = np.array([2.785574281694399, 1.3239220120693769, 0.3797874083283934, 0.0, 0.15225000859821225, 0.7558700990885153]) # VASP
 
 q = np.array([-3, -2, -1, 0, 1, 2])
 
 # Chemical potentials (VASP ---> eV, and QE ---> Ry)
-#u_C = -9.09304 # VASP
-#u_N = -8.320881 # VASP
-
-u_C = -18.433566785 # QE
-u_N = -28.216708845 # QE
+u_C = -9.09304 # VASP
+u_N = -8.320881 # VASP
 
 n_C = -2
 n_N = 1
