@@ -226,3 +226,18 @@ NCORE  =  7
 Once the calculation is done, the total energy can be extract using the [tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/tot.py) script. In addition, Kohn–Sham level diagrams, Localization factor diagrams, total magnetization, and spin states can be analyzed using the [LSPD](https://github.com/JosephPVera/Localized-States) package. The 3D charge density can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software along with the **CHGCAR** file.
 
 An example for NV-1 can be found in the [N_C-V_C_-1](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/PD-Supercells/Calculations/PBE/defect/N_C-V_C_-1) folder.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/PD-Supercells/Calculations/PBE/defect/N_C-V_C_-1/kohn-sham-states.png)
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/PD-Supercells/Calculations/PBE/defect/N_C-V_C_-1/eigenplot_localization.png)
+
+### 1.3.2.3. Finite-Size Correction
+The main artifact of the supercell approach for point-defect calculations consists in the introduction of periodic images of the defect located in the simulation cell. Such periodically-repeated array of defects corresponds to very high defect concentrations for commonly used supercell types. In such case, defect-defect interactions are large and can considerably affect the predicted formation energy of the point defect. Among the kinds of defect-defect interactions, electrostatic ones are never negligible for any practical supercell size. The study of point defects in the dilute limit then requires some scheme to correct for such spurious electrostatic interactions.
+
+<p align="center">
+  <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Figures/finite-size-correction.png" alt="Descripción de la imagen">
+</p>
+
+Here, the output information contents in the **OUTCAR** file is relevant for computing the energy corrections. The **potential** information can be found in the section "**average (electrostatic) potential at core**". In addition, the **dielectric constant** is also required for this calculation. It can be computed by following the steps described in the [primitive](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive) folder. To compute these energy corrections, the Kumagai–Oba (eFNV) method will be used. For this purpose, useful scripts such as [efnv_corrections.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/efnv_corrections.py), [qe_efnv_corrections.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_efnv_corrections.py), and [qe_efnv-correction_plot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_efnv-correction_plot.py) can be used.
+
+**NV center in diamond:** For our example, the information has been processed and saved in JSON files within each defect folder. The following energy corrections were obtained:
