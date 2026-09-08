@@ -525,18 +525,18 @@ The main artifact of the supercell approach for point-defect calculations consis
 
 As mentioned previously, the output information from the **potential calculation** is relevant for computing the energy corrections. In addition, the **dielectric constant** is also required for this calculation. It can be computed by following the steps described in the [phonons folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/Phonons). To compute these energy corrections, the Kumagai–Oba (eFNV) method will be used. For this purpose, useful scripts such as [efnv_corrections.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/efnv_corrections.py), [qe_efnv_corrections.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_efnv_corrections.py), and [qe_efnv-correction_plot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_efnv-correction_plot.py) can be used.
 
-**NV center in diamond:** For our example, the information has been processing in the [Finite_Size_correction folder](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/Finite_Size_correction). The following energy corrections were obtained:
+**NV center in diamond:** For our example, the information has been processed and saved in JSON files within each defect folder. The following energy corrections were obtained:
 
 <div align="center">
   
 | Charge State | Energy Correction (meV) |
 |:------------:| :----------------------:|
-|   -3         |       1400.70           | 
-|   -2         |       535.632           |
-|   -1         |       54.2815           |
+|   -3         |       1705.32           |   
+|   -2         |       800.818           |   
+|   -1         |       199.088           |   
 |    0         |           0.0           |
-|   +1         |       297.506           |
-|   +2         |       1053.18           |
+|   +1         |       430.317           |   
+|   +2         |       1109.70           |   
 
 </div>
 
