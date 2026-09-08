@@ -22,30 +22,8 @@ import numpy as np
 from scipy.special import erfc
 
 EV_ANGSTROM_COULOMB_CONST = 14.399645351950548  # e^2/(4*pi*eps0) in eV*Angstrom
-# Exact constant used by pydefect's make_efnv_correction.py (their comment:
-# "assuming an elementary charge locate at defect_coords and angstrom for
-# length, ... multiply elementary_charge*1e10/epsilon_0 = 180.95128169876497
-# to make potential in V"). This matches -4*pi*EV_ANGSTROM_COULOMB_CONST to
-# 8 significant figures (my independently-derived calibration, see
-# `_calibration_selftest`); using pydefect's own literal value here.
 
 UNIT_CONVERSION = 180.95128169876497
-# CONFIRMED against pydefect's actual source (`make_calc_results.py`):
-#   potentials=[-p for p in outcar.electrostatic_potential]
-# pydefect DOES negate the raw pymatgen/VASP OUTCAR value when building
-# `CalcResults.potentials` (the `calc_results.py` docstring -- "sign is
-# reserved from vasp convention" -- turned out to be ambiguous wording,
-# not a statement that the value is left unmodified). Combined with the
-# driver's `pot = potentials[defect] - potentials[perfect]`, this means,
-# in terms of RAW pymatgen/OUTCAR values (as returned by
-# `read_site_potentials` below):
-#   pot = (-raw_defect) - (-raw_perfect) = raw_perfect - raw_defect
-# which is exactly the `perfect - defect` subtraction order used in
-# `compute_efnv_correction` below. This is now a fully confirmed
-# mechanism, not just an empirical fit -- validated to match a real
-# correction.json to <1% on the total correction energy (NV- in diamond:
-# pc term matches to 6 significant figures; alignment term to ~4%,
-# consistent with minor numerical/site-selection differences).
 
 ENERGY_CALIBRATION_CONSTANT = -UNIT_CONVERSION
 POTENTIAL_CALIBRATION_CONSTANT = UNIT_CONVERSION
@@ -54,11 +32,6 @@ POTENTIAL_CALIBRATION_CONSTANT = UNIT_CONVERSION
 class AnisotropicEwald:
     """Anisotropic-dielectric Ewald summation for a periodic point-charge
     lattice, following the Kumagai-Oba (2014) formulation.
-
-    Two raw (uncalibrated, dimensionless-in-1/length) quantities are
-    exposed -- `lattice_energy_raw` and `atomic_site_potential_raw` -- and
-    two physically calibrated (eV / Volt) convenience methods -- `pc_energy`
-    and `potential` -- that apply `CALIBRATION_CONSTANT` for the caller.
     """
 
     def __init__(self, lattice: np.ndarray, dielectric_tensor: np.ndarray,
@@ -88,19 +61,6 @@ class AnisotropicEwald:
         # G=0 reciprocal-space term (finite due to the compensating background)
         self.g0_term = -0.25 / self.volume / self.mod_ewald_param ** 2
 
-        # ------------------------------------------------------------
-        # PERFORMANCE NOTE: everything cached below depends only on the
-        # lattice/dielectric tensor/accuracy (i.e. on the Ewald object
-        # itself), NEVER on the site being evaluated. The original code
-        # rebuilt these grids (via np.meshgrid) and, for the reciprocal
-        # sum, recomputed exp(...) for every G-vector on *every single
-        # atomic site* -- that's the actual cost driver for a supercell
-        # with hundreds of atoms. Building them once here and reusing
-        # them for every site (only `cos(G . r_site)` genuinely changes
-        # per site) is mathematically identical, just far less redundant
-        # work. Same for the real-space integer grid: only the fractional
-        # shift changes per site, not the grid itself.
-        # ------------------------------------------------------------
         nmax = self.accuracy / self.mod_ewald_param
         real_nums = tuple(ceil(nmax / np.linalg.norm(self.lattice[i])) for i in range(3))
         self._real_int_grid = self._grid(real_nums)          # (M,3) integers
@@ -134,7 +94,6 @@ class AnisotropicEwald:
             xyz = np.delete(xyz, self._real_origin_idx, axis=0)  # the (0,0,0) row
         return xyz @ self.lattice
 
-    # raw (uncalibrated) sums 
     def _real_space_sum(self, include_origin: bool, frac_shift) -> float:
         r = self._real_space_vectors(include_origin, frac_shift)      # (M,3)
         metric_dist = np.sqrt(np.einsum('mi,ij,mj->m', r, self.epsilon_inv, r))
@@ -200,7 +159,7 @@ class PotentialSite:
 
     @property
     def diff_pot(self) -> float:
-        """DFT potential minus model potential -- should plateau to a
+        """DFT potential minus model potential, should plateau to a
         constant at sites far from the defect if the model is adequate."""
         return self.potential - self.pc_potential
 
@@ -258,28 +217,11 @@ class ExtendedFnvCorrection:
 
 def minimum_image_frac_and_cart(site_frac: np.ndarray, defect_frac: np.ndarray,
                                  lattice: np.ndarray):
-    """Minimum-image fractional offset and Cartesian vector (site - defect).
-    Used only for the `distance` filter (far/near), matching pydefect's use
-    of `lattice.get_distance_and_image` for `PotentialSite.distance`.
-    """
     diff_frac = site_frac - defect_frac
     diff_frac -= np.round(diff_frac)
     return diff_frac, diff_frac @ lattice
 
 def calc_max_sphere_radius(lattice_matrix: np.ndarray) -> float:
-    """Ported verbatim-in-logic from pydefect's own
-    `corrections/defect_region.py::calc_max_sphere_radius`:
-        distances[i] = |(a_i x a_j) . a_k| / |a_i x a_j|   (cyclic in i)
-        return max(distances) / 2.0
-    NOTE: this uses MAX of the three face-to-face (interplanar) spacings,
-    not min. An earlier version of this module used `min(...)/2`, which is
-    the mathematically-"safe" largest sphere that never touches a
-    periodic image in ANY direction; pydefect's actual convention instead
-    takes the LARGEST of the three spacings. The two coincide for
-    isotropic (e.g. cubic) cells -- as in the NV-diamond example below --
-    but differ for elongated/oblique supercells. Matching pydefect exactly
-    here since that is what downstream results are compared against.
-    """
     lattice_matrix = np.asarray(lattice_matrix, dtype=float)
     distances = np.zeros(3)
     for i in range(3):
@@ -289,18 +231,11 @@ def calc_max_sphere_radius(lattice_matrix: np.ndarray) -> float:
     return float(np.max(distances) / 2.0)
 
 class DefectRegion:
-    """Base class mirroring pydefect's `corrections/defect_region.py`
-    abstraction for how `defect_region_radius` is chosen."""
-    
+  
     def defect_region_radius(self, lattice_matrix: np.ndarray) -> float:
         raise NotImplementedError
 
 class FixedDistanceDefectRegion(DefectRegion):
-    """Always returns a user-fixed radius, ignoring the lattice -- useful
-    e.g. for layered materials where the physically-relevant sampling
-    region isn't well captured by cell geometry alone (see doped's
-    layered-material tips: manually setting `defect_region_radius` to
-    exclude sites still inside the defective layer)."""
 
     def __init__(self, radius: float):
         self.radius = radius
@@ -309,11 +244,6 @@ class FixedDistanceDefectRegion(DefectRegion):
         return self.radius
 
 class HalfMaxFaceDistanceDefectRegion(DefectRegion):
-    """radius = `sample_radius_ratio` * calc_max_sphere_radius(lattice).
-    This is pydefect's standard (lattice-geometry-based) convention; the
-    exact default `sample_radius_ratio` pydefect itself uses was not in
-    the files you shared -- if your pydefect run used a value other than
-    1.0, pass it explicitly here to match it."""
 
     def __init__(self, sample_radius_ratio: float = 1.0):
         self.sample_radius_ratio = sample_radius_ratio
@@ -337,52 +267,17 @@ def compute_efnv_correction(
         defect_region_radius: Optional[float] = None,
         ewald_accuracy: float = 25.0,
 ) -> ExtendedFnvCorrection:
-    """End-to-end eFNV correction, analogous to pydefect's
-    `make_efnv_correction` driver.
-
-    Parameters
-    ----------
-    lattice : (3,3) array, Angstrom -- rows = real-space lattice vectors
-        of the DEFECTIVE supercell.
-    dielectric_tensor : (3,3) array -- static (electronic + ionic).
-    charge : defect charge state, units of e.
-    defect_frac_coords : (3,) fractional coordinates of the defect.
-    site_frac_coords : (N,3) fractional coordinates of the N atoms common
-        to both supercells (defective-supercell numbering).
-    site_species : length-N list of element symbols (for bookkeeping).
-    defect_site_potentials, perfect_site_potentials : (N,) arrays, Volts --
-        atomic-site electrostatic potentials from OUTCAR, same ordering.
-    defect_region_radius : Angstrom. If None, uses `defect_region_radius_default`.
-    ewald_accuracy : passed to `AnisotropicEwald` (real/reciprocal cutoff
-        control; 25.0 is generously converged for typical supercells).
-    """
     ewald = AnisotropicEwald(lattice, dielectric_tensor, accuracy=ewald_accuracy)
 
     if defect_region_radius is None:
         defect_region_radius = defect_region_radius_default(lattice)
 
     defect_frac_coords = np.asarray(defect_frac_coords)
-    # `distance` (far/near filter) uses the minimum-image convention,
-    # matching pydefect's `lattice.get_distance_and_image`:
     _, rel_cart = minimum_image_frac_and_cart(
         site_frac_coords, defect_frac_coords, lattice)
     distances = np.linalg.norm(rel_cart, axis=1)
-    # the Ewald potential's `rel_coord`, however, uses the RAW fractional
-    # difference (no minimum-image reduction), matching pydefect's
-    # `make_sites`: `[x - y for x, y in zip(coord, defect_coords)]`.
-    # (Mathematically equivalent to the minimum-image version given a
-    # sufficiently large real-space Ewald cutoff, which `accuracy=25`
-    # guarantees -- kept separate here purely for exact fidelity.)
     raw_rel_frac = site_frac_coords - defect_frac_coords
 
-    # `perfect - defect` here (not the driver's literal `defect - perfect`)
-    # because `defect_site_potentials`/`perfect_site_potentials` are RAW
-    # pymatgen/OUTCAR values (see `read_site_potentials`), while pydefect's
-    # `make_calc_results_from_vasp` negates them before use:
-    #   potentials=[-p for p in outcar.electrostatic_potential]
-    # so pydefect's `potentials[defect]-potentials[perfect]` equals
-    # `raw_perfect - raw_defect` in terms of the raw values used here.
-    # Confirmed directly against pydefect's source, not just fitted.
     dft_diff = perfect_site_potentials - defect_site_potentials
 
     sites = []
@@ -412,17 +307,6 @@ def read_structure(poscar_path: str):
     return Poscar.from_file(poscar_path).structure
 
 def read_structure_qe(filepath: str):
-    """Parse a Quantum ESPRESSO `pw.x` input file's `CELL_PARAMETERS
-    {angstrom}` and `ATOMIC_POSITIONS (crystal)` cards (plus `nat` from
-    &SYSTEM) and return a pymatgen Structure -- a drop-in replacement for
-    `read_structure` (VASP POSCAR/CONTCAR) so `compare_structures`,
-    `atom_mapping`, etc. all work completely unchanged on QE input.
-
-    Only the {angstrom}/(crystal) combination is handled (this is what
-    `diamond_pd_scf_*.in` uses); it raises clearly if your file uses
-    {bohr}/{alat} cells or (angstrom)/(bohr)/(alat) positions instead --
-    extend the unit checks below if you need those.
-    """
     import re
     from pymatgen.core import Structure, Lattice
 
@@ -468,46 +352,6 @@ def read_structure_qe(filepath: str):
     return Structure(Lattice(cell), species, frac_coords, coords_are_cartesian=False)
 
 def read_site_potentials_qe(cube_path: str, structure=None) -> np.ndarray:
-    """Per-atom electrostatic potential [V] from a Gaussian-cube file
-    produced by QE's `pp.x` (`plot_num=11` -> V_bare+V_H,
-    `output_format=6` -> cube). This is the QE analogue of
-    `read_site_potentials` (VASP OUTCAR), but QE has no PAW-sphere-averaged
-    per-atom potential to read directly -- instead this trilinearly
-    interpolates the potential GRID at each atom's fractional coordinate,
-    which is the standard substitute used by FNV-type post-processing for
-    plane-wave codes without an OUTCAR-style per-atom value (it's also
-    what your existing `sxdefectalign --qe` two-pass workflow does under
-    the hood).
-
-    Parameters
-    ----------
-    cube_path : path to the .cube file (e.g. from `diamond_pd_pot_*.in`).
-    structure : the pymatgen Structure (e.g. from `read_structure_qe`)
-        whose atom order the returned potentials should follow. Strongly
-        recommended -- pass the SAME structure object you used for
-        `compare_structures`/`atom_mapping`, so indices line up 1:1 and
-        you sidestep any doubt about how the cube file's own embedded
-        atom list happens to be ordered. If omitted, uses the atom order
-        embedded in the cube file itself.
-
-    IMPORTANT UNIT/SIGN NOTE (please read):
-    - Units: pp.x reports plot_num=11 in Rydberg atomic units; converted
-      to eV below via 13.605691930242388 eV/Ry (QE's own conversion
-      constant).
-    - Sign: this returns the value as-is (converted to eV, not negated),
-      so it plugs into `compute_efnv_correction` exactly like a VASP
-      OUTCAR value does (which uses `perfect - defect` on raw values).
-      Unlike the VASP path -- which this module's docstring validated
-      against a real, independently-computed correction.json -- this QE
-      sign convention has NOT been independently cross-checked here.
-      Verify it yourself: after running `alignment_term_qe.py`, check
-      `correction_plot.py`'s far-field "potential difference" (red '+')
-      markers plateau to a small, roughly constant value (not diverging,
-      not obviously the wrong sign); ideally also cross-check the total
-      correction energy against your existing `sxdefectalign --qe`
-      result for the same defect. If the sign looks flipped, change
-      `RY_TO_EV` below to its negative and rerun.
-    """
     from pymatgen.io.common import VolumetricData
     cube = VolumetricData.from_cube(cube_path)
     frac_coords = (structure.frac_coords if structure is not None
@@ -516,27 +360,11 @@ def read_site_potentials_qe(cube_path: str, structure=None) -> np.ndarray:
     return np.array([RY_TO_EV * cube.value_at(*fc) for fc in frac_coords])
 
 def read_site_potentials(outcar_path: str) -> np.ndarray:
-    """Per-atom 'average electrostatic potential' [V] from an OUTCAR, in
-    the same atom order as the corresponding POSCAR.
-
-    Returns the RAW pymatgen/VASP-convention value (no sign flip). Note
-    that pydefect itself negates this value when building its internal
-    `CalcResults.potentials` (`potentials=[-p for p in
-    outcar.electrostatic_potential]` in `make_calc_results_from_vasp`) --
-    `compute_efnv_correction` below accounts for that by using
-    `perfect - defect` (equivalent to pydefect's `defect - perfect` on
-    negated values), so pass the raw values returned here unmodified.
-    """
     from pymatgen.io.vasp import Outcar
     return np.array(Outcar(outcar_path).electrostatic_potential)
 
 @dataclass
 class StructureComparison:
-    """Full result of comparing a perfect and a defective supercell,
-    mirroring pydefect's `DefectStructureComparator` (bidirectional,
-    species-matched nearest-neighbor projection). General: handles any
-    number of vacancies, interstitials, and substitutions in one complex.
-    """
     perfect_frac: np.ndarray
     perfect_species: List[str]
     defect_frac: np.ndarray
@@ -556,28 +384,10 @@ class StructureComparison:
         return np.linalg.norm(diff @ self.lattice, axis=1)
 
     def atom_mapping(self):
-        """dict {defect_index: perfect_index} for every defect atom that
-        is NOT an inserted/substituted-in site -- i.e. the common atoms
-        to use for the eFNV site-potential comparison. Mirrors
-        `DefectStructureComparator.atom_mapping` exactly."""
         return {d: p for d, p in enumerate(self.d_to_p)
                 if d not in self.inserted_idx}
 
     def defect_center_coord(self) -> np.ndarray:
-        """Fractional coordinates of the defect "center": the minimum-
-        image-connected average of every removed site (perfect-structure
-        coords) and every inserted site (defect-structure coords).
-        Matches `DefectStructureComparator.defect_center_coord` exactly,
-        including its counter-intuitive behavior for substitutions: since
-        a species change breaks the species-matched projection, a
-        substituted site contributes to BOTH the removed set (its old
-        position/species) AND the inserted set (its new position/species)
-        -- for an unrelaxed substitution the two coincide, so a pure
-        substitution just returns that site; but in a complex (e.g. a
-        substitution next to a vacancy) it means the substitution site is
-        weighted 2x relative to a plain vacancy or interstitial in the
-        average, not treated as a single point.
-        """
         coords = ([np.asarray(v) for v in self.vacancies]
                   + [np.asarray(s[0]) for s in self.substitutions]     # old (removed) side
                   + [np.asarray(i[0]) for i in self.interstitials]
@@ -604,27 +414,6 @@ class StructureComparison:
 
 def compare_structures(perfect_structure, defect_structure,
                         match_tol: float = 0.5) -> StructureComparison:
-    """Compare a perfect and a defective supercell and classify every
-    difference, mirroring pydefect's `DefectStructureComparator` +
-    `make_site_diff` logic (see `pydefect/analyzer/defect_structure_comparator.py`
-    and `pydefect/util/structure_tools.py::Distances.atom_idx_at_center`).
-    Handles ANY defect type or complex: vacancy, interstitial,
-    substitution, or any combination (multi-vacancy, vacancy+substitution
-    like N-V in diamond, antisite pairs, etc.) -- general, not
-    NV-diamond-specific.
-
-    Algorithm:
-      1. For each perfect atom, find the nearest defect atom of the SAME
-         species within `match_tol` (and vice versa) -- `p_to_d`/`d_to_p`.
-      2. A perfect atom is "removed" if it has no such match, or the
-         match isn't mutual (some other perfect atom claimed it first).
-         Symmetrically for "inserted" defect atoms.
-      3. Among removed/inserted sites, a SPECIES-AGNOSTIC, MUTUAL
-         nearest-neighbor match (again within `match_tol`) pairs up a
-         removed site with an inserted site as a SUBSTITUTION; unpaired
-         removed sites are VACANCIES, unpaired inserted sites are
-         INTERSTITIALS.
-    """
     lattice = defect_structure.lattice.matrix
     perfect_frac = np.array([s.frac_coords for s in perfect_structure])
     perfect_species = [s.specie.symbol for s in perfect_structure]
@@ -696,28 +485,10 @@ def compare_structures(perfect_structure, defect_structure,
         substitutions=substitutions,
     )
 
-# Site-potential plot (per-species DFT potential, point-charge model potential, and the
-# residual "potential difference", with the defect_region_radius cutoff and 
-# average_potential_diff level marked).
 def plot_site_potentials(correction: ExtendedFnvCorrection, title: str = "",
                           output_path: Optional[str] = None,
                           show: bool = False, dpi: int = 150):
-    """Recreate pydefect's site-potential diagnostic plot for a computed
-    `ExtendedFnvCorrection`. Requires matplotlib (only imported here, not
-    a hard dependency of the rest of this module).
-
-    Markers match pydefect's convention: filled circles per element (DFT
-    potential, `site.potential`), blue "1" markers (point-charge model
-    potential, `site.pc_potential`), red "+" markers (residual
-    `site.diff_pot`); a black dash-dot vertical line at
-    `defect_region_radius`; a red dotted horizontal line at
-    `average_potential_diff` (only drawn beyond the radius, where it's
-    actually averaged); a thin black dotted zero line.
-
-    Returns the matplotlib Figure. Pass `output_path` (e.g. "plot.pdf" or
-    "plot.png") to save it (raster formats use `dpi`, default 150), and/or
-    `show=True` to display interactively.
-    """
+                            
     import matplotlib.pyplot as plt
     from itertools import groupby
 
@@ -767,8 +538,6 @@ def plot_site_potentials(correction: ExtendedFnvCorrection, title: str = "",
         plt.show()
     return fig
 
-# Self-test: validates the Ewald port against the known simple-cubic Madelung constant
-# (alpha_M = 2.837297) and the scalar-dielectric scaling law E(eps) = E_vacuum / eps
 def _calibration_selftest(verbose: bool = True) -> None:
     L = 10.0
     lattice = np.eye(3) * L
