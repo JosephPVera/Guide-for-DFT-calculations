@@ -1,0 +1,31 @@
+ALGO  =  Normal
+
+PREC   =  Normal
+LREAL  =  Auto
+EDIFF  =  1e-06
+ENCUT  =  500.0
+NELM   =  100
+
+ISIF    =  2
+IBRION  =  2
+EDIFFG  =  -0.01
+NSW     =  200
+
+ISMEAR  =  -2
+SIGMA   =  0.005
+
+# PROMOTING ELECTRON
+FERWE = 432*1.0 216*0.0
+FERDO = 429*1.0 1*0.0 1*1.0 217*0.0
+
+ISPIN  =  2
+
+LWAVE   =  False
+LCHARG  =  False
+
+LORBIT  =  10
+
+NELECT  =  862.0
+
+NPAR   =  4
+NCORE  =  9
