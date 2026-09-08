@@ -541,7 +541,7 @@ As mentioned previously, the output information from the **potential calculation
 </div>
 
 ### 1.3.4. Formation energy diagram
-Then, to gather important information such as the chemical potentials, total energies, charge states, energy of the valence band maximum, and energy corrections, the formation energy diagram can be plotted. 
+Then, to gather important information such as the chemical potentials, total energies, charge states, energy of the valence band maximum, and energy corrections, the formation energy diagram can be plotted. This diagram can be plotted using the [formation_energy.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/formation_energy.py) script.
 
 **NV center in diamond:** For our example, information such as the chemical potentials, total energies, charge states, and energy of the valence band maximum has been computed. However, energy corrections have not yet been included.
 
