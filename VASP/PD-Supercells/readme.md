@@ -192,7 +192,7 @@ Once this is done, each system with its respective charge state must follow the 
 #### 1.3.2.1. Relaxation
 
 #### 1.3.2.2. Self-Consistent Field (SCF) calculation
-Given that calculations involving supercells are usually computationally expensive, the calculations will typically be performed using only Gamma point (k-point mesh = 1x1x1). Therefore, the relaxation and SCF calculations can be performed in a single step by setting up the INCAR file as follows:
+Given that calculations involving supercells are usually computationally expensive, the calculations will typically be performed using only Gamma point (k-point mesh = 1x1x1). Therefore, **the relaxation and SCF calculations can be performed in a single step** by setting up the INCAR file as follows:
 ```bash
 ALGO  =  Normal
 
