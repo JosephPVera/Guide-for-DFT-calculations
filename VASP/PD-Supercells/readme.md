@@ -225,4 +225,4 @@ NCORE  =  7
 
 Once the calculation is done, the total energy can be extract using the [tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/tot.py) script. In addition, Kohn–Sham level diagrams, Localization factor diagrams, total magnetization, and spin states can be analyzed using the [LSPD](https://github.com/JosephPVera/Localized-States) package. The 3D charge density can be visualized using the [VESTA](https://jp-minerals.org/vesta/en/download.html) software along with the **CHGCAR** file.
 
-
+An example for NV-1 can be found in the [N_C-V_C_-1](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/PD-Supercells/Calculations/PBE/defect/N_C-V_C_-1) folder.
