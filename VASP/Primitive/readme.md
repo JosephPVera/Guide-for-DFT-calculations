@@ -1,5 +1,5 @@
 --- 
-# Steps for VASP calculations: Relax, DOS, PDOS, Band Structure, and Charge Density
+# Steps for VASP calculations: Relax, DOS, PDOS, Band Structure, Dielectric Tensor, and Charge Density
 ---
 
 Steps for VASP calculations using PBE and HSE06 functionals.
