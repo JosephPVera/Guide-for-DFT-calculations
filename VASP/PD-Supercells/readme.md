@@ -223,4 +223,4 @@ NPAR   =  4
 NCORE  =  7
 ```
 
-Once the calculation is done, the total energy can be extract using the [tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/tot.py) script. 
+Once the calculation is done, the total energy can be extract using the [tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/tot.py) script. In addition, Kohn–Sham level diagrams, Localization factor diagrams, total magnetization, and spin states can be analyzed using the [LSPD](https://github.com/JosephPVera/Localized-States) package.
