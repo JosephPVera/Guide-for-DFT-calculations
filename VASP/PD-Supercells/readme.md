@@ -188,3 +188,39 @@ mkdir N_C-V_C_{-3..2..1}
 ```
 
 Once this is done, each system with its respective charge state must follow the steps below:
+
+#### 1.3.2.1. Relaxation
+
+#### 1.3.2.2. Self-Consistent Field (SCF) calculation
+Given that calculations involving supercells are usually computationally expensive, the calculations will typically be performed using only Gamma point (k-point mesh = 1x1x1). Therefore, the relaxation and SCF calculations can be performed in a single step by setting up the INCAR file as follows:
+```bash
+ALGO  =  Normal
+
+PREC   =  Normal
+LREAL  =  Auto
+EDIFF  =  1e-06
+ENCUT  =  500.0
+NELM   =  100
+
+ISIF    =  2
+IBRION  =  2
+EDIFFG  =  -0.01
+NSW     =  200
+
+ISMEAR  =  0
+SIGMA   =  0.005
+
+ISPIN  =  2
+
+LWAVE   =  False
+LCHARG  =  False
+
+LORBIT  =  10
+
+NELECT  =  862.0
+
+NPAR   =  4
+NCORE  =  7
+```
+
+Once the calculation is done, the total energy can be extract using the [tot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/tot.py) script. 
