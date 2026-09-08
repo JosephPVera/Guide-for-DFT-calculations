@@ -141,7 +141,7 @@ print(f"pc term        : {pc_term:.16f} eV")
 print(f"alignment term : {alignment_term:.16f} eV")
 print(f"correction energy : {correction_energy:.16f} eV")
 
-# save EVERYTHING into a json file 
+# save everything into a json file 
 summary = {
     "@module": "efnv_correction_standalone",
     "@class": "DefectEnergySummary",
