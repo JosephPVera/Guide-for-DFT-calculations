@@ -11,7 +11,7 @@ Check the [VASP](https://vasp-at.translate.goog/wiki/The_VASP_Manual?_x_tr_sl=en
 ⚠️**Warning:** VASP is proprietary software. If you want to perform calculations using VASP, you must obtain and use the software legally. Therefore, **POTCAR files are not included in this repository**.
 
 ## 0. Workflow
-![Alt text]()
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/PD-Supercells/Figures/supercell_PD_workflow.png)
 
 ---
 # 1. PBE functional
