@@ -21,6 +21,15 @@ from typing import List, Optional, Tuple
 import numpy as np
 from scipy.special import erfc
 
+import re
+from pymatgen.core import Structure, Lattice
+from pymatgen.io.common import VolumetricData
+from pymatgen.io.vasp import Outcar
+from pymatgen.io.vasp import Poscar
+
+import matplotlib.pyplot as plt
+from itertools import groupby
+
 EV_ANGSTROM_COULOMB_CONST = 14.399645351950548  # e^2/(4*pi*eps0) in eV*Angstrom
 
 UNIT_CONVERSION = 180.95128169876497
@@ -303,12 +312,9 @@ def compute_efnv_correction(
 # I/O and pre-processing helpers (VASP specific)
 def read_structure(poscar_path: str):
     """Return a pymatgen Structure from a POSCAR/CONTCAR file."""
-    from pymatgen.io.vasp import Poscar
     return Poscar.from_file(poscar_path).structure
 
 def read_structure_qe(filepath: str):
-    import re
-    from pymatgen.core import Structure, Lattice
 
     with open(filepath) as f:
         lines = f.readlines()
@@ -352,7 +358,6 @@ def read_structure_qe(filepath: str):
     return Structure(Lattice(cell), species, frac_coords, coords_are_cartesian=False)
 
 def read_site_potentials_qe(cube_path: str, structure=None) -> np.ndarray:
-    from pymatgen.io.common import VolumetricData
     cube = VolumetricData.from_cube(cube_path)
     frac_coords = (structure.frac_coords if structure is not None
                    else cube.structure.frac_coords)
@@ -360,7 +365,6 @@ def read_site_potentials_qe(cube_path: str, structure=None) -> np.ndarray:
     return np.array([RY_TO_EV * cube.value_at(*fc) for fc in frac_coords])
 
 def read_site_potentials(outcar_path: str) -> np.ndarray:
-    from pymatgen.io.vasp import Outcar
     return np.array(Outcar(outcar_path).electrostatic_potential)
 
 @dataclass
@@ -487,10 +491,7 @@ def compare_structures(perfect_structure, defect_structure,
 
 def plot_site_potentials(correction: ExtendedFnvCorrection, title: str = "",
                           output_path: Optional[str] = None,
-                          show: bool = False, dpi: int = 150):
-                            
-    import matplotlib.pyplot as plt
-    from itertools import groupby
+                          show: bool = False, dpi: int = 150):                            
 
     sites = sorted(correction.sites, key=lambda s: s.specie)
     max_distance = max(s.distance for s in sites)
