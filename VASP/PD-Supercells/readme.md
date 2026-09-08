@@ -231,13 +231,42 @@ An example for NV-1 can be found in the [N_C-V_C_-1](https://github.com/JosephPV
 
 ![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/PD-Supercells/Calculations/PBE/defect/N_C-V_C_-1/eigenplot_localization.png)
 
-### 1.3.2.3. Finite-Size Correction
+### 1.3.3. Finite-Size Correction
 The main artifact of the supercell approach for point-defect calculations consists in the introduction of periodic images of the defect located in the simulation cell. Such periodically-repeated array of defects corresponds to very high defect concentrations for commonly used supercell types. In such case, defect-defect interactions are large and can considerably affect the predicted formation energy of the point defect. Among the kinds of defect-defect interactions, electrostatic ones are never negligible for any practical supercell size. The study of point defects in the dilute limit then requires some scheme to correct for such spurious electrostatic interactions.
 
 <p align="center">
   <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Figures/finite-size-correction.png" alt="Descripción de la imagen">
 </p>
 
-Here, the output information contents in the **OUTCAR** file is relevant for computing the energy corrections. The **potential** information can be found in the section "**average (electrostatic) potential at core**". In addition, the **dielectric constant** is also required for this calculation. It can be computed by following the steps described in the [primitive](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive) folder. To compute these energy corrections, the Kumagai–Oba (eFNV) method will be used. For this purpose, useful scripts such as [efnv_corrections.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/efnv_corrections.py), [qe_efnv_corrections.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_efnv_corrections.py), and [qe_efnv-correction_plot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/Scripts/qe_efnv-correction_plot.py) can be used.
+Here, the output information contents in the **OUTCAR** file is relevant for computing the energy corrections. The **potential** information can be found in the section "**average (electrostatic) potential at core**". In addition, the **dielectric constant** is also required for this calculation. It can be computed by following the steps described in the [primitive](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/Primitive) folder. To compute these energy corrections, the Kumagai–Oba (eFNV) method will be used. For this purpose, useful scripts such as [efnv_corrections.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/efnv_corrections.py), [qe_efnv_corrections.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/vasp_efnv_corrections.py), and [qe_efnv-correction_plot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/vasp_efnv-correction_plot.py) can be used.
 
 **NV center in diamond:** For our example, the information has been processed and saved in JSON files within each defect folder. The following energy corrections were obtained:
+
+<div align="center">
+  
+| Charge State | Energy Correction (meV) |
+|:------------:| :----------------------:|
+|   -3         |       2785.57           |    
+|   -2         |       1323.92           |    
+|   -1         |       379.787           |   
+|    0         |           0.0           |
+|   +1         |       152.250           |   
+|   +2         |       755.870           |   
+
+</div>
+
+### 1.3.4. Formation energy diagram
+Then, to gather important information such as the chemical potentials, total energies, charge states, energy of the valence band maximum, and energy corrections, the formation energy diagram can be plotted. This diagram can be plotted using the [formation_energy.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/formation_energy.py) script.
+
+**NV center in diamond:** For our example, information such as the chemical potentials, total energies, charge states, and energy of the valence band maximum has been computed. However, energy corrections have not yet been included.
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/PD-Supercells/Calculations/PBE/defect/formation_energy-no_corrections.png)
+
+Including the energy corrections:
+
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/PD-Supercells/Calculations/PBE/defect/formation_energy-corrections.png)
+
+---
+# 2. HSE06 functional
+---
+The steps for calculations using hybrid functionals are the same as those outlined for calculations using PBE functionals.
