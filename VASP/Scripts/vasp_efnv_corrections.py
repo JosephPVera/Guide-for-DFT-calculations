@@ -18,7 +18,7 @@ This merges what used to be two scripts:
 
 import json
 import numpy as np
-from eFNV.efnv_corrections import (
+from efnv_corrections import (
     read_structure, read_site_potentials, compare_structures,
     HalfMaxFaceDistanceDefectRegion, FixedDistanceDefectRegion,
     compute_efnv_correction, AnisotropicEwald,
