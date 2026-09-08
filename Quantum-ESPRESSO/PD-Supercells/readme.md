@@ -545,11 +545,11 @@ Then, to gather important information such as the chemical potentials, total ene
 
 **NV center in diamond:** For our example, information such as the chemical potentials, total energies, charge states, and energy of the valence band maximum has been computed. However, energy corrections have not yet been included.
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Figures/formation_energy.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/formation_energy-no_corrections.png)
 
 Including the energy corrections:
 
-![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Figures/formation_energy-corrections.png)
+![Alt text](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Supercells/Calculations/PBE/defect/formation_energy-corrections.png)
 
 ---
 # 2. HSE06 functional
