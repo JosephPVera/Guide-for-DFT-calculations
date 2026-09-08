@@ -10,7 +10,7 @@ Reads the correction.json file produced by qe_efnv_corrections.py script.
 """
 
 import json
-from eFNV.efnv_corrections import (
+from efnv_corrections import (
     ExtendedFnvCorrection, PotentialSite, plot_site_potentials,
 )
 
