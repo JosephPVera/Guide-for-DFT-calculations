@@ -81,3 +81,109 @@ Finally, the ZPL energy is:
 $$
 E_{ZPL} = -1933.269192 - (-1934.987194) = 1.718002\ \mathrm{eV}
 $$
+
+## 3. Configuration Coordinate
+A Configuration Coordinate Diagram (CCD) is a way to describe how the total energy of a system changes when the atomic configuration is displaced along a particular collective structural coordinate. It is widely used to analyze optical transitions, lattice relaxation, phonons, and electron–phonon coupling, especially for point defects. CCDs are based on the Franck–Condon approximation, which assumes that electronic transitions occur on a timescale much faster than nuclear motion. Therefore, the atomic configuration is effectively frozen during an optical transition, resulting in vertical transitions between the ground and excited state PES, while the subsequent lattice relaxation occurs on the corresponding PES. The difference between the equilibrium configurations of the two electronic states determines the relaxation energies and contributes to the Stokes shift. The CCD is depicted in the figure below:
+
+<p align="center">
+  <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/Quantum-ESPRESSO/PD-Excited_state/Figures/ccd.png" alt="Descripción de la imagen">
+</p>
+
+Here, the blue curve represents the ground state PES, while the orange curve represents the excited state PES. In addition, the following quantities are also defined:
+#### 1. Configuration coordinate ΔQ
+The mass-weighted generalized displacement between the two relaxed geometries (ground and excited configurations):
+   
+$$
+\begin{equation}
+\Delta Q^{2} = \sum_{a} m_{a} \left| R_{\{e,a\}} - R_{\{g,a\}} \right|^{2}.
+\end{equation}
+$$
+   
+#### 2. Relaxation energies
+How much energy each state releases when its geometry relaxes from the other state's minimum to its own:
+
+$$
+\Delta _{g} = \Delta _{AS} = E_{g}(Q_{e}) - E_{g}(Q_{g}),
+$$
+
+$$
+\Delta _{e} = \Delta _{S} = E_{e}(Q_{g}) - E_{e}(Q_{e}).
+$$
+
+Here, $$Δ_{AS}$$ is the energy the ground state surface drops by, moving from $$Q_{e}$$ down to its true minimum $$Q_{g}$$, known as the anti-Stokes shift. Meanwhile, $$Δ_{S}$$ is the analogous   drop on the excited surface moving from $$Q_{g}$$ to $$Q_{e}$$, known as the Stokes shift.
+
+#### 3. Absorption and emission energies
+These are vertical transitions (Franck–Condon: the nuclei don't move during the fast electronic transition), so each keeps $$Q$$ fixed and only changes electronic state:
+
+$$
+E_{abs} = E_{e}(Q_{g}) - E_{g}(Q_{g}),
+$$
+
+$$
+E_{em} = E_{e}(Q_{e}) - E_{g}(Q_{e}).
+$$
+
+Absorption starts from the ground-state equilibrium ($$Q_{g}$$) and jumps vertically onto the excited surface. Emission starts from the excited-state equilibrium ($$Q_{e}$$) and jumps vertically onto the ground surface.
+
+#### 4. Zero Phonon Line (ZPL)
+The purely electronic transition energy, between the two minima directly (not vertical):
+
+$$
+E_{ZPL} = E_{e}(Q_{e}) - E_{g}(Q_{g}).
+$$
+
+#### 5. Effective phonon frequencies
+Each surface is modeled as a 1D harmonic oscillator in $$Q$$, with the origin at its own minimum:
+
+$$
+E_{i}(Q) = E_{i}(Q_{i}) + \frac{1}{2}\omega_{i}^{2}(Q - Q_{i})^{2}.
+$$
+
+Solving for $$\omega_{i}$$ using the relaxation energy:
+
+$$
+\Delta _{i} = \frac{1}{2}\omega_{i}^{2}\Delta Q^{2},
+$$
+
+where $$i$$ can take either the ground ($$g$$) or excited ($$e$$) state value. Therefore, 
+
+$$
+\hbar \omega_{i} = \hbar \frac{\sqrt{2\Delta _{i}}}{\Delta Q}.
+$$
+
+The two curves generally have different curvature, hence different frequencies. Keep in mind that $$\omega_{i}$$ is the angular frequency of the effective mode, and $$\hbar \omega_{i}$$ is the energy quantum of that mode. This energy is the energy difference between two vibrational levels.
+
+#### 6. Huang-Rhys factor
+The Huang–Rhys factor (**S**) is a dimensionless parameter that measures the strength of electron–phonon (or electron–vibrational) coupling in a material. In simple terms, it tells you how strongly an electronic excitation changes the equilibrium position of the atoms, causing the excitation to couple to lattice/molecular vibrations.
+   - S <<< 1: weak electron–phonon coupling
+     * The electronic transition produces relatively little lattice distortion.
+     * The optical spectrum tends to be dominated by ZPL.
+     * Phonon sidebands are weak.
+   - S ~ 1: intermediate coupling
+     * Vibrational/phonon-assisted transitions become significant.
+     * Both the ZPL and phonon sidebands can be important.
+   - S >>> 1: strong electron–phonon coupling
+     * The electronic excitation substantially distorts the lattice.
+     * The ZPL becomes relatively weak compared with the phonon sideband.
+     * Many vibrational replicas can appear in the optical spectrum.
+
+>Note: A particularly useful interpretation is that **S** is approximately the average number of phonons involved in the optical transition. It is important because it quantifies how strongly an electronic transition is coupled to lattice vibrations (phonons).
+
+Therefore, **S** can be computed using the following relation (single harmonic mode model):
+
+$$
+S_{i} \approx \langle n_{phonon}\rangle = \frac{\Delta _{i}}{\hbar \omega_{i}},
+$$
+
+where $$i$$ can take either the ground ($$g$$) or excited ($$e$$) state value.
+
+#### 7. Debye–Waller factor
+The Debye–Waller factor (**D**) tells you what fraction of an optical transition occurs without creating or absorbing phonons. This factor is computed using **S** via the following relation:
+
+$$
+D_{i} = e^{-S_{i}}
+$$
+
+ >Note: For a point defect intended as a single-photon emitter, a high Debye–Waller factor is generally desirable because it means a larger fraction of photons are emitted into the sharp ZPL, rather than the broad phonon sideband.
+
+To compute all the quantities outlined above, several configurations must be generated between the ground state configuration ($$Q_{g}$$) and the excited state configuration ($$Q_{e}$$). This can be done by interpolating configurations between $$Q_{g}$$ and $$Q_{e}$$ (remember to use the relaxed configurations in both cases). Now, run an SCF calculation for each case, first using the ground state input and then using the excited state input. Finally, after the calculations are completed, extract the total energies.
