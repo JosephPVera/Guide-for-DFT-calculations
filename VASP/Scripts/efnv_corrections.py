@@ -496,33 +496,58 @@ def plot_site_potentials(correction: ExtendedFnvCorrection, title: str = "",
     sites = sorted(correction.sites, key=lambda s: s.specie)
     max_distance = max(s.distance for s in sites)
 
-    fig, ax = plt.subplots() #figsize=(6, 4.5))
-    color_cycle = iter(plt.rcParams['axes.prop_cycle'].by_key()['color'])
+    fig, ax = plt.subplots()
 
     pc_distances, pc_potentials, diff_distances, diffs = [], [], [], []
+                            
+    # colors taken from https://matterviz.janosh.dev/periodic-table/element-colors (according VESTA)                        
+    colors = {"H": "#ffcccc", "He": "#fce8ce", "Li": "#86df73", "Be": "#5ed77b",
+              "B": "#1fa20f", "C": "#4c4c4c", "N": "#b0b9e6", "O": "#fe0300", "F": "#b0b9e6",
+              "Ne": "#fe37b5", "Na": "#f9dc3c", "Mg": "#fb7b15", "Al": "#81b2d6", "Si": "#1b3bfa",
+              "P": "#c09cc2", "S": "#fffa00", "Cl": "#31fc02", "Ar": "#cffec4", "K": "#a121f6",
+              "Ca": "#5a96bd", "Sc": "#b563ab", "Ti": "#78caff", "V": "#e51900", "Cr": "#00009e",
+              "Mn": "#a7089d", "Fe": "#b57100", "Co": "#0000af", "Ni": "#b7bbbd", "Cu": "#2247dc",
+              "Zn": "#8f8f81", "Ga": "#9ee373", "Ge": "#7e6ea6", "As": "#74d057", "Se": "#9aef0f",
+              "Br": "#7e3102", "Kr": "#fac1f3", "Rb": "#702eb0", "Sr": "#00ff00", "Y": "#94ffff",
+              "Zr": "#00ff00", "Nb": "#73c2c9", "Mo": "#54b5b5", "Tc": "#3b9e9e", "Ru": "#248f8f",
+              "Rh": "#0a7d8c", "Pd": "#006985", "Ag": "#c0c0c0", "Cd": "#ffd98f", "In": "#a67573",
+              "Sn": "#9a8eb9", "Sb": "#9e63b5", "Te": "#d47a00", "I": "#940094", "Xe": "#429eb0",
+              "Cs": "#57178f", "Ba": "#00c900", "La": "#5ac449", "Ce": "#ffffc7", "Pr": "#d9ffc7",
+              "Nd": "#c7ffc7", "Pm": "#a3ffc7", "Sm": "#8fffc7", "Eu": "#61ffc7", "Gd": "#45ffc7",
+              "Tb": "#30ffc7", "Dy": "#1fffc7", "Ho": "#00ff9c", "Er": "#00e675", "Tm": "#00d452",
+              "Yb": "#00bf38", "Lu": "#00ab24", "Hf": "#4dc2ff", "Ta": "#4da6ff", "W": "#2194d6",
+              "Re": "#267dab", "Os": "#266696", "Ir": "#175487", "Pt": "#d0d0e0", "Au": "#ffd123",
+              "Hg": "#b8b8d0", "Tl": "#a6544d", "Pb": "#575961", "Bi": "#9e4fb5", "Po": "#ab5c00",
+              "At": "#754f45", "Rn": "#428296", "Fr": "#420066", "Ra": "#007d00", "Ac": "#70abfa",
+              "Th": "#00baff", "Pa": "#00a1ff", "U": "#008fff", "Np": "#0080ff", "Pu": "#006bff",
+              "Am": "#545cf2", "Cm": "#785ce3", "Bk": "#8a4fe3", "Cf": "#a136d4", "Es": "#b31fd4",
+              "Fm": "#b31fba", "Md": "#b30da6", "No": "#bd0d87", "Lr": "#c70066", "Rf": "#cc0059",
+              "Db": "#d1004f", "Sg": "#d90045", "Bh": "#e00038", "Hs": "#e6002e", "Mt": "#eb0026"}
+              
     for specie, group in groupby(sites, key=lambda s: s.specie):
         group = list(group)
         distances = [s.distance for s in group]
         potentials = [s.potential for s in group]
+
         ax.scatter(distances, potentials, marker="o", label=f"{str(specie)} (Potential DFT)",
-                   color=next(color_cycle, None))
+                   color=colors[str(specie)]) 
         for s in group:
             pc_distances.append(s.distance)
             pc_potentials.append(s.pc_potential)
             diff_distances.append(s.distance)
             diffs.append(s.diff_pot)
 
-    ax.scatter(pc_distances, pc_potentials, marker="1", color="b",
+    ax.scatter(pc_distances, pc_potentials, marker="1", color="xkcd:blue",
               label="point charge (Model)")
-    ax.scatter(diff_distances, diffs, marker="+", color="r",
+    ax.scatter(diff_distances, diffs, marker="+", color="xkcd:red",
               label="potential difference")
 
     ax.axvline(x=correction.defect_region_radius, linewidth=1.0,
-              color="black", linestyle="-.")
+              color="xkcd:black", linestyle="--")
     avg = correction.average_potential_diff
     ax.plot([correction.defect_region_radius, max_distance * 1.1],
            [avg, avg], linewidth=1.5, color="red", linestyle=":")
-    ax.axhline(y=0, linewidth=0.5, color="black", linestyle=":")
+    ax.axhline(y=0, linewidth=1.0, color="xkcd:black", linestyle=":")
 
     ax.set_xlim(0, max_distance * 1.05)
     ax.set_xlabel("Distance from a defect (\u00c5)", size=14)
