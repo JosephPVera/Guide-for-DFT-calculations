@@ -537,9 +537,9 @@ def plot_site_potentials(correction: ExtendedFnvCorrection, title: str = "",
             diff_distances.append(s.distance)
             diffs.append(s.diff_pot)
 
-    ax.scatter(pc_distances, pc_potentials, marker="1", color="b",
+    ax.scatter(pc_distances, pc_potentials, marker="1", color="xkcd:blue",
               label="point charge (Model)")
-    ax.scatter(diff_distances, diffs, marker="+", color="r",
+    ax.scatter(diff_distances, diffs, marker="+", color="xkcd:red",
               label="potential difference")
 
     ax.axvline(x=correction.defect_region_radius, linewidth=1.0,
@@ -547,7 +547,7 @@ def plot_site_potentials(correction: ExtendedFnvCorrection, title: str = "",
     avg = correction.average_potential_diff
     ax.plot([correction.defect_region_radius, max_distance * 1.1],
            [avg, avg], linewidth=1.5, color="red", linestyle=":")
-    ax.axhline(y=0, linewidth=0.5, color="black", linestyle=":")
+    ax.axhline(y=0, linewidth=0.5, color="xkcd:black", linestyle=":")
 
     ax.set_xlim(0, max_distance * 1.05)
     ax.set_xlabel("Distance from a defect (\u00c5)", size=14)
