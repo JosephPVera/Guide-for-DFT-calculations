@@ -538,9 +538,9 @@ def plot_site_potentials(correction: ExtendedFnvCorrection, title: str = "",
             diffs.append(s.diff_pot)
 
     ax.scatter(pc_distances, pc_potentials, marker="1", color="xkcd:blue",
-              label="point charge (Model)")
+              label="Model Point Charge")
     ax.scatter(diff_distances, diffs, marker="+", color="xkcd:red",
-              label="potential difference")
+              label="Potential Difference")
 
     ax.axvline(x=correction.defect_region_radius, linewidth=1.0,
               color="xkcd:black", linestyle="--")
@@ -554,8 +554,7 @@ def plot_site_potentials(correction: ExtendedFnvCorrection, title: str = "",
     ax.set_ylabel("Potential (V)", size=14)
     ax.set_title(title, size=15)
     ax.tick_params(labelsize=12)
-    ax.legend()#bbox_to_anchor=(0, 1.05), loc="upper left",
-             #borderaxespad=0, fontsize=8)
+    ax.legend()
     fig.tight_layout()
 
     if output_path:
