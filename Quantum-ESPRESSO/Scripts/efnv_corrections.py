@@ -543,11 +543,11 @@ def plot_site_potentials(correction: ExtendedFnvCorrection, title: str = "",
               label="potential difference")
 
     ax.axvline(x=correction.defect_region_radius, linewidth=1.0,
-              color="black", linestyle="-.")
+              color="xkcd:black", linestyle="--")
     avg = correction.average_potential_diff
     ax.plot([correction.defect_region_radius, max_distance * 1.1],
            [avg, avg], linewidth=1.5, color="red", linestyle=":")
-    ax.axhline(y=0, linewidth=0.5, color="xkcd:black", linestyle=":")
+    ax.axhline(y=0, linewidth=1.0, color="xkcd:black", linestyle=":")
 
     ax.set_xlim(0, max_distance * 1.05)
     ax.set_xlabel("Distance from a defect (\u00c5)", size=14)
