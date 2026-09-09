@@ -500,6 +500,7 @@ def plot_site_potentials(correction: ExtendedFnvCorrection, title: str = "",
 
     pc_distances, pc_potentials, diff_distances, diffs = [], [], [], []
                             
+    # colors taken from https://matterviz.janosh.dev/periodic-table/element-colors (according VESTA)                        
     colors = {"H": "#ffcccc", "He": "#fce8ce", "Li": "#86df73", "Be": "#5ed77b",
               "B": "#1fa20f", "C": "#4c4c4c", "N": "#b0b9e6", "O": "#fe0300", "F": "#b0b9e6",
               "Ne": "#fe37b5", "Na": "#f9dc3c", "Mg": "#fb7b15", "Al": "#81b2d6", "Si": "#1b3bfa",
