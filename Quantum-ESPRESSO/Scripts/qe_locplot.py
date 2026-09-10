@@ -225,7 +225,7 @@ def plot_spin_channel(ax, kpoints, title, vbm, cbm, norm, cmap, res=0,
         ax.set_ylabel("Energy (eV)" if shift == 0 else f"Energy (eV)", fontsize=14)
     ax.set_title(title, fontsize=14)
     ax.set_xticks(range(1, n_k + 1))
-    ax.set_xticklabels([r'$\Gamma$'] + [str(i) for i in range(2, n_k + 1)], fontsize=14)
+    ax.set_xticklabels([r'$\Gamma$'] + [str(i) for i in range(2, n_k + 1)], fontsize=8, size=10)
 
     # shading of the valence band (blue) / conduction band (red)
     vb_line = vbm - shift
@@ -283,10 +283,10 @@ def main():
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
     cmap = plt.get_cmap(CMAP)
 
-    fig, axes = plt.subplots(1, 2, figsize=(11, 8), sharey=True, constrained_layout=True)
-    plot_spin_channel(axes[0], up_kpoints, "SPIN UP", vbm=vbm, cbm=cbm, norm=norm, cmap=cmap,
+    fig, axes = plt.subplots(1, 2, figsize=(10, 8), sharey=True, constrained_layout=True)
+    plot_spin_channel(axes[0], up_kpoints, "Spin Up", vbm=vbm, cbm=cbm, norm=norm, cmap=cmap,
                        res=res, show_index=args.index, show_ylabel=True)
-    scatter_obj = plot_spin_channel(axes[1], down_kpoints, "SPIN DOWN", vbm=vbm, cbm=cbm, norm=norm, cmap=cmap,
+    scatter_obj = plot_spin_channel(axes[1], down_kpoints, "Spin Down", vbm=vbm, cbm=cbm, norm=norm, cmap=cmap,
                                      res=res, show_index=args.index, show_ylabel=False)
 
     if scatter_obj is None:
@@ -297,7 +297,9 @@ def main():
 
     if scatter_obj is not None:
         cbar = fig.colorbar(scatter_obj, ax=axes, location="right", pad=0.02, fraction=0.05)
-        #if args.tot:
+        cbar.set_label('Localization Factor - Projected Density of States (PDOS)', fontsize=14)
+        cbar.ax.yaxis.set_label_position('left')
+    #if args.tot:
         #    cbar.set_label("Localization degree (the 'tot' value from the summary row)")
         #else:
         #    cbar.set_label("Localization degree (sum of 'tot' from the listed atoms)")
