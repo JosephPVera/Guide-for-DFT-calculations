@@ -192,7 +192,7 @@ def plot_spin_channel(ax, kpoints, title, vbm, cbm, res=0, show_index=False, sho
         ax.set_ylabel("Energy (eV)" if shift == 0 else f"Energy (eV)", fontsize=14)
     ax.set_title(title, fontsize=14)
     ax.set_xticks(range(1, n_k + 1))
-    ax.set_xticklabels([r'$\Gamma$'] + [str(i) for i in range(2, n_k + 1)], fontsize=14)
+    ax.set_xticklabels([r'$\Gamma$'] + [str(i) for i in range(2, n_k + 1)], fontsize=8, size=10)
     #ax.grid(alpha=0.3, zorder=0)
 
     from matplotlib.lines import Line2D
@@ -248,9 +248,9 @@ def main():
     down_kpoints = parse_section(sections["DOWN"])
 
     fig, axes = plt.subplots(1, 2, figsize=(10, 8), sharey=True)
-    plot_spin_channel(axes[0], up_kpoints, "SPIN UP", vbm=vbm, cbm=cbm, res=res,
+    plot_spin_channel(axes[0], up_kpoints, "Spin Up", vbm=vbm, cbm=cbm, res=res,
                        show_index=args.index, show_ylabel=True)
-    legend_elems = plot_spin_channel(axes[1], down_kpoints, "SPIN DOWN", vbm=vbm, cbm=cbm, res=res,
+    legend_elems = plot_spin_channel(axes[1], down_kpoints, "Spin Down", vbm=vbm, cbm=cbm, res=res,
                                       show_index=args.index, show_ylabel=False)
 
     if legend_elems:
