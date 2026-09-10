@@ -247,7 +247,7 @@ def main():
     up_kpoints = parse_section(sections["UP"])
     down_kpoints = parse_section(sections["DOWN"])
 
-    fig, axes = plt.subplots(1, 2, figsize=(10, 8), sharey=True)
+    fig, axes = plt.subplots(1, 2, figsize=(10, 8), sharey=True, constrained_layout=True)
     plot_spin_channel(axes[0], up_kpoints, "Spin Up", vbm=vbm, cbm=cbm, res=res,
                        show_index=args.index, show_ylabel=True)
     legend_elems = plot_spin_channel(axes[1], down_kpoints, "Spin Down", vbm=vbm, cbm=cbm, res=res,
@@ -265,7 +265,7 @@ def main():
     if res != 0:
         title += f"\nrescale: E - {res} eV"
     #fig.suptitle(title)
-    fig.tight_layout()
+    #fig.tight_layout()
     fig.savefig(args.output, dpi=150, bbox_inches="tight")
     #print(f"Saved figure in: {args.output}")
     #print(f"SPIN UP: {len(up_kpoints)} k-points found")
