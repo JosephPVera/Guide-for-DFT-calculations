@@ -132,11 +132,11 @@ def color_for_occupation(occ):
     if occ != occ: 
         return "gray"
     if occ > 0.9:
-        return "blue" # occupied
+        return "xkcd:blue" # occupied
     elif occ < 0.1: 
-        return "red"  # unoccupied
+        return "xkcd:red"  # unoccupied
     else: 
-        return "green" # partially occupied
+        return "xkcd:green" # partially occupied
 
 def plot_spin_channel(ax, kpoints, title, vbm, cbm, res=0, show_index=False, show_ylabel=True):
     if not kpoints:
@@ -197,9 +197,9 @@ def plot_spin_channel(ax, kpoints, title, vbm, cbm, res=0, show_index=False, sho
 
     from matplotlib.lines import Line2D
     legend_elems = [
-        Line2D([0], [0], marker="o", color="w", markerfacecolor="blue", markersize=8, label="Occupied"),
-        Line2D([0], [0], marker="o", color="w", markerfacecolor="green", markersize=8, label="Partially Occupied"),
-        Line2D([0], [0], marker="o", color="w", markerfacecolor="red", markersize=8, label="Unoccupied"),
+        Line2D([0], [0], marker="o", color="w", markerfacecolor="xkcd:blue", markersize=8, label="Occupied"),
+        Line2D([0], [0], marker="o", color="w", markerfacecolor="xkcd:green", markersize=8, label="Partially Occupied"),
+        Line2D([0], [0], marker="o", color="w", markerfacecolor="xkcd:red", markersize=8, label="Unoccupied"),
     ]
 
     # shading of the valence band (blue) / conduction band (red)
