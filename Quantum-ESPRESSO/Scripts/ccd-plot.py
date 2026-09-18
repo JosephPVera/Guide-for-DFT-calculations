@@ -12,6 +12,9 @@ python3 ccd-plot.py [--qe]
 """
 
 import argparse
+import glob
+import os
+import re
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -29,23 +32,102 @@ args = parser.parse_args()
 
 # Relaxed structures. Filenames/format switch automatically with --qe.
 if args.qe:
+    # QE input files (ATOMIC_POSITIONS + CELL_PARAMETERS cards),
+    # read with ASE's 'espresso-in' format.
     GROUND_STRUCT = "ground_state.in"
     EXCITED_STRUCT = "excited_state.in"
     READ_FORMAT = "espresso-in"
 else:
+    # VASP POSCAR files, read with ASE's 'vasp' format.
     GROUND_STRUCT = "POSCAR_ground"
     EXCITED_STRUCT = "POSCAR_excited"
     READ_FORMAT = "vasp"
 
 RY_TO_EV = 13.605703976
 
-lam_ground_branch = [0.000, 0.125, 0.250, 0.375, 0.500, 0.625, 0.750, 0.875, 1.000]
-#E_ground_branch = [-1934.980784, -1934.977989, -1934.969964, -1934.956341, -1934.937106, -1934.912548, -1934.883567, -1934.849263, -1934.809417] # VASP
-E_ground_branch = [-3971.35123692, -3971.35102213, -3971.35043852, -3971.34948852, -3971.34817434, -3971.34649790, -3971.34446085, -3971.34206465, -3971.33931072] #QE
+GROUND_DIR = "ground_state"
+EXCITED_DIR = "excited_state"
 
-lam_excited_branch = [0.000, 0.125, 0.250, 0.375, 0.500, 0.625, 0.750, 0.875, 1.000]
-#E_excited_branch = [-1933.070423, -1933.120350, -1933.160452, -1933.194160, -1933.221428, -1933.242528, -1933.258358, -1933.268010, -1933.271245] # VASP
-E_excited_branch = [-3971.21257337, -3971.21571612, -3971.21844021, -3971.22074576, -3971.22263282, -3971.22410140, -3971.22515168, -3971.22578418, -3971.22599987] #QE
+VASP_ENERGY_PATTERN = re.compile(r'<i name="e_wo_entrp">\s*([-+]?\d*\.\d+)\s*</i>')
+
+def extract_vasp_energy(folder: str) -> float:
+    """Return the last e_wo_entrp value found in <folder>/vasprun.xml, in eV."""
+    vasprun_path = os.path.join(folder, "vasprun.xml")
+    if not os.path.isfile(vasprun_path):
+        raise FileNotFoundError(f"vasprun.xml not found in {folder}")
+    last_value = None
+    with open(vasprun_path, "r", encoding="utf-8") as f:
+        for line in f:
+            match = VASP_ENERGY_PATTERN.search(line)
+            if match:
+                last_value = match.group(1)
+    if last_value is None:
+        raise ValueError(f"Total energy not found in {vasprun_path}")
+    return float(last_value)
+
+QE_SLURM_PATTERN = re.compile(r"^slurm-\d+\.out$")
+QE_DOUBLE_BANG_PATTERN = re.compile(r"^\s*!!\s*total energy\s*=")
+QE_SINGLE_BANG_PATTERN = re.compile(r"^\s*!\s*total energy\s*=")
+QE_ENERGY_VALUE_PATTERN = re.compile(r"total energy\s*=\s*(-?\d+\.\d+)\s*(\w+)")
+
+def extract_qe_energy(folder: str) -> float:
+    """Return the last total energy (preferring the final '!!' line over
+    an SCF-step '!' line) found in the QE .out file inside <folder>,
+    in Rydberg."""
+    out_files = sorted(
+        f for f in glob.glob(os.path.join(folder, "*.out"))
+        if not QE_SLURM_PATTERN.match(os.path.basename(f))
+    )
+    if not out_files:
+        raise FileNotFoundError(f"No QE .out file found in {folder}")
+
+    last_energy_single = None
+    last_energy_double = None
+    with open(out_files[0], "r", encoding="utf-8") as f:
+        for line in f:
+            if QE_DOUBLE_BANG_PATTERN.match(line):
+                match = QE_ENERGY_VALUE_PATTERN.search(line)
+                if match:
+                    last_energy_double = match.group(1)
+            elif QE_SINGLE_BANG_PATTERN.match(line):
+                match = QE_ENERGY_VALUE_PATTERN.search(line)
+                if match:
+                    last_energy_single = match.group(1)
+
+    energy = last_energy_double if last_energy_double is not None else last_energy_single
+    if energy is None:
+        raise ValueError(f"Total energy not found in {out_files[0]}")
+    return float(energy)
+
+def get_lambda_folders(base_dir: str) -> list[str]:
+    """Return the lambda-value subfolder names of base_dir (e.g. '0.000',
+    '0.125', ...), sorted numerically from smallest to largest."""
+    if not os.path.isdir(base_dir):
+        raise FileNotFoundError(f"Directory not found: {base_dir}")
+    lam_folders = []
+    for entry in os.listdir(base_dir):
+        if not os.path.isdir(os.path.join(base_dir, entry)):
+            continue
+        try:
+            float(entry)
+        except ValueError:
+            continue
+        lam_folders.append(entry)
+    if not lam_folders:
+        raise FileNotFoundError(f"No lambda-value subfolders found in {base_dir}")
+    lam_folders.sort(key=float)
+    return lam_folders
+
+def get_branch_energies(base_dir: str, lam_folders: list[str], use_qe: bool) -> list[float]:
+    """Extract the total energy for each lambda subfolder of base_dir."""
+    extractor = extract_qe_energy if use_qe else extract_vasp_energy
+    return [extractor(os.path.join(base_dir, lam)) for lam in lam_folders]
+
+lam_folder_names = get_lambda_folders(GROUND_DIR)
+lam_branch = [float(lam) for lam in lam_folder_names]
+
+E_ground_branch = get_branch_energies(GROUND_DIR, lam_folder_names, args.qe)
+E_excited_branch = get_branch_energies(EXCITED_DIR, lam_folder_names, args.qe)
 
 if args.qe:
     E_ground_branch = [E * RY_TO_EV for E in E_ground_branch]
@@ -54,25 +136,46 @@ if args.qe:
 E_g_Qg, E_g_Qe = E_ground_branch[0], E_ground_branch[-1]
 E_e_Qg, E_e_Qe = E_excited_branch[0], E_excited_branch[-1]
 
-# ---------------------------------------------------------------- #
 # 1. Mass-weighted displacement, dQ
-# ---------------------------------------------------------------- #
 
 atoms_g = read(GROUND_STRUCT, format=READ_FORMAT)
 atoms_e = read(EXCITED_STRUCT, format=READ_FORMAT)
 
-disp = atoms_e.get_positions() - atoms_g.get_positions()   # Angstrom
-masses = atoms_g.get_masses()                              # amu
+if len(atoms_g) != len(atoms_e):
+    raise ValueError("Ground and excited structures have different atom counts.")
+
+if list(atoms_g.get_chemical_symbols()) != list(atoms_e.get_chemical_symbols()):
+    raise ValueError("Atom ordering/species mismatch between ground and excited structures.\n"
+                      "The atom order must be identical in both structure files.")
+
+if not np.allclose(atoms_g.cell.array, atoms_e.cell.array, atol=1.0e-6):
+    raise ValueError("Ground and excited cells differ. This script assumes the same "
+                      "simulation cell for both relaxed structures.")
+
+frac_g = atoms_g.get_scaled_positions(wrap=False)
+frac_e = atoms_e.get_scaled_positions(wrap=False)
+
+dfrac = frac_e - frac_g
+dfrac -= np.round(dfrac)                     # minimum-image convention
+
+disp = np.dot(dfrac, atoms_g.cell.array)     # Cartesian displacement, Angstrom
+masses = atoms_g.get_masses()                # amu
+
+per_atom_disp = np.sqrt(np.sum(disp**2, axis=1))
+max_disp = np.max(per_atom_disp)
+atom_max = np.argmax(per_atom_disp) + 1
 
 dQ2 = np.sum(masses[:, None] * disp**2)
 dQ = np.sqrt(dQ2)                                           # amu^1/2 . Angstrom
 
 print(f"ΔQ = {dQ:.4f} amu^(1/2)*Angstrom")
-
-# ---------------------------------------------------------------- #
+#print(f"Maximum atomic displacement    = {max_disp:.6f} Å (atom {atom_max})")
+if max_disp > 1.0:
+    print("WARNING: a large single-atom displacement was found -- double check "
+          "this atom didn't just get wrapped across a periodic boundary.")
+ 
 # 2. Relaxation energies (two-point method)
 #    == Stokes / anti-Stokes shifts
-# ---------------------------------------------------------------- #
 
 dE_ground = E_g_Qe - E_g_Qg   # ground state relaxes going Qe -> Qg  == anti-Stokes shift
 dE_excited = E_e_Qg - E_e_Qe  # excited state relaxes going Qg -> Qe == Stokes shift
@@ -141,8 +244,8 @@ def fit_parabola_frequency(lam_list, E_list, lam_min, dQ):
     # hbar*omega = hbar*sqrt(k_eff) in the same mass-weighted units
     return MEV_PER_UNIT * np.sqrt(k_eff)
 
-fit_g = fit_parabola_frequency(lam_ground_branch, E_ground_branch, 0.0, dQ)
-fit_e = fit_parabola_frequency(lam_excited_branch, E_excited_branch, 1.0, dQ)
+fit_g = fit_parabola_frequency(lam_branch, E_ground_branch, 0.0, dQ)
+fit_e = fit_parabola_frequency(lam_branch, E_excited_branch, 1.0, dQ)
 
 if fit_g is not None:
     homega_g = fit_g
@@ -208,15 +311,14 @@ fig, ax = plt.subplots(figsize=(6, 5))
 ax.plot(Q, E_ground_curve, color="xkcd:blue", label="Ground state")
 ax.plot(Q, E_excited_curve, color="xkcd:orange", label="Excited state")
 
-if len(lam_ground_branch) > 0:
-    Q_ground_pts = np.array(lam_ground_branch) * dQ
+if len(lam_branch) > 0:
+    Q_ground_pts = np.array(lam_branch) * dQ
     ax.plot(Q_ground_pts, E_ground_branch, "o", color="xkcd:blue",
-            markerfacecolor="white", markersize=5)#, label="Ground state")
+            markerfacecolor="white", markersize=5)#, label="Ground state (data)")
 
-if len(lam_excited_branch) > 0:
-    Q_excited_pts = np.array(lam_excited_branch) * dQ
+    Q_excited_pts = np.array(lam_branch) * dQ
     ax.plot(Q_excited_pts, E_excited_branch, "o", color="xkcd:orange",
-            markerfacecolor="white", markersize=5)#, label="Excited state")
+            markerfacecolor="white", markersize=5)#, label="Excited state (data)")
 
 ax.plot(Q_g_min, E_g_Qg, "o", color="xkcd:blue")
 ax.plot(Q_e_min, E_e_Qe, "o", color="xkcd:orange")
@@ -252,6 +354,7 @@ ax.set_ylabel("Total energy (eV)", fontsize=14)
 ax.legend(frameon=False)
 fig.tight_layout()
 fig.savefig("ccd.png", dpi=150)
+#print("Saved plot to ccd.png")
 
 with open("ccd.dat", "w") as f:
     f.write("Configuration Coordinate Diagram\n")
