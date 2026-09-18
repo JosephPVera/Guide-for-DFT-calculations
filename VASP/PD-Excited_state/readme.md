@@ -187,3 +187,50 @@ $$
  >Note: For a point defect intended as a single-photon emitter, a high Debye–Waller factor is generally desirable because it means a larger fraction of photons are emitted into the sharp ZPL, rather than the broad phonon sideband.
 
 To compute all the quantities outlined above, several configurations must be generated between the ground state configuration ($$Q_{g}$$) and the excited state configuration ($$Q_{e}$$). This can be done by interpolating configurations between $$Q_{g}$$ and $$Q_{e}$$ (remember to use the relaxed configurations in both cases). Now, run an SCF calculation for each case, first using the ground state input and then using the excited state input. Finally, after the calculations are completed, extract the total energies.
+
+For our example, NV center in diamond, the ground configurations can be found in the [ground_state](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/PD-Excited_state/CCD/PBE/ground_state) folder. In addition, the excited configurations can be found in the [excited_state](https://github.com/JosephPVera/Guide-for-DFT-calculations/tree/main/VASP/PD-Excited_state/CCD/PBE/excited_state) folder. These configurations, between $$Q_{g}$$ and $$Q_{e}$$, can be created using the [ccd.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/ccd.py) script. Here, the ground state configuration and input are specified in the [POSCAR_ground](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/PD-Excited_state/CCD/PBE/POSCAR_ground) file, while the excited state configuration and input are specified in the [POSCAR_excited](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/PD-Excited_state/CCD/PBE/POSCAR_excited) file. Once the total energies have been extracted, they can be used to compute the relevant quantities and plot the CCD using the [ccd-plot.py](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/Scripts/ccd-plot.py) script.
+<p align="center">
+  <img src="https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/PD-Excited_state/CCD/PBE/ccd.png" alt="Descripción de la imagen">
+</p>
+
+The details are saved in a **ccd.dat** file, such as [ccd.dat](https://github.com/JosephPVera/Guide-for-DFT-calculations/blob/main/VASP/PD-Excited_state/CCD/PBE/ccd.dat).
+```bash
+Configuration Coordinate Diagram
+
+ΔQ = 0.691764 amu^(1/2)*Angstrom
+
+-----------------------------------------
+Zero Phonon Line (ZPL)
+-----------------------------------------
+ZPL = 1.718002 eV
+
+-----------------------------------------
+Absorption and emission energy
+-----------------------------------------
+E (absorption) = 1.915981 eV
+E (emission) = 1.545505 eV
+
+-----------------------------------------
+Relaxation energy
+-----------------------------------------
+Anti-Stokes shift (ground) = 0.172497 eV
+Stokes shift (excited) = 0.197979 eV
+
+-----------------------------------------
+Effective phonon modes (frecuencies)
+-----------------------------------------
+ℏω (ground) = 54.2363 meV
+ℏω (excited) = 58.3651 meV
+
+-----------------------------------------
+Huang-Rhys factor
+-----------------------------------------
+S (ground) = 3.1805
+S (excited) = 3.3921
+
+-----------------------------------------
+Debye-Waller factor
+-----------------------------------------
+D (ground) = 0.041566
+D (excited) = 0.033638
+```
