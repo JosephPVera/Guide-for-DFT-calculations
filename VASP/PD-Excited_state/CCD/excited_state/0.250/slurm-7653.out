@@ -1,0 +1,74 @@
+/var/spool/slurmd/job07653/slurm_script: line 11: !#SBATCH: command not found
+real-time non-blocking time  (microseconds, -R) unlimited
+core file size              (blocks, -c) unlimited
+data seg size               (kbytes, -d) unlimited
+scheduling priority                 (-e) 0
+file size                   (blocks, -f) unlimited
+pending signals                     (-i) 509966
+max locked memory           (kbytes, -l) unlimited
+max memory size             (kbytes, -m) 114688000
+open files                          (-n) 1024
+pipe size                (512 bytes, -p) 8
+POSIX message queues         (bytes, -q) 819200
+real-time priority                  (-r) 0
+stack size                  (kbytes, -s) unlimited
+cpu time                   (seconds, -t) unlimited
+max user processes                  (-u) 125621
+virtual memory              (kbytes, -v) unlimited
+file locks                          (-x) unlimited
+ running   28 mpi-ranks, with    1 threads/rank, on    1 nodes
+ distrk:  each k-point on   28 cores,    1 groups
+ distr:  one band on    7 cores,    4 groups
+ vasp.6.5.1 10Mar25 (build Feb 13 2026 23:13:13) complex                        
+  
+ POSCAR found type information on POSCAR C N 
+ POSCAR found :  2 types and     215 ions
+ -----------------------------------------------------------------------------
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|     You requested a magnetic or noncollinear calculation, but did not       |
+|     specify the initial magnetic moment with the MAGMOM tag. Note that      |
+|     a default of 9.302e-3 will be used for all atoms. This                  |
+|     ferromagnetic setup may break the symmetry of the crystal, in           |
+|     particular it may rule out finding an antiferromagnetic solution.       |
+|     Thence, we recommend setting the initial magnetic moment manually       |
+|     or verifying carefully that this magnetic setup is desired.             |
+|                                                                             |
+ -----------------------------------------------------------------------------
+
+ scaLAPACK will be used
+ LDA part: xc-table for (Slater+PW92), standard interpolation
+ POSCAR, INCAR and KPOINTS ok, starting setup
+ FFT: planning ... GRIDC
+ FFT: planning ... GRID_SOFT
+ FFT: planning ... GRID
+ WAVECAR not read
+ entering main loop
+       N       E                     dE             d eps       ncg     rms          rms(c)
+DAV:   1     0.295918109998E+04    0.29592E+04   -0.45411E+05  2160   0.153E+03
+DAV:   2    -0.174392394527E+04   -0.47031E+04   -0.45079E+04  2624   0.298E+02
+DAV:   3    -0.199530490774E+04   -0.25138E+03   -0.24889E+03  2592   0.668E+01
+DAV:   4    -0.200190530979E+04   -0.66004E+01   -0.65819E+01  2656   0.105E+01
+DAV:   5    -0.200207449413E+04   -0.16918E+00   -0.16886E+00  2592   0.169E+00BRMIX: very serious problems
+ the old and the new charge density differ
+ old charge density:   861.00000 new  861.99988
+    0.578E+01
+DAV:   6    -0.194985465336E+04    0.52220E+02   -0.41554E+01  2496   0.864E+00    0.344E+01
+DAV:   7    -0.193287837446E+04    0.16976E+02   -0.49719E+01  2496   0.930E+00    0.837E+00
+DAV:   8    -0.193314602331E+04   -0.26765E+00   -0.19123E+00  2592   0.198E+00    0.430E+00
+DAV:   9    -0.193315028929E+04   -0.42660E-02   -0.30232E-01  2528   0.864E-01    0.116E+00
+DAV:  10    -0.193315628553E+04   -0.59962E-02   -0.66591E-02  2568   0.372E-01    0.438E-01
+DAV:  11    -0.193315688391E+04   -0.59838E-03   -0.76576E-03  2576   0.138E-01    0.162E-01
+DAV:  12    -0.193315737687E+04   -0.49296E-03   -0.21683E-03  2592   0.656E-02    0.868E-02
+DAV:  13    -0.193315755916E+04   -0.18229E-03   -0.38459E-04  2624   0.309E-02    0.513E-02
+DAV:  14    -0.193315769329E+04   -0.13414E-03   -0.11202E-04  2576   0.177E-02    0.239E-02
+DAV:  15    -0.193315772500E+04   -0.31704E-04   -0.31703E-05  2576   0.974E-03    0.998E-03
+DAV:  16    -0.193315772871E+04   -0.37077E-05   -0.60681E-06  2336   0.394E-03    0.396E-03
+DAV:  17    -0.193315772856E+04    0.14446E-06   -0.75128E-07  1616   0.157E-03
+   1 F= -.19331577E+04 E0= -.19331577E+04  d E =0.000000E+00  mag=     2.0000

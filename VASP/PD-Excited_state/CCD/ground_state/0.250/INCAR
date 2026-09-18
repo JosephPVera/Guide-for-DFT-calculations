@@ -1,0 +1,28 @@
+ALGO  =  Normal
+
+PREC   =  Normal
+LREAL  =  Auto
+EDIFF  =  1e-06
+ENCUT  =  500.0
+NELM   =  100
+
+ISIF    =  2
+IBRION  =  2
+EDIFFG  =  -0.01
+NSW     =  0
+
+ISMEAR  =  0
+SIGMA   =  0.005
+NUPDOWN = 2
+
+ISPIN  =  2
+
+LWAVE   =  False
+LCHARG  =  False
+
+LORBIT  =  10
+
+NELECT  =  862.0
+
+NPAR   =  4
+NCORE  =  7
