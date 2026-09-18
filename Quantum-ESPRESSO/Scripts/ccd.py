@@ -80,6 +80,7 @@ def check_vasp_structures(R_g, R_e):
     #print("Simulation cell       : identical")
     print()
 
+# innecesary function, it can be delete
 def calculate_displacements(R_g, R_e):
     """Calculate the minimum-image displacement between ground and excited
     structures. 
