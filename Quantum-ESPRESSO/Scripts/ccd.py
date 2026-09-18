@@ -553,8 +553,8 @@ def run_qe(n_images):
     the cell.
     """
 
-    ground_outdir = "ground_configs"
-    excited_outdir = "excited_configs"
+    ground_outdir = "ground_state"
+    excited_outdir = "excited_state"
 
     # Read QE templates
     print("Reading QE templates...")
